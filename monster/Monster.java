@@ -4,33 +4,26 @@ import java.io.*;
 public abstract class Monster{
 
     protected String name;
-    protected String descript;
+    protected String desc;
     protected int lvl;
     protected int HP;
     protected int ATK;
     protected int DEF;
     protected int luck;
     protected int speed;
-    protected ArrayList<Item>() list = new ArrayList<Item>(); 
-
-    public Monster(){ //base constructor
-	name = "Monster";
-	descript = "an evil character";
-	lvl = 1;
-	HP = 100;
-	ATK = 1;
-	DEF = 1;
-	luck = 1;
-	speed = 1;
-    }
+    protected ArrayList<Item>() list = new ArrayList<Item>();
+    protected Image sprite, image;
+    protected int mana;
 
     public abstract void setList();
 
     public String getName(){ return name; }
 
-    public String getDescript(){ return descript; }
+    public String getDesc(){ return desc; }
 
     public int getLVL(){ return lvl; }
+
+    public void setHP(int result){ hp = result; }
 
     public int getHP(){ return HP; }
 
@@ -41,6 +34,14 @@ public abstract class Monster{
     public int getLuck(){ return luck; }
 
     public int getSpeed(){ return speed; }
+
+    public Image getSprite(){ return sprite; };
+
+    public Image getImage(){ return image; };
+
+    public int getMana(){ return mana; }
+
+    public void charge(){ mana++; }
 
     public void attack(){
 	//attacks player
