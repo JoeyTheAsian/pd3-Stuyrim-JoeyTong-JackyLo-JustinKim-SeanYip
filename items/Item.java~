@@ -1,0 +1,6 @@
+public abstract class Item{
+    protected String name;
+    protected String description;
+    protected int value;
+    protected int rarity;
+}

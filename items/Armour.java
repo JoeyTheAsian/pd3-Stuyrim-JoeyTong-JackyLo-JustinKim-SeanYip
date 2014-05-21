@@ -1,7 +1,18 @@
-public class Armour extends Item{
-    public int defBonus;
-    public int hpBonus;
-    public int speedBonus;
-    public int lukBonus;
-    //not sure if I should make all of the armour just one item or have individual armour pieces 
+public abstract class Armour extends Item{
+    protected int defBonus;
+    protected int HPBonus;
+    protected int speedBonus;
+    protected int lukBonus;
+    public int getDefBonus(){
+	return def;
+    }
+    public int getHPBonus(){
+	return HPBonus;
+    }
+    public int getSpeedBonus(){
+	return speedBonus();
+    }
+    public int getLukBonus(){
+	return luk;
+    }
 }
