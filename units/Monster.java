@@ -41,10 +41,10 @@ public abstract class Monster{
 
     public int getMana(){ return mana; }
 
-    public void charge(){ mana++; }
+    public void charge(){ mana+=10; }
 
     public void attack(){
-	//attacks player
+
     }
 
     public abstract void sAttack(); //stands for special attack
