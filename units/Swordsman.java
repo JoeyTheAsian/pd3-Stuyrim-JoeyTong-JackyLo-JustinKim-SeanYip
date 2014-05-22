@@ -1,9 +1,9 @@
 import java.util.*;
 import java.io.*;
 
-public class Melee extends Player{
+public class Swordsman extends Player{
 
-  public Melee(){
+  public Swordsman(){
     //constructer
   }
   
