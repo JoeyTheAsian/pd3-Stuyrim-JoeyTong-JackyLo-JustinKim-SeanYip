@@ -4,4 +4,15 @@ public class Magic extends Player{
   
   }
   
+  public void sAttack(){
+    
   }
+
+  public void sAttack2(){
+  
+  }
+  
+  public void sAttack3(){
+    
+  }
+}
