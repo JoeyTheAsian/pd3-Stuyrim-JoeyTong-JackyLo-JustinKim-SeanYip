@@ -7,7 +7,7 @@ import javax.xml.bind.DatatypeConverter;
 
 public class Utilities {
 	public static String hash(String file, String algorithm) {
-		try {return DatatypeConverter.printHexBinary(MessageDigest.getInstance(algorithm).digest(Files.readAllBytes((new File(file)).toPath())));}
+		try {return DatatypeConverter.printHexBinary(MessageDigest.getInstance(algorithm).digest(Files.readAllBytes((new File(file)).toPath()))).toLowerCase();}
 		catch (Exception e) {e.printStackTrace();}
 		return "";
 	}
@@ -18,5 +18,9 @@ public class Utilities {
 		String stackTrace = e.toString();
 		for (StackTraceElement ste : e.getStackTrace()) {stackTrace += "\n\tat " + ste;}
 		return stackTrace;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(hash("Title_Screen_1.png", "SHA-512"));
 	}
 }
