@@ -1,9 +1,9 @@
 import java.util.*;
 import java.io.*;
 
-public class Range extends Player{
+public class Archer extends Player{
 
-  public Range(){
+  public Archer(){
     //construction
   }
   
