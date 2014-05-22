@@ -1,9 +1,9 @@
 import java.util.*;
 import java.io.*;
 
-public class Magic extends Player{
+public class Mage extends Player{
 
-  public Magic(){
+  public Mage(){
   
   }
   
