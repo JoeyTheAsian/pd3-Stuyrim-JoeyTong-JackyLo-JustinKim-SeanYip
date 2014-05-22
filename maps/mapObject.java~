@@ -11,9 +11,8 @@ public abstract class mapObject{
     }
     public boolean canUse(){
 	return canUse;
-    }
-    //may have to revise this  vvv
-    public String getTexture(){
+    }    
+    public ImageIcon getTexture(){
 	return texture;
     }
 }

@@ -1,3 +1,5 @@
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 public abstract class mapObject{
     protected boolean canWalkOn;
     protected boolean canUse;
