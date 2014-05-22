@@ -9,7 +9,7 @@ public abstract class Monster{
     protected int HP;
     protected int ATK;
     protected int DEF;
-    protected int luck;
+    protected int luk;
     protected int speed;
     protected ArrayList<Item>() list = new ArrayList<Item>();
     protected Image sprite, image;
@@ -31,7 +31,7 @@ public abstract class Monster{
     
     public int getDEF(){ return DEF; }
 
-    public int getLuck(){ return luck; }
+    public int getLuk(){ return luk; }
 
     public int getSpeed(){ return speed; }
 
