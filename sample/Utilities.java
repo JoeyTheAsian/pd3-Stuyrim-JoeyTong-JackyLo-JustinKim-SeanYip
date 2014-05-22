@@ -6,6 +6,11 @@ import javax.swing.JOptionPane;
 import javax.xml.bind.DatatypeConverter;
 
 public class Utilities {
+<<<<<<< HEAD
+	public static void showErrorMessage(Component parent, Exception e) {
+	    JOptionPane.showMessageDialog(parent, "An error has occurred. Stack trace:\n\n" + stackTraceToString(e), "Error", JOptionPane.ERROR_MESSAGE);
+	}
+=======
 	public static String hash(String file, String algorithm) {
 		try {return DatatypeConverter.printHexBinary(MessageDigest.getInstance(algorithm).digest(Files.readAllBytes((new File(file)).toPath()))).toLowerCase();}
 		catch (Exception e) {e.printStackTrace();}
@@ -13,6 +18,7 @@ public class Utilities {
 	}
 	
 	public static void showErrorMessage(Component parent, Exception e) {JOptionPane.showMessageDialog(parent, "An error has occurred. Stack trace:\n\n" + stackTraceToString(e), "Error", JOptionPane.ERROR_MESSAGE);}
+>>>>>>> 1494af21cf46f16e9a540b90ce5d8b9cde2a36a3
 	
 	public static String stackTraceToString(Throwable e) {
 		String stackTrace = e.toString();
