@@ -1,3 +1,7 @@
+import javax.swing.*;
+import java.io.*;
+import java.awt.*;
+import java.util.HashMap;
 public abstract class mapObject{
     protected boolean canWalkOn;
     protected boolean canUse;

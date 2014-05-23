@@ -1,5 +1,12 @@
+import javax.swing.*;
+import java.io.*;
+import java.awt.*;
+import java.util.HashMap;
 public class Obstacle extends MapObject{
+    public Obstacle(ImageIcon image){
 	canUse= false;
 	canWalkOn=false;
-        texture = image;
+	canBreak = false;
+	texture = image;
+    }
 }
