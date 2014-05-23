@@ -12,6 +12,8 @@ public class Goblin extends Monster{
 	DEF = (int)(Math.random() * 50) + 75 + (lvl-1) * 15;
 	//luk = ;
 	//speed = ;
+	x = 550;
+	y = 150;
 	sprite = new ImageIcon("GoblinSpr.png").getImage();
 	image = new ImageIcon("Goblin.png").getImage();
 	mana = 100;

@@ -12,6 +12,8 @@ public class Slime extends Monster{
 	DEF = (int)(Math.random() * 50) + 25 + (lvl-1) * 15;
 	//luk = ;
 	//speed = ;
+	x = 550;
+	y = 150;
 	sprite = new ImageIcon("SlimeSpr.png").getImage();
 	image = new ImageIcon("Slime.png").getImage();
 	mana = 100;

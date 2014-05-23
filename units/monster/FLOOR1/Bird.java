@@ -11,7 +11,9 @@ public class Bird extends Monster{
 	ATK = (int)(Math.random() * 50) + 25 + (lvl-1) * 10;
 	Def = (int)(Math.random() * 50) + 25 + (lvl-1) * 10;
 	//luk = ;
-	//speed = ;
+	//speed = ;					       
+	x = 500;
+	y = 150;
 	sprite = new ImageIcon("BirdSpr.png").getImage();
 	image = new ImageIcon("Bird.png").getImage();
 	mana = 100;
