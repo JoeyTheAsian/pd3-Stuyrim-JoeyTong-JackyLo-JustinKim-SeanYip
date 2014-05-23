@@ -5,10 +5,11 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 public class Driver extends JFrame{
-    static Image floor;
-    static Image player;
-    static Image map;
-
+    static Image floor;  //background image
+    static Image player;  //player image
+    static Image map;  //map image??..
+    static String GUIState; //to check what GUI to paint
+    
 
     public Driver(){
 	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -24,5 +25,8 @@ public class Driver extends JFrame{
 	setVisible(true);
 	mapObject a = new Obstacle(new ImageIcon("map/Player.png"));
 	player = a.texture.getImage();
+    }
+    public static void main(String[]args){
+	new Driver();
     }
 }
