@@ -12,7 +12,7 @@ public class Bird extends Monster{
 	Def = (int)(Math.random() * 50) + 25 + (lvl-1) * 10;
 	//luk = ;
 	//speed = ;
-	sprite = new ImageIcon("Bird.png").getImage();
+	sprite = new ImageIcon("BirdSpr.png").getImage();
 	image = new ImageIcon("Bird.png").getImage();
 	mana = 100;
     }
