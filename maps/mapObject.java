@@ -1,7 +1,11 @@
+
 import javax.swing.*;
 import java.io.*;
 import java.awt.*;
 import java.util.HashMap;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 public abstract class mapObject{
     protected boolean canWalkOn;
     protected boolean canUse;

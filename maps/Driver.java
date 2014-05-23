@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.io.*;
 import java.awt.*;
@@ -23,9 +24,5 @@ public class Driver extends JFrame{
 	setVisible(true);
 	mapObject a = new Obstacle(new ImageIcon("map/Player.png"));
 	player = a.texture.getImage();
-    }
-
-    public static void main(String[]args){
-	new Driver();
     }
 }
