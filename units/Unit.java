@@ -20,27 +20,47 @@ public abstract class Unit{
 
     public String getDesc(){ return desc; }
 
+    public void setLVL(int level){ lvl = level; }
+
     public int getLVL(){ return lvl; }
 
-    public void setHP(int result){ hp = result; }
+    public void setHP(int health){ hp = health; }
 
     public int getHP(){ return HP; }
+    
+    public void setATK(int attack){ ATK = attack; }
 
     public int getATK(){ return ATK; }
     
+    public void setDEF(int defense){ DEF = defense; }
+    
     public int getDEF(){ return DEF; }
+    
+    public void setLuk(int luck){ luk = luck; }
 
     public int getLuk(){ return luk; }
 
+    public void setSpeed(int sped){ speed = sped; }
+
     public int getSpeed(){ return speed; }
+
+    public void setSprite(String spr /*STRING, NOT IMAGE, and assuming that spr exists*/){ sprite = new ImageIcon(spr).getImage(); }
 
     public Image getSprite(){ return sprite; };
 
+    public void setImage(String img){ image = new ImageIcon(img).getImage();
+
     public Image getImage(){ return image; };
+    
+    public void setMana(int mn) { mana = mn; }
 
     public int getMana(){ return mana; }
 
+    public void setX(int xcor){ x = xcor; }
+
     public int getX(){ return x; }
+    
+    public void setY(int ycor){ y = ycor; }
     
     public int getY(){ return y; }
 
