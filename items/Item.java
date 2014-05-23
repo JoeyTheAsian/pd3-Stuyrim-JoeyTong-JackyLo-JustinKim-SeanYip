@@ -1,29 +1,19 @@
 public abstract class Item{
-    private String name;
-    private String description;
-    private int value;
-    private int rarity;
-    
-    public int getVal(){
+    protected String name;
+    protected String description;
+    protected int value;
+    protected int rarity;
+    public int getValue(){
 	return value;
     }
     public String getName(){
 	return name;
     }
+    public String getDesc(){
+	return description;
+    }
     public int getRarity(){
 	return rarity;
-    }	
-    public void setName(String s){
-	name = s;
-    }
-    public void setRarity(int r){
-	rarity = r;
-    }
-    public void setDesc(String d){
-	description = d;
-    }
-    public void setValue(int v){
-	value = v;
     }
 
 }
