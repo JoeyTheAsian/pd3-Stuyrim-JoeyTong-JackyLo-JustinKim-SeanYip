@@ -12,7 +12,9 @@ public class Plant extends Monster{
 	DEF = (int)(Math.random() * 20) + 15 + (lvl-1) * 15;
 	//luk = ;
 	//speed = ;
-	sprite = new ImageIcon("Plant.png").getImage();
+	x = 550;
+	y = 150;
+	sprite = new ImageIcon("PlantSpr.png").getImage();
 	image = new ImageIcon("Plant.png").getImage();
 	mana = 150;
     }

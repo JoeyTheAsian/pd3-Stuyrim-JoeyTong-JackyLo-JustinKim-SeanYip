@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public abstract class Player extends Unit{
+public abstract class Player extends Unit implements Serializable{
  
   //player should have three unique special attacks 
   //NOTE: sAttack1() = sAttack() from Unit class
