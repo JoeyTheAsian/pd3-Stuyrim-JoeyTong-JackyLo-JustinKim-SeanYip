@@ -1,22 +1,22 @@
 import java.util.*;
 import java.io.*;
 
-public class Swordsman extends Player{
+public class Archer extends Player{
 
-  public Swordsman(){
-    //constructer
+  public Archer(String myName){
+      name = myName;
   }
   
   public void sAttack(){
-    
+      
   }
   
   public void sAttack2(){
-    
+      
   }
   
   public void sAttack3(){
-    
+      
   }
-
+  
 }

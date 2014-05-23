@@ -1,10 +1,10 @@
 import java.util.*;
 import java.io.*;
 
-public class Archer extends Player{
+public class Swordsman extends Player{
 
-  public Archer(){
-    //construction
+  public Swordsman(String myName){
+      name = myName;
   }
   
   public void sAttack(){
@@ -18,5 +18,5 @@ public class Archer extends Player{
   public void sAttack3(){
     
   }
-  
+
 }

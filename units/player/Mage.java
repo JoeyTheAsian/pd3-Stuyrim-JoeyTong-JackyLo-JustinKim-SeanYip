@@ -3,8 +3,8 @@ import java.io.*;
 
 public class Mage extends Player{
 
-  public Mage(){
-  
+  public Mage(String myName){
+      name = myName;
   }
   
   public void sAttack(){
