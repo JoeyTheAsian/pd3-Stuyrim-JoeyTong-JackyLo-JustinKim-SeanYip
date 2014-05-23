@@ -1,5 +1,7 @@
 import java.util.*;
 import java.io.*;
+import java.awt.*;
+import javax.swing.*;
 
 public abstract class Unit{
     protected String name;
@@ -10,7 +12,7 @@ public abstract class Unit{
     protected int DEF;
     protected int luk;
     protected int speed;
-    protected ArrayList<Item>() list = new ArrayList<Item>();
+    //protected ArrayList<Item>() list = new ArrayList<Item>();
     protected Image sprite, image;
     protected int mana;
     protected int x;
@@ -24,7 +26,7 @@ public abstract class Unit{
 
     public int getLVL(){ return lvl; }
 
-    public void setHP(int health){ hp = health; }
+    public void setHP(int health){ HP = health; }
 
     public int getHP(){ return HP; }
     
@@ -48,7 +50,7 @@ public abstract class Unit{
 
     public Image getSprite(){ return sprite; };
 
-    public void setImage(String img){ image = new ImageIcon(img).getImage();
+    public void setImage(String img){ image = new ImageIcon(img).getImage(); }
 
     public Image getImage(){ return image; };
     

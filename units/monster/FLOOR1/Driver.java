@@ -5,6 +5,7 @@ import java.io.*;
 
 public class Driver extends JFrame{
     Container buttons = new Container();
+    JButton bird, goblin, plant, slime;
     
     public Driver(){
 	this.setLayout(new GridLayout(2,1));
@@ -31,22 +32,22 @@ public class Driver extends JFrame{
 
 	bird.addActionListener(new AbstractAction("Bird"){
 		public void actionPerformed(ActionEvent e){
-		    Picture.add(new Bird());
+		    Picture.monsterList.add(new Bird());
 		}
 	    });
 	goblin.addActionListener(new AbstractAction("Goblin"){
 		public void actionPerformed(ActionEvent e){
-		    Picture.add(new Goblin());
+		    Picture.monsterList.add(new Goblin());
 		}
 	    });
 	plant.addActionListener(new AbstractAction("Plant"){
 		public void actionPerformed(ActionEvent e){
-		    Picture.add(new Plant());
+		    Picture.monsterList.add(new Plant());
 		}
 	    });
 	slime.addActionListener(new AbstractAction("Slime"){
 		public void actionPerformed(ActionEvent e){
-		    Picture.add(new Slime());
+		    Picture.monsterList.add(new Slime());
 		}
 	    });
 	

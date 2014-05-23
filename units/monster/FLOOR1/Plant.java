@@ -1,12 +1,14 @@
 import java.util.*;
 import java.io.*;
+import java.awt.*;
+import javax.swing.*;
 
 public class Plant extends Monster{
 
     public Plant(){
 	name = "Plant";
 	desc = "Mother Nature's Minion Of Death";
-	lvl = Player.lvl;
+	//lvl = Player.lvl;
 	HP = 500 + (lvl-1) * 50;
 	ATK = (int)(Math.random() * 50) + 50 + (lvl-1) * 15;
 	DEF = (int)(Math.random() * 20) + 15 + (lvl-1) * 15;

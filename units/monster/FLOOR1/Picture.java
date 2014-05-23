@@ -1,6 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.swing.*;
+import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -26,8 +26,8 @@ public class Picture extends JPanel implements ActionListener{
 
     public void actionPerformed(ActionEvent q){
 	for (Monster mon: monsterList){
-	    mon.setX(mon.getX() + (int)(Math.random() * 2) - 1);
-	    mon.setY(mon.getY() + (int)(Math.random() * 2) - 1);
+	    mon.setX(mon.getX() + (int)(Math.random() * 10) - 5);
+	    mon.setY(mon.getY() + (int)(Math.random() * 10) - 5);
 	}
 	repaint();
     }
