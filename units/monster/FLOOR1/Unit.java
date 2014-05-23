@@ -46,7 +46,7 @@ public abstract class Unit{
 
     public int getSpeed(){ return speed; }
 
-    public void setSprite(String spr /*STRING, NOT IMAGE, and assuming that spr exists*/){ sprite = new ImageIcon(spr).getImage(); }
+    public void setSprite(String spr){ sprite = new ImageIcon(spr).getImage(); }
 
     public Image getSprite(){ return sprite; };
 
