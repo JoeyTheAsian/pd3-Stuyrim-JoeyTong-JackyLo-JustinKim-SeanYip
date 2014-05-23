@@ -1,0 +1,32 @@
+import java.awt.Component;
+import java.io.File;
+import java.nio.file.Files;
+import java.security.MessageDigest;
+import javax.swing.JOptionPane;
+import javax.xml.bind.DatatypeConverter;
+
+public class Utilities {
+<<<<<<< HEAD
+	public static void showErrorMessage(Component parent, Exception e) {
+	    JOptionPane.showMessageDialog(parent, "An error has occurred. Stack trace:\n\n" + stackTraceToString(e), "Error", JOptionPane.ERROR_MESSAGE);
+	}
+=======
+	public static String hash(String file, String algorithm) {
+		try {return DatatypeConverter.printHexBinary(MessageDigest.getInstance(algorithm).digest(Files.readAllBytes((new File(file)).toPath()))).toLowerCase();}
+		catch (Exception e) {e.printStackTrace();}
+		return "";
+	}
+	
+	public static void showErrorMessage(Component parent, Exception e) {JOptionPane.showMessageDialog(parent, "An error has occurred. Stack trace:\n\n" + stackTraceToString(e), "Error", JOptionPane.ERROR_MESSAGE);}
+>>>>>>> 1494af21cf46f16e9a540b90ce5d8b9cde2a36a3
+	
+	public static String stackTraceToString(Throwable e) {
+		String stackTrace = e.toString();
+		for (StackTraceElement ste : e.getStackTrace()) {stackTrace += "\n\tat " + ste;}
+		return stackTrace;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(hash("Title_Screen_1.png", "SHA-512"));
+	}
+}
