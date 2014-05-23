@@ -5,3 +5,4 @@ public class Breakable extends MapObject{
     public Breakable(ImageIcon image){
 	texture = image;
     }
+}
