@@ -26,9 +26,10 @@ public class Game extends JFrame {
     JButton startButton = new JButton ("Start!");
     JComboBox<String> themeComboBox;
     JPanel gamePanel;
-    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-    int height = dim.height-37;
-    int width = dim.width;
+
+    //screen dimensions
+    int height = Toolkit.getDefaultToolkit().getScreenSize().height-37;
+    int width = Toolkit.getDefaultToolkit().getScreenSize().width;
 
 
     public Game() {
@@ -41,7 +42,7 @@ public class Game extends JFrame {
 	pane.add(gamePanel);
 	pack();
 	setResizable(false);
-	setSize(dim.width, dim.height-37);
+	setSize(width, height);
 	setLocationRelativeTo(null);
     }
     
