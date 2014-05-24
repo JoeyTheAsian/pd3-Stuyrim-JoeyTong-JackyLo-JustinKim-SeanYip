@@ -20,26 +20,26 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 
-public class Game extends JFrame {
+public class Menu extends JFrame {
     BufferedImage image;
     JButton optionsButton = new JButton("Options");
     JButton startButton = new JButton ("Start!");
     JComboBox<String> themeComboBox;
-    JPanel gamePanel;
+    JPanel Panel;
 
     //screen dimensions
     int height = Toolkit.getDefaultToolkit().getScreenSize().height-37;
     int width = Toolkit.getDefaultToolkit().getScreenSize().width;
 
 
-    public Game() {
+    public Menu() {
 	Container pane = getContentPane();
-	gamePanel = new GamePanel();
+	Panel = new Panel();
 
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
 	setTitle("Game");
 	setLayout(null);
-	pane.add(gamePanel);
+	pane.add(Panel);
 	pack();
 	setResizable(false);
 	setSize(width, height);
@@ -50,8 +50,8 @@ public class Game extends JFrame {
 	super.paint(g);
     }
     
-    public class GamePanel extends JPanel {
-	public GamePanel() {
+    public class Panel extends JPanel {
+	public Panel() {
 	    setLayout(null);
 	    setSize(width, height);
 
@@ -98,7 +98,7 @@ public class Game extends JFrame {
 	    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 	} catch (Exception e) {Utilities.showErrorMessage(null, e);}
 	long t1 = System.nanoTime();
-	SwingUtilities.invokeLater(() -> new Game().setVisible(true));
+	SwingUtilities.invokeLater(() -> new Menu().setVisible(true));
 	long t2 = System.nanoTime();
 	out.println("Initialization time: " + (t2 - t1) + " ns / " + ((double) (t2 - t1) / 1000000) + " ms / " + ((double) (t2 - t1) / 1000000000) + " s");
     }
