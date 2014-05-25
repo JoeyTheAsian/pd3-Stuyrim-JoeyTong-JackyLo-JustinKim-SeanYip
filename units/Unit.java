@@ -5,26 +5,20 @@ import javax.swing.*;
 
 public abstract class Unit{
     protected String name;
-    protected String desc;
-    protected int lvl;
     protected int HP;
     protected int ATK;
     protected int DEF;
+    protected int EXP;
     protected int luk;
     protected int speed;
-    //protected ArrayList<Item>() list = new ArrayList<Item>();
-    protected Image sprite, image;
+    protected int ATKspeed; //hit per x CENTIseconds
+    protected ArrayList<Item>() list = new ArrayList<Item>();
+    protected Image image;
     protected int mana;
     protected int x;
     protected int y;
 
     public String getName(){ return name; }
-
-    public String getDesc(){ return desc; }
-
-    public void setLVL(int level){ lvl = level; }
-
-    public int getLVL(){ return lvl; }
 
     public void setHP(int health){ HP = health; }
 
@@ -37,6 +31,10 @@ public abstract class Unit{
     public void setDEF(int defense){ DEF = defense; }
     
     public int getDEF(){ return DEF; }
+
+    public void setEXP(int xp){ EXP = xp; }
+
+    public int getEXP(){ return EXP; }
     
     public void setLuk(int luck){ luk = luck; }
 
@@ -46,9 +44,9 @@ public abstract class Unit{
 
     public int getSpeed(){ return speed; }
 
-    public void setSprite(String spr){ sprite = new ImageIcon(spr).getImage(); }
+    public void setATKspeed(int atkspd){ ATKspeed = atkspd; }
 
-    public Image getSprite(){ return sprite; };
+    public int getATKspeed(){ return ATKspeed; }
 
     public void setImage(String img){ image = new ImageIcon(img).getImage(); }
 

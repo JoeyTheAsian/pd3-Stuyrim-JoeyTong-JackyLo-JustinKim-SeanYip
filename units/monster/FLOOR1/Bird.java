@@ -7,18 +7,14 @@ public class Bird extends Monster{
 
     public Bird(){
 	name = "Bird";
-	desc = "Wings Of Death";
-	//lvl = Player.lvl; //someone make the Player class T_T
-	HP = 750 + (lvl-1) * 25;
-	ATK = (int)(Math.random() * 50) + 25 + (lvl-1) * 10;
-	DEF = (int)(Math.random() * 50) + 25 + (lvl-1) * 10;
-	//luk = ;
-	//speed = ;					       
-	x = 500;
-	y = 150;
-	sprite = new ImageIcon("BirdSpr.png").getImage();
+	HP = 500;
+	mana = 500;
+	ATK = 20;
+	DEF = 5;
+	EXP = 20;
+	speed = 25;
+	ATKspeed = 50;
 	image = new ImageIcon("Bird.png").getImage();
-	mana = 100;
     }
 
     public void setList(){
