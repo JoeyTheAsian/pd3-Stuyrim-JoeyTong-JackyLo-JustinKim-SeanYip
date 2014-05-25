@@ -40,7 +40,7 @@ public class Menu extends JFrame {
 	Panel = new Panel();
 
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
-	setTitle("Game");
+	setTitle("The Senior Scrolls: Stuyrim");
 	setLayout(null);
 	pane.add(Panel);
 	pack();
