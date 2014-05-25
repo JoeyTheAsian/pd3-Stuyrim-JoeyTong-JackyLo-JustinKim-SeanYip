@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -25,7 +26,7 @@ import javax.swing.SwingConstants;
 public class Menu extends JFrame {
     BufferedImage image;
     JButton optionsButton = new JButton("Options");
-    JButton startButton = new JButton ("Start!");
+    JButton startButton = new JButton ("Start");
     JComboBox<String> themeComboBox;
     JPanel Panel;
 
@@ -70,13 +71,13 @@ public class Menu extends JFrame {
 	    optionsButton.setSize(width/10,height/20);
 	    optionsButton.setVerticalTextPosition(SwingConstants.CENTER);
 	    optionsButton.setHorizontalTextPosition(SwingConstants.CENTER);
-
+	    optionsButton.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 	    optionsButton.setLocation((width/3)-(width/20), (height/7*6)-(height/40));
-	    Image img = new ImageIcon("optionsButton.png").getImage().getScaledInstance
+	    Image img = new ImageIcon("Button.png").getImage().getScaledInstance
 		(optionsButton.getWidth(),optionsButton.getHeight(),java.awt.Image.SCALE_SMOOTH);
 	    optionsButton.setIcon(new ImageIcon(img));
-	    optionsButton.setName("Options");
 	    optionsButton.setForeground(Color.white);
+
 
 	    startButton.addActionListener(e -> {
 
@@ -87,14 +88,12 @@ public class Menu extends JFrame {
 	    startButton.setSize(width/10,height/20);
 	    startButton.setVerticalTextPosition(SwingConstants.CENTER);
 	    startButton.setHorizontalTextPosition(SwingConstants.CENTER);
-
+	    startButton.setFont(new Font("TimesRoman",Font.PLAIN, 20));
 	    startButton.setLocation((width/3*2)-(width/20), (height/7*6)-(height/40));
-	    Image img1 = new ImageIcon("startButton.png").getImage().getScaledInstance
+	    Image img1 = new ImageIcon("Button.png").getImage().getScaledInstance
 		(optionsButton.getWidth(),optionsButton.getHeight(),java.awt.Image.SCALE_SMOOTH);
 	    startButton.setIcon(new ImageIcon(img1));
-	    startButton.setName("Start Game!");
 	    startButton.setForeground(Color.white);
-
 	    add(optionsButton);
 	    add(startButton);
 	    pack();
