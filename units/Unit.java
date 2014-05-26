@@ -74,8 +74,9 @@ public abstract class Unit{
 
     public void charge(){ mana+=10; }
 
-    public void attack(){ }
+    public void attack(Unit u){
+	u.setHP(u.getHP()+u.getDEF()-getATK());
+    }
 
     public abstract void sAttack(); //stands for special attack
-
 }
