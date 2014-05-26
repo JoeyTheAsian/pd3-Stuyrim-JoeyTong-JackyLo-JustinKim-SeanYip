@@ -15,8 +15,8 @@ public abstract class Unit{
     protected ArrayList<Item>() list = new ArrayList<Item>();
     protected Image image;
     protected int mana;
-    protected double x;
-    protected double y;
+    protected double screenX, mapX;
+    protected double screenY, mapY;
 
     public String getName(){ return name; }
 
@@ -56,19 +56,26 @@ public abstract class Unit{
 
     public int getMana(){ return mana; }
 
-    public void setX(double xcor){ x = xcor; }
+    public void setScreenX(double xcor){ screenX = xcor; }
 
-    public int getX(){ return (int) x; }
+    public int getScreenX(){ return (int) screenX; }
     
-    public void setY(double ycor){ y = ycor; }
+    public void setMapX(double xcor){ mapX = xcor; }
+
+    public int getMapX(){ return mapX; }
+
+    public void setScreenY(double ycor){ screenY = ycor; }
     
-    public int getY(){ return (int) y; }
+    public int getScreenY(){ return (int) screenY; }
+
+    public void setMapY(double ycor){ mapY = ycor; }
+
+    public int getMapY(){ return mapY; }
 
     public void charge(){ mana+=10; }
 
     public void attack(){ }
 
     public abstract void sAttack(); //stands for special attack
-
 
 }
