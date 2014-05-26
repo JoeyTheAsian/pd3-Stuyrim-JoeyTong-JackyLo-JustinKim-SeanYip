@@ -15,8 +15,8 @@ public abstract class Unit{
     protected ArrayList<Item>() list = new ArrayList<Item>();
     protected Image image;
     protected int mana;
-    protected int x;
-    protected int y;
+    protected double x;
+    protected double y;
 
     public String getName(){ return name; }
 
@@ -56,13 +56,13 @@ public abstract class Unit{
 
     public int getMana(){ return mana; }
 
-    public void setX(int xcor){ x = xcor; }
+    public void setX(double xcor){ x = xcor; }
 
-    public int getX(){ return x; }
+    public int getX(){ return (int) x; }
     
-    public void setY(int ycor){ y = ycor; }
+    public void setY(double ycor){ y = ycor; }
     
-    public int getY(){ return y; }
+    public int getY(){ return (int) y; }
 
     public void charge(){ mana+=10; }
 
