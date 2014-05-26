@@ -42,7 +42,7 @@ import javax.swing.SwingConstants;
 	    optionsButton.setHorizontalTextPosition(SwingConstants.CENTER);
 	    optionsButton.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 	    optionsButton.setLocation((width/3)-(width/20), (height/7*6)-(height/40));
-	    Image img = new ImageIcon("Button.png").getImage().getScaledInstance
+	    Image img = new ImageIcon("GUI Images/Button.png").getImage().getScaledInstance
 		(optionsButton.getWidth(),optionsButton.getHeight(),java.awt.Image.SCALE_SMOOTH);
 	    optionsButton.setIcon(new ImageIcon(img));
 	    optionsButton.setForeground(Color.white);
@@ -60,7 +60,7 @@ import javax.swing.SwingConstants;
 	    startButton.setHorizontalTextPosition(SwingConstants.CENTER);
 	    startButton.setFont(new Font("TimesRoman",Font.PLAIN, 20));
 	    startButton.setLocation((width/3*2)-(width/20), (height/7*6)-(height/40));
-	    Image img1 = new ImageIcon("Button.png").getImage().getScaledInstance
+	    Image img1 = new ImageIcon("GUI Images/Button.png").getImage().getScaledInstance
 		(optionsButton.getWidth(),optionsButton.getHeight(),java.awt.Image.SCALE_SMOOTH);
 	    startButton.setIcon(new ImageIcon(img1));
 	    startButton.setForeground(Color.white);
