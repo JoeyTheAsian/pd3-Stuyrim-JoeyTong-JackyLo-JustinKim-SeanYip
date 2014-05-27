@@ -5,21 +5,26 @@ import javax.swing.*;
 
 public abstract class Unit{
     protected String name;
-    protected int HP;
+    protected int maxHP, HP;
     protected int ATK;
     protected int DEF;
     protected int EXP;
     protected int luk;
+    protected int range;
     protected int speed;
     protected int ATKspeed; //hit per x CENTIseconds
     protected ArrayList<Item>() list = new ArrayList<Item>();
     protected Image image;
-    protected int mana;
+    protected int maxMana, mana;
     protected double screenX, mapX;
     protected double screenY, mapY;
 
     public String getName(){ return name; }
 
+    public void setMaxHP(int health){ maxHP = health; }
+	
+    public int getMaxHP(){ return maxHP; }
+	
     public void setHP(int health){ HP = health; }
 
     public int getHP(){ return HP; }
@@ -40,6 +45,10 @@ public abstract class Unit{
 
     public int getLuk(){ return luk; }
 
+    public void setRange(int rg){ range = rg; }
+    
+    public int getRange(){ return range; }
+
     public void setSpeed(int sped){ speed = sped; }
 
     public int getSpeed(){ return speed; }
@@ -52,6 +61,10 @@ public abstract class Unit{
 
     public Image getImage(){ return image; };
     
+    public void setMaxMana(int mn){ maxMana = mn; }
+    
+    public int getMaxMana(){ return maxMana; }
+    
     public void setMana(int mn) { mana = mn; }
 
     public int getMana(){ return mana; }
@@ -62,7 +75,7 @@ public abstract class Unit{
     
     public void setMapX(double xcor){ mapX = xcor; }
 
-    public int getMapX(){ return mapX; }
+    public int getMapX(){ return (int) mapX; }
 
     public void setScreenY(double ycor){ screenY = ycor; }
     
@@ -70,7 +83,7 @@ public abstract class Unit{
 
     public void setMapY(double ycor){ mapY = ycor; }
 
-    public int getMapY(){ return mapY; }
+    public int getMapY(){ return (int) mapY; }
 
     public void charge(){ mana+=10; }
 
