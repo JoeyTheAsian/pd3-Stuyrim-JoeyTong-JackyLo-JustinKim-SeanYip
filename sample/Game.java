@@ -51,5 +51,6 @@ public class Game extends JFrame {
     }
     public void paint(Graphics g) {
 	super.paint(g);
+	g.dispose();
     }
 }
