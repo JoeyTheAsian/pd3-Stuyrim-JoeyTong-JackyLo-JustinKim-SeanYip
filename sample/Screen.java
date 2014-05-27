@@ -12,8 +12,6 @@ import java.awt.image.BufferStrategy;
 import java.awt.Image;
 import java.io.File;
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.lang.InterruptedException;
@@ -22,7 +20,7 @@ import java.lang.Thread;
 public class Screen extends Canvas implements Runnable{
     private Thread Thread;
     private BufferedImage image;
-    private int height = Toolkit.getDefaultToolkit().getScreenSize().height-37;
+    private int height = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4);
     private int width = Toolkit.getDefaultToolkit().getScreenSize().width;
     private boolean running;
     public Screen(){
