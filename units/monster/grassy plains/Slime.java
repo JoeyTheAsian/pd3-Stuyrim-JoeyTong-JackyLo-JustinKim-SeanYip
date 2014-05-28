@@ -17,7 +17,7 @@ public class Slime extends Monster{
 	image = new ImageIcon("Slime.png").getImage();
     }
 
-    public void setList(){x
+    public void setList(){
 	
     }
 	
