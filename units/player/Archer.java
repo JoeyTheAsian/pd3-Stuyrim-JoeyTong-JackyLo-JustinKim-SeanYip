@@ -12,6 +12,7 @@ public class Archer extends Player{
 	EXP = 0;
 	speed = 40;
 	ATKspeed = 33;
+	range = 150;
 	image = new ImageIcon("Archer.png").getImage();
     }
   

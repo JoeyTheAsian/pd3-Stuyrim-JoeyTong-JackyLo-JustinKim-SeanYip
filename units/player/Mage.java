@@ -12,6 +12,7 @@ public class Mage extends Player{
 	EXP = 0;
 	speed = 10;
 	ATKspeed = 100;
+	range = 120;
 	image = new ImageIcon("Mage.png").getImage();
     }
   

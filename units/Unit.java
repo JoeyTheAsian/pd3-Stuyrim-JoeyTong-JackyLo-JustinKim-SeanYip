@@ -10,14 +10,14 @@ public abstract class Unit{
     protected int DEF;
     protected int EXP;
     protected int luk;
-    protected int range;
+    protected int range = 20;
     protected int speed;
     protected int ATKspeed; //hit per x CENTIseconds
     protected ArrayList<Item>() list = new ArrayList<Item>();
     protected Image image;
     protected int maxMana, mana;
-    protected double screenX, mapX;
-    protected double screenY, mapY;
+    protected double screenX, screenY;
+    protected int mapX, mapY;
 
     public String getName(){ return name; }
 
@@ -73,17 +73,17 @@ public abstract class Unit{
 
     public int getScreenX(){ return (int) screenX; }
     
-    public void setMapX(double xcor){ mapX = xcor; }
+    public void setMapX(int xcor){ mapX = xcor; }
 
-    public int getMapX(){ return (int) mapX; }
+    public int getMapX(){ return mapX; }
 
     public void setScreenY(double ycor){ screenY = ycor; }
     
     public int getScreenY(){ return (int) screenY; }
 
-    public void setMapY(double ycor){ mapY = ycor; }
+    public void setMapY(int ycor){ mapY = ycor; }
 
-    public int getMapY(){ return (int) mapY; }
+    public int getMapY(){ return mapY; }
 
     public void charge(){ mana+=10; }
 
