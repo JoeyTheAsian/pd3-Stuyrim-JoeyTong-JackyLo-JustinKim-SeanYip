@@ -36,8 +36,8 @@ public class Game extends JFrame {
 
     public Game() {
 	pane = getContentPane();
-        //MenuPanel = new MenuPanel();
-	// Screen = new Screen();
+        MenuPanel = new MenuPanel();
+	Screen = new Screen();
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
 	setTitle("The Senior Scrolls I: Stuyrim");
 	setLayout(null);
@@ -45,7 +45,6 @@ public class Game extends JFrame {
 	pack();
 	setResizable(false);
 	setSize(width, height);
-	setLocationRelativeTo(null);
 	setVisible(true);
     }
     public void paint(Graphics g) {
