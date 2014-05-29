@@ -27,6 +27,15 @@ public class Swordsman extends Player{
 
     }
 
-    //include lvlup
+    public void LVLup(){
+	super.LVLup();
+	LVLupStates();
+    }
+
+    public void LVLupStats(){
+	HP = HP + LVL*25;
+	ATK = ATK + LVL*10;
+	DEF + DEF + LVL*10;
+    }
 
 }

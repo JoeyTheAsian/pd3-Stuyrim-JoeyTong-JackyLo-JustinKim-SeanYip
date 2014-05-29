@@ -31,4 +31,7 @@ public abstract class Player extends Unit/* implements Serializable*/{
 	    LVLReq = (int)(Math.pow(2,LVL)) * 50;
 	}
     }
+
+    public abstract void LVLupStats();
+
 }

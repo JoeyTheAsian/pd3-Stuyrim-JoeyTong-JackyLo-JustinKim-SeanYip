@@ -28,4 +28,15 @@ public class Archer extends Player{
       
     }
   
+    public void LVLup(){
+	super.LVLup();
+	LVLupStats();
+    }
+
+    public void LVLupStats(){
+	HP = HP + LVL*10;
+	ATK = ATK + LVL*25;
+	DEF = DEF + LVL*5;
+    }
+
 }

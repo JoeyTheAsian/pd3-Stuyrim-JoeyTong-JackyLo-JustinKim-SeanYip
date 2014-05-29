@@ -27,4 +27,16 @@ public class Mage extends Player{
     public void sAttack3(){
     
     }
+    
+    public void LVLup(){
+	super.LVLup();
+	LVLupStats();
+    }
+
+    public void LVLupStats(){
+	HP = HP + LVL*10;
+	ATK = ATK + LVL*50;
+	DEF = DEF + LVL*5;
+    }
+
 }
