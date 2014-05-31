@@ -19,4 +19,12 @@ public class Utilities {
 		for (StackTraceElement ste : e.getStackTrace()) {stackTrace += "\n\tat " + ste;}
 		return stackTrace;
 	}
+	
+	public static void main(String[] args) {
+		if (args.length != 2) {
+			System.out.println("Usage: java Utilities <file> <algoritm>");
+			return;
+		}
+		System.out.println(hash(args[0], args[1]));
+	}
 }
