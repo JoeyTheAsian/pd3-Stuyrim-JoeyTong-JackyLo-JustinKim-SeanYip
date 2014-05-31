@@ -26,27 +26,27 @@ public class Screen extends Canvas implements Runnable {
 		catch (Exception e) {Utilities.showErrorMessage(this, e);}
 		addKeyListener(new KeyListener() {
 				public void keyPressed(KeyEvent e) {
-					System.out.print(e + " ");
+					System.out.print(e + " | ");
 					System.out.println((e.getKeyCode() == KeyEvent.VK_W) || (e.getKeyCode() == KeyEvent.VK_S) || (e.getKeyCode() == KeyEvent.VK_A) || (e.getKeyCode() == KeyEvent.VK_D));
 					if (e.getKeyCode() == KeyEvent.VK_W) {
 						if (y == 0) {return;}
 						y -= character.getHeight();
-						getGraphics().drawImage(image, x, y, Color.WHITE, null);
+						getGraphics().drawImage(image, x, y, null);
 					}
 					if (e.getKeyCode() == KeyEvent.VK_S) {
 						if (y >= (height - character.getHeight())) {return;}
 						y += character.getHeight();
-						getGraphics().drawImage(image, x, y, Color.WHITE, null);
+						getGraphics().drawImage(image, x, y, null);
 					}
 					if (e.getKeyCode() == KeyEvent.VK_A) {
 						if (x == 0) {return;}
 						x -= character.getWidth();
-						getGraphics().drawImage(image, x, y, Color.WHITE, null);
+						getGraphics().drawImage(image, x, y, null);
 					}
 					if (e.getKeyCode() == KeyEvent.VK_D) {
 						if (x >= (width - character.getWidth())) {return;}
 						x += character.getWidth();
-						getGraphics().drawImage(image, x, y, Color.WHITE, null);
+						getGraphics().drawImage(image, x, y, null);
 					}
 				}
 				public void keyReleased(KeyEvent e) {}
