@@ -1,14 +1,14 @@
-import java.awt.Graphics;
 import java.awt.Color;
-import java.awt.Toolkit;
 import java.awt.Font;
-import java.awt.image.BufferedImage;
+import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
     
 public class MenuPanel extends JPanel {
@@ -37,7 +37,9 @@ public class MenuPanel extends JPanel {
 		optionsButton.setForeground(Color.white);
 
 		startButton.addActionListener(e -> {
-				startButton.getParent().getParent().add(new Screen());
+				Screen screen = new Screen();
+				startButton.getParent().getParent().add(screen);
+				screen.requestFocusInWindow();
 				startButton.getParent().getParent().add(new GamePanel());
 				startButton.getParent().getParent().repaint();
 				startButton.getParent().getParent().remove(this);

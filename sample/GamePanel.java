@@ -35,16 +35,6 @@ public class GamePanel extends JPanel {
 		setBounds(0, windowHeight / 5 * 4, windowWidth, windowHeight);
 		try {bg = ImageIO.read(new File("GUI images/wood background.png"));}
 		catch (Exception e) {Utilities.showErrorMessage(this, e);}
-		addKeyListener(new KeyListener() {
-				public void keyPressed(KeyEvent e) {
-					if (e.getKeyCode() == KeyEvent.VK_W) {}
-					if (e.getKeyCode() == KeyEvent.VK_S) {}
-					if (e.getKeyCode() == KeyEvent.VK_A) {}
-					if (e.getKeyCode() == KeyEvent.VK_D) {}
-				}
-				public void keyReleased(KeyEvent e) {}
-				public void keyTyped(KeyEvent e) {}
-		});
 		setVisible(true);
 		repaint();		     
     }
