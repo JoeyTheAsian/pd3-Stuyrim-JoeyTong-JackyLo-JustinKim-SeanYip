@@ -1,49 +1,49 @@
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class Screen extends Canvas implements Runnable {
+	private ArrayList<Character> characters = new ArrayList<>();
     private Thread thread;
-    private BufferedImage image, character;
+    private BufferedImage image;
+	private Character slime = new Character("Slime.png", 0, 0);
     private int height = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4);
     private int width = Toolkit.getDefaultToolkit().getScreenSize().width;
     private boolean running;
-    public int x = 0, y = 0;
 
     public Screen() {
 		setSize(width, height);
-		try {
-			image = ImageIO.read(new File("success.jpg"));
-			character = ImageIO.read(new File("Slime.png"));
-		}
+		try {image = ImageIO.read(new File("success.jpg"));}
 		catch (Exception e) {Utilities.showErrorMessage(this, e);}
+		characters.add(slime);
 		addKeyListener(new KeyListener() {
 				public void keyPressed(KeyEvent e) {}
 				public void keyReleased(KeyEvent e) {}
 				public void keyTyped(KeyEvent e) {
 					if (e.getKeyChar() == 'w') {
-						if (y == 0) {return;}
-						y -= 5;
+						if (slime.getY() == 0) {return;}
+						slime.setY(slime.getY() - 5);
 					}
 					if (e.getKeyChar() == 's') {
-						if (y >= (height - character.getHeight())) {return;}
-						y += 5;
+						if (slime.getY() >= (height - slime.getHeight())) {return;}
+						slime.setY(slime.getY() + 5);
 					}
 					if (e.getKeyChar() == 'a') {
-						if (x == 0) {return;}
-						x -= 5;
+						if (slime.getX() == 0) {return;}
+						slime.setX(slime.getX() - 5);
 					}
 					if (e.getKeyChar() == 'd') {
-						if (x >= (width - character.getWidth())) {return;}
-						x += 5;
+						if (slime.getX() >= (width - slime.getWidth())) {return;}
+						slime.setX(slime.getX() + 5);
 					}
+					System.out.println(slime.getX() + ", " + slime.getY());
 					repaint();
 				}
 		});
@@ -88,7 +88,7 @@ public class Screen extends Canvas implements Runnable {
 		}
 		g = bs.getDrawGraphics();
 		g.drawImage(image,0,0,width,height, null);
-		g.drawImage(character, x,y,character.getHeight(), character.getWidth(), null);
+		for (Character character : characters) {g.drawImage(character.getImage(), character.getX(), character.getY(), null);}
 		g.dispose();
 		bs.show();
     }
