@@ -28,28 +28,23 @@ public class Screen extends Canvas implements Runnable {
 				public void keyPressed(KeyEvent e) {}
 				public void keyReleased(KeyEvent e) {}
 				public void keyTyped(KeyEvent e) {
-					System.out.print(e + " | ");
-					System.out.println((e.getKeyChar() == 'w') || (e.getKeyChar() == 's') || (e.getKeyChar() == 'a') || (e.getKeyChar() == 'd'));
 					if (e.getKeyChar() == 'w') {
 						if (y == 0) {return;}
-						y -= character.getHeight();
-						getGraphics().drawImage(image, x, y, null);
+						y -= 5;
 					}
 					if (e.getKeyChar() == 's') {
 						if (y >= (height - character.getHeight())) {return;}
-						y += character.getHeight();
-						getGraphics().drawImage(image, x, y, null);
+						y += 5;
 					}
 					if (e.getKeyChar() == 'a') {
 						if (x == 0) {return;}
-						x -= character.getWidth();
-						getGraphics().drawImage(image, x, y, null);
+						x -= 5;
 					}
 					if (e.getKeyChar() == 'd') {
 						if (x >= (width - character.getWidth())) {return;}
-						x += character.getWidth();
-						getGraphics().drawImage(image, x, y, null);
+						x += 5;
 					}
+					repaint();
 				}
 		});
 		setVisible(true);
