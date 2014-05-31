@@ -19,8 +19,4 @@ public class Utilities {
 		for (StackTraceElement ste : e.getStackTrace()) {stackTrace += "\n\tat " + ste;}
 		return stackTrace;
 	}
-
-	public static void main(String[] args) {
-		System.out.println(hash("Title_Screen_1.png", "SHA-512"));
-	}
 }
