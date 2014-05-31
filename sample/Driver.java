@@ -1,4 +1,3 @@
-import java.awt.KeyboardFocusManager;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
