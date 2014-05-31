@@ -10,14 +10,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-    
+	
 public class MenuPanel extends JPanel {
-    private int height =Toolkit.getDefaultToolkit().getScreenSize().height-37, width = Toolkit.getDefaultToolkit().getScreenSize().width;
-    private JButton optionsButton = new JButton("Options") , startButton = new JButton ("Start");
-    private Image img;
-    private BufferedImage BG;
+	private int height =Toolkit.getDefaultToolkit().getScreenSize().height-37, width = Toolkit.getDefaultToolkit().getScreenSize().width;
+	private JButton optionsButton = new JButton("Options") , startButton = new JButton ("Start");
+	private Image img;
+	private BufferedImage BG;
 
-    public MenuPanel() {
+	public MenuPanel() {
 		setLayout(null);
 		setSize(width, height);
 		try {BG = ImageIO.read(new File("stuyrim.png"));}
@@ -62,8 +62,8 @@ public class MenuPanel extends JPanel {
 		repaint();
 	}
  
-    public void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(BG,0,0,width,height, null);
-    }
+	}
 }

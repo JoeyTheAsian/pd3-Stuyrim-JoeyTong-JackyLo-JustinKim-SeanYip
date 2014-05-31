@@ -4,13 +4,13 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 public class Game extends JFrame {
-    Container pane;
-    //screen dimensions
-    int height = Toolkit.getDefaultToolkit().getScreenSize().height-37;
-    int width = Toolkit.getDefaultToolkit().getScreenSize().width;
+	Container pane;
+	//screen dimensions
+	int height = Toolkit.getDefaultToolkit().getScreenSize().height-37;
+	int width = Toolkit.getDefaultToolkit().getScreenSize().width;
    
 
-    public Game() {
+	public Game() {
 		pane = getContentPane();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("The Senior Scrolls I: Stuyrim");
@@ -21,10 +21,10 @@ public class Game extends JFrame {
 
 		setSize(width, height);
 		setVisible(true);
-    }
+	}
 	
-    public void paint(Graphics g) {
+	public void paint(Graphics g) {
 		super.paint(g);
 		g.dispose();
-    }
+	}
 }

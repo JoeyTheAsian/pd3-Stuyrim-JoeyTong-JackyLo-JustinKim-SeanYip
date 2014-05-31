@@ -11,14 +11,14 @@ import javax.imageio.ImageIO;
 
 public class Screen extends Canvas implements Runnable {
 	private ArrayList<Character> characters = new ArrayList<>();
-    private Thread thread;
-    private BufferedImage image;
+	private Thread thread;
+	private BufferedImage image;
 	private Character slime = new Character("Slime.png", 0, 0);
-    private int height = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4);
-    private int width = Toolkit.getDefaultToolkit().getScreenSize().width;
-    private boolean running;
+	private int height = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4);
+	private int width = Toolkit.getDefaultToolkit().getScreenSize().width;
+	private boolean running;
 
-    public Screen() {
+	public Screen() {
 		setSize(width, height);
 		try {image = ImageIO.read(new File("success.jpg"));}
 		catch (Exception e) {Utilities.showErrorMessage(this, e);}
@@ -48,20 +48,20 @@ public class Screen extends Canvas implements Runnable {
 				}
 		});
 		setVisible(true);
-    }
+	}
 
-    public synchronized void start() {
+	public synchronized void start() {
 		running = true;
 		thread = new Thread(this);
 		thread.start();
-    }
+	}
 	
-    public synchronized void stop() {
+	public synchronized void stop() {
 		try {thread.join();}
 		catch (InterruptedException e) {Utilities.showErrorMessage(this, e);}
-    }
+	}
 	
-    public void run(){
+	public void run(){
 		/*	long prevTime = System.nanoTime();
 		final double ns = 1000000000.0/60.0;
 		double delta = 0;	
@@ -76,11 +76,11 @@ public class Screen extends Canvas implements Runnable {
 		}}*/
 		repaint();
 		update();
-    }
+	}
 	
-    public void update() {}
+	public void update() {}
  
-    public void paint(Graphics g) {
+	public void paint(Graphics g) {
 		BufferStrategy bs = getBufferStrategy();
 		if (bs == null) {
 			createBufferStrategy(3);
@@ -91,5 +91,5 @@ public class Screen extends Canvas implements Runnable {
 		for (Character character : characters) {g.drawImage(character.getImage(), character.getX(), character.getY(), null);}
 		g.dispose();
 		bs.show();
-    }
+	}
 }
