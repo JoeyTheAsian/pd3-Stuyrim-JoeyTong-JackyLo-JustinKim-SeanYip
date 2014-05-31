@@ -14,17 +14,17 @@ public class Character {
 		setY(y);
 	}
 	
-	public BufferedImage getImage() {return image;}
-	public String getImageLocation() {return imageLocation;}
-	public int getHeight() {return image.getHeight();}
-	public int getWidth() {return image.getWidth();}
-	public int getX() {return x;}
-	public int getY() {return y;}
+	public final BufferedImage getImage() {return image;}
+	public final String getImageLocation() {return imageLocation;}
+	public final int getHeight() {return image.getHeight();}
+	public final int getWidth() {return image.getWidth();}
+	public final int getX() {return x;}
+	public final int getY() {return y;}
 	
-	public void setImage(String imageLocation) {
+	public final void setImage(String imageLocation) {
 		try {image = ImageIO.read(new File(imageLocation));}
 		catch (Exception e) {Utilities.showErrorMessage(null, e);}
 	}
-	public void setX(int x) {this.x = x;}
-	public void setY(int y) {this.y = y;}
+	public final void setX(int x) {this.x = x;}
+	public final void setY(int y) {this.y = y;}
 }

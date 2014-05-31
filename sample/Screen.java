@@ -13,7 +13,7 @@ public class Screen extends Canvas implements Runnable {
 	private ArrayList<Character> characters = new ArrayList<>();
 	private Thread thread;
 	private BufferedImage image;
-	private Character slime = new Character("Slime.png", 0, 0);
+	private Player slime = new Player("Slime.png", 0, 0);
 	private int height = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4);
 	private int width = Toolkit.getDefaultToolkit().getScreenSize().width;
 	private boolean running;
@@ -43,7 +43,6 @@ public class Screen extends Canvas implements Runnable {
 						if (slime.getX() >= (width - slime.getWidth())) {return;}
 						slime.setX(slime.getX() + 5);
 					}
-					System.out.println(slime.getX() + ", " + slime.getY());
 					repaint();
 				}
 		});
