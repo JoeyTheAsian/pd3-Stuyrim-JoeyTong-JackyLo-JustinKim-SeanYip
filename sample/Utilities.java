@@ -2,7 +2,6 @@ import java.awt.Component;
 import java.io.File;
 import java.nio.file.Files;
 import java.security.MessageDigest;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.xml.bind.DatatypeConverter;
 
