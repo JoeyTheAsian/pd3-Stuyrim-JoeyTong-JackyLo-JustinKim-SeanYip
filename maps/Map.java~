@@ -1,7 +1,0 @@
-public class Map{
-    private mapObject[][]map;
-    public mapObject[][] getMap(){
-	return map;
-    }
-    
-}
