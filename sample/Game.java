@@ -25,9 +25,6 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.SwingConstants;
 
 public class Game extends JFrame {
-    BufferedImage image;
-    JPanel MenuPanel;
-    Canvas Screen;
     Container pane;
     //screen dimensions
     int height =Toolkit.getDefaultToolkit().getScreenSize().height-37;
@@ -36,14 +33,13 @@ public class Game extends JFrame {
 
     public Game() {
 	pane = getContentPane();
-        MenuPanel = new MenuPanel();
-	Screen = new Screen();
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
 	setTitle("The Senior Scrolls I: Stuyrim");
 	setLayout(null);
+	MenuPanel MenuPanel = new MenuPanel();
 	pane.add(MenuPanel);
-	pack();
 	setResizable(false);
+
 	setSize(width, height);
 	setVisible(true);
     }
