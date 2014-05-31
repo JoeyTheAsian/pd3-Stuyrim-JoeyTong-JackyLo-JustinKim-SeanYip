@@ -1,8 +1,9 @@
 Notes/ToDo:
--make boss for grassplains
 -figure out item list
 -tweak stats
 -add more monsters
 -fix luk and speed
+   -luk should be critical rate (0 - 50%)
+   -speed should be movement, not evasion (max = 25?)
 
 please delete the Thumb.db files. They have no impact to this project
