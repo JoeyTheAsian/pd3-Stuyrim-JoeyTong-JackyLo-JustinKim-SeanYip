@@ -6,7 +6,7 @@ import javax.swing.*;
 public class Alduin extends Monster{
 
     public Alduin(){
-	name = "Alduin";
+	name = "Alduin the Great Dragon";
 	HP = 10000;
 	mana = 500;
 	ATK = 500;
