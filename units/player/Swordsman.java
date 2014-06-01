@@ -10,7 +10,8 @@ public class Swordsman extends Player{
 	ATK = 100;
 	DEF = 50;
 	EXP = 0;
-	speed = 20;
+	luk = 3;
+	speed = 5;
 	ATKspeed = 50;
 	image = new ImageIcon("Swordsman.png").getImage();
     }
@@ -29,13 +30,18 @@ public class Swordsman extends Player{
 
     public void LVLup(){
 	super.LVLup();
-	LVLupStates();
+	LVLupStats();
     }
 
     public void LVLupStats(){
-	HP = HP + LVL*25;
-	ATK = ATK + LVL*10;
-	DEF + DEF + LVL*10;
+	setHP(getHP()+25);
+	setATK(getATK()+10);
+	setDEF(getDEF()+10);
+	setLuk(getLuk()+1);
+	if (getLVL()%2 == 0){
+	    setSpeed(getSpeed()+1);
+	    setATKSpeed(getATKSpeed()-1);
+	}
     }
 
 }

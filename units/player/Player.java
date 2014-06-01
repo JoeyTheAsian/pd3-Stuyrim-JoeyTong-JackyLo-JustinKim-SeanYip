@@ -20,6 +20,34 @@ public abstract class Player extends Unit/* implements Serializable*/{
 
     public int getLVL(){ return LVL; }
 
+    public void setHead(Item hd){ head = hd; }
+
+    public Item getHead(){ return head; }
+
+    public void setTorso(Item tso){ torso = tso; }
+
+    public Item getTorso(){ return torso; }
+
+    public void setLegs(Item lgs){ legs = lgs };
+
+    public Item getLegs(){ return legs; }
+
+    public void setFeet(Item ft){ feet = ft; }
+
+    public Item getFeet(){ return feet; }
+
+    public void setHands(Item hnd){ hands = hnd; }
+
+    public Item getHands(){ return hands; }
+
+    public void setWeapon(Item wpn){ weapon = wpn; }
+
+    public Item getWeapon(){ return weapon; }
+
+    public void setAccessory(Item acs){ accessory = acs; }
+
+    public Item getAccessory(){ return accessory; }
+
     public abstract void sAttack2();
   
     public abstract void sAttack3();

@@ -10,8 +10,9 @@ public class Archer extends Player{
 	ATK = 100;
 	DEF = 20;
 	EXP = 0;
-	speed = 40;
-	ATKspeed = 33;
+	luk = 5;
+	speed = 7;
+	ATKspeed = 50;
 	range = 150;
 	image = new ImageIcon("Archer.png").getImage();
     }
@@ -34,9 +35,12 @@ public class Archer extends Player{
     }
 
     public void LVLupStats(){
-	HP = HP + LVL*10;
-	ATK = ATK + LVL*25;
-	DEF = DEF + LVL*5;
+	setHP(getHP()+10);
+	setATK(getATK()+25);
+	setDEF(getDEF()+5);
+	setLuk(getLuk()+2);
+	setSpeed(getSpeed()+2);
+	setATKSpeed(getATKSpeed()-2);
     }
 
 }

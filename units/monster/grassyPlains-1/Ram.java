@@ -12,7 +12,8 @@ public class Ram extends Monster{
 	ATK = 75;
 	DEF = 25;
 	EXP = 25;
-	speed = 15;
+	luk = 10; //crazy headbutts
+	speed = 4;
 	ATKspeed = 100;
 	image = new ImageIcon("Ram.png").getImage();
     }

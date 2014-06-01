@@ -11,7 +11,7 @@ public abstract class Unit{
     protected int EXP;
     protected int luk;
     protected int range = 20;
-    protected int speed;
+    protected int speed = 10;
     protected int ATKspeed; //hit per x CENTIseconds
     protected ArrayList<Item>() list = new ArrayList<Item>();
     protected Image image;
@@ -88,7 +88,10 @@ public abstract class Unit{
     public void charge(){ mana+=10; }
 
     public void attack(Unit u){
-	u.setHP(u.getHP()+u.getDEF()-getATK());
+	if ((int)(Math.random()*100) <= getLuk())
+	    u.setHP(u.getHP()+u.getDEF()-1.5*getATK());
+	else
+	    u.setHP(u.getHP()+u.getDEF()-getATK());
     }
 
     public abstract void sAttack(); //stands for special attack

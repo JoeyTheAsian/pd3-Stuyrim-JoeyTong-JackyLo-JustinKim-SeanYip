@@ -12,7 +12,8 @@ public class Bird extends Monster{
 	ATK = 20;
 	DEF = 5;
 	EXP = 20;
-	speed = 25;
+	luk = 5;
+	speed = 10;
 	ATKspeed = 50;
 	image = new ImageIcon("Bird.png").getImage();
     }

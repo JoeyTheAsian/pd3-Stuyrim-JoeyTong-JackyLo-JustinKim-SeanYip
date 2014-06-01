@@ -12,7 +12,8 @@ public class Goblin extends Monster{
 	ATK = 100;
 	DEF = 75;
 	EXP = 50;
-	speed = 10;
+	luk = 5;
+	speed = 5;
 	ATKspeed = 75;
 	image = new ImageIcon("Goblin.png").getImage();
     }

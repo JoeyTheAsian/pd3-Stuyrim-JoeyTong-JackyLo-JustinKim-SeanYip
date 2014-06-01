@@ -10,7 +10,8 @@ public class Mage extends Player{
 	ATK = 150;
 	DEF = 20;
 	EXP = 0;
-	speed = 10;
+	luk = 3;
+	speed = 4;
 	ATKspeed = 100;
 	range = 120;
 	image = new ImageIcon("Mage.png").getImage();
@@ -34,9 +35,16 @@ public class Mage extends Player{
     }
 
     public void LVLupStats(){
-	HP = HP + LVL*10;
-	ATK = ATK + LVL*50;
-	DEF = DEF + LVL*5;
+	setHP(getHP()+10);
+	setATK(getATK()+50);
+	setDEF(getDEF()+5);
+	if (getLVL()%2 == 0){
+	    setLuk(getLuk+1);
+	    setSpeed(getSpeed()+1);
+	}
+	if (getLVL()%3 == 0){
+	    setATKSpeed(getATKSpeed()-1);
+	}
     }
 
 }

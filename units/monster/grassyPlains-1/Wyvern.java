@@ -12,7 +12,8 @@ public class Wyvern extends Monster{
 	ATK = 150;
 	DEF = 100;
 	EXP = 200;
-	speed = 40;
+	luk = 5;
+	speed = 15;
 	ATKspeed = 50;
 	image = new ImageIcon("Wyvern.png").getImage();
     }
