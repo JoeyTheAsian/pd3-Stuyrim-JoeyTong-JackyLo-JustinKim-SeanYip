@@ -3,13 +3,13 @@ pd3-Stuyrim-JoeyTong-JackyLo
 
 Final Project
 
-Group Members: Joey Tong, Justin Kim, Jacky Lo (Pd 3)
+Group Members: Joey Tong, Justin Kim, Jacky Lo (Pd 3),  Sean Yip (Pd 2)
 
 Project Name: The Senior Scrolls I: Stuyrim
 
 Project description: 2.5D RPG game
 
- Sean Yip (Pd 2)
+
   
   TEST CODE IS ALL IN SAMPLE IMPLEMENT YOUR CODE BITS INTO SAMPLE CODE
   
