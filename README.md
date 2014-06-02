@@ -10,7 +10,6 @@ Project description: 2.5D RPG game
   TEST CODE IS ALL IN SAMPLE IMPLEMENT YOUR CODE BITS INTO SAMPLE CODE
   Textures and images get dumped in images directory 
   
-It's strange that the files in the main directory are sample code and the files in the /sample directory are the real code.
   Feature log: 
   6/6/14 
   Joey:
