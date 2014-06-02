@@ -17,15 +17,15 @@ public class Mage extends Player{
 	image = new ImageIcon("Mage.png").getImage();
     }
   
-    public void sAttack(){
+    public void sAttack(){//heal
     
     }
 
-    public void sAttack2(){
+    public void sAttack2(){//slows monsters in an area
   
     }
   
-    public void sAttack3(){
+    public void sAttack3(){//kamehameha
     
     }
     

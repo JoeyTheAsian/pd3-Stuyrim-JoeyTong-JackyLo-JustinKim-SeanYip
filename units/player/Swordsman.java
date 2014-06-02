@@ -16,15 +16,15 @@ public class Swordsman extends Player{
 	image = new ImageIcon("Swordsman.png").getImage();
     }
     
-    public void sAttack(){
+    public void sAttack(){//slash, deals damage to monsters and decreases ATKspeed and DEF of monsters inside range of 100?
     
     }
   
-    public void sAttack2(){
+    public void sAttack2(){//relentless pursuit, increases dEF, ATK, and luk
     
     }
   
-    public void sAttack3(){
+    public void sAttack3(){//
 
     }
 
