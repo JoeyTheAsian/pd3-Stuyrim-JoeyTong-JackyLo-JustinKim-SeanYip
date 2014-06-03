@@ -5,7 +5,8 @@ import javax.swing.*;
 
 public class Bird extends Monster{
 
-    public Bird(){
+    public Bird(int x, int y){
+	super(x,y);
 	name = "Bird";
 	HP = 500;
 	mana = 500;
@@ -22,7 +23,7 @@ public class Bird extends Monster{
 
     }
 
-    public void sAttack(){
+    public void sAttack(){ //peck, deals true damage (ignores DEF)
 	
     }
 

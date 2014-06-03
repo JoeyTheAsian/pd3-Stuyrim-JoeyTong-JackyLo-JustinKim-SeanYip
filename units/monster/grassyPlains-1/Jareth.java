@@ -5,7 +5,8 @@ import javax.swing.*;
 
 public class Jareth extends Monster{ //Random name I googled. He's some actor from a 1980's film. I have no affection to him and that film. I just wanted a name. T_T -Jacky
 
-    public Jareth(){
+    public Jareth(int x, int y){
+	super(x,y);
 	name = "Jareth the Goblin King";
 	HP = 5000;
 	mana = 500;
@@ -22,15 +23,15 @@ public class Jareth extends Monster{ //Random name I googled. He's some actor fr
 
     }
 
-    public void sAttack(){
+    public void sAttack(){//calls three goblins
 	
     }
 
-    public void sAttack2(){
+    public void sAttack2(){//warcry, increases stats and decreases increases of enemies around him
 	
     }
 
-    public void sAttack3(){
+    public void sAttack3(){//giant mallet smash, deals true damage to the enemies in an area and stuns them
 
     }
 

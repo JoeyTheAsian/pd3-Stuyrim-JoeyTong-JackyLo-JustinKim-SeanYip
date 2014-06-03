@@ -5,7 +5,8 @@ import javax.swing.*;
 
 public class Goblin extends Monster{
 
-    public Goblin(){
+    public Goblin(int x, int y){
+	super(x,y);
 	name = "Goblin";
 	HP = 1500;
 	mana = 500;
@@ -22,7 +23,7 @@ public class Goblin extends Monster{
 
     }
 
-    public void sAttack(){
+    public void sAttack(){//hits you in the head with a heavy mallet that stuns you
 
     }
 

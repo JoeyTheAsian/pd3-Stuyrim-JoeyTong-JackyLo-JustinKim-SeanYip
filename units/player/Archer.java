@@ -5,7 +5,8 @@ import javax.swing.*;
 
 public class Archer extends Player{
 
-    public Archer(String myName){
+    public Archer(String myName, int x, int y){
+	super(x,y);
 	name = myName;
 	HP = 1000;
 	mana = 500;

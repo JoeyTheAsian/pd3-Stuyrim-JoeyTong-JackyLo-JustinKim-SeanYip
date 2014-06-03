@@ -5,7 +5,8 @@ import javax.swing.*;
 
 public class Wyvern extends Monster{
     
-    public Wyvern(){
+    public Wyvern(int x, int y){
+	super(x,y);
 	name = "Wyvern";
 	HP = 2000;
 	mana = 500;
@@ -22,7 +23,7 @@ public class Wyvern extends Monster{
 
     }
 
-    public void sAttack(){
+    public void sAttack(){ //scratches and bites that bleeds and slows you, then flies 200? away
   
     }
 

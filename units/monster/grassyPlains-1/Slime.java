@@ -5,7 +5,8 @@ import javax.swing.*;
 
 public class Slime extends Monster{
 
-    public Slime(){
+    public Slime(int x, int y){
+	super(x,y);
 	name = "Slime";
 	HP = 500;
 	mana = 500;
@@ -22,7 +23,7 @@ public class Slime extends Monster{
 	
     }
 	
-    public void sAttack(){
+    public void sAttack(){//slows your speed and ATKspeed
 	
     }
 

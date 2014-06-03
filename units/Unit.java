@@ -16,9 +16,14 @@ public abstract class Unit{
     protected ArrayList<Item>() list = new ArrayList<Item>();
     protected Image image;
     protected int maxMana, mana;
-    protected double screenX, screenY;
+    //protected double screenX, screenY;
     protected int mapX, mapY;
-    protected int CDS1 = 5; //cooldown time for special attack
+    protected int CDS1 = 500; //cooldown time for special attack in CENTIseconds
+
+    public Unit(int x, int y){
+	mapX = x;
+	mapY = y;
+    }
 
     public String getName(){ return name; }
 
@@ -69,18 +74,22 @@ public abstract class Unit{
     public void setMana(int mn) { mana = mn; }
 
     public int getMana(){ return mana; }
-
+    
+    /*
     public void setScreenX(double xcor){ screenX = xcor; }
 
     public int getScreenX(){ return (int) screenX; }
-    
+    */
+
     public void setMapX(int xcor){ mapX = xcor; }
 
     public int getMapX(){ return mapX; }
 
+    /*
     public void setScreenY(double ycor){ screenY = ycor; }
     
     public int getScreenY(){ return (int) screenY; }
+    */
 
     public void setMapY(int ycor){ mapY = ycor; }
 
@@ -89,6 +98,12 @@ public abstract class Unit{
     public void setCDS1(int cds1){ CDS1 = cds1; }
 
     public void getCDS1(){ return CDS1; }
+
+    public int getDist(Unit u){ //gets the distance from Unit u
+	return Math.sqrt( Math.pow((getMapX()-u.getMapX()),2) +
+			  Math.pow((getMapY()-u.getMapY()),2));
+	//distance formula
+    }
 
     public void charge(){ mana+=10; }
 

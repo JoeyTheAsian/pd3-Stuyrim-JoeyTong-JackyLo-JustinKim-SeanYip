@@ -21,7 +21,7 @@ public class Gargoyle extends Monster{
 	
     }
 
-    public void sAttack(){
+    public void sAttack(){ //blast of air from its wings that deals damage and slows you
 
     }
 

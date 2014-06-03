@@ -5,7 +5,8 @@ import javax.swing.*;
 
 public class Silverfish extends Monster{
 
-    public Silverfish(){
+    public Silverfish(int x, int y){
+	super(x,y);
 	name = "Silverfish";
 	HP = 500;
 	mana = 500;
@@ -21,7 +22,7 @@ public class Silverfish extends Monster{
 
     }
 
-    public void sAttack(){
+    public void sAttack(){//calls 2 more silverfish to help their friend
 
     }
 
