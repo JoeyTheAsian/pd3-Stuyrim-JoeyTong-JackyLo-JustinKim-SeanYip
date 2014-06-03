@@ -32,7 +32,7 @@ public class Item implements Comparable {
      * Level is sorted highest first.
      * Name is just lexicographic order.
      */
-    public int compareTo(Item other) {
+    public int compareTo(Object other) {
         // Check item type here
         String[] types = {"Weapon", "Shield", "Head", "Torso", "Back", "Hands",
             "Legs", "Feet", "Accessory", "Consumable", "Misc"};
