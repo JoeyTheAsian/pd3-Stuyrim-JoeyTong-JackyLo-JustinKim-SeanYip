@@ -1,25 +1,19 @@
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.imageio.ImageIO;
-import javax.swing.*;
 
-public class Screen extends Canvas implements Runnable{
-
-    private static final int MAX_FPS = 60;
+public class Screen extends Canvas implements Runnable {
+	private static final int MAX_FPS = 60;
     private static final int FPS_SAMPLE_SIZE = 6;
 
-    private ArrayList<Character> characters = new ArrayList<>();
-    private ArrayList<Character> ai = new ArrayList<>();
+    private static ArrayList<Character> characters = new ArrayList<>();
+    private static ArrayList<Character> ai = new ArrayList<>();
     private Thread thread;
     private BufferedImage image;
 
@@ -33,62 +27,46 @@ public class Screen extends Canvas implements Runnable{
     //screen dimensions
     private int height = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4);
     private int width = Toolkit.getDefaultToolkit().getScreenSize().width;
-
-    private long prevTick;
-    private LinkedList<Long> frames;
+	
+	private long prevTick = -1;
+    private LinkedList<Long> frames = new LinkedList<>();
     private int averageFPS;
     private boolean running;
-    //    private Timer timer = new Timer(100,this);
+    //private Timer timer = new Timer(100,this);
 
     public Screen() {
-        prevTick = -1;
-        frames = new LinkedList<Long>();
-	setSize(width, height);
-	try {image = ImageIO.read(new File("GUI Images/success.jpg"));}
-	catch (Exception e) {Utilities.showErrorMessage(this, e);}
-	characters.add(slime);
-	ai.add(bird);
-	ai.add(giant);
-	ai.add(swordsman);
-	addKeyListener(new KeyListener() {
-		public void keyPressed(KeyEvent e) {
-		    //don't put control logic into screen class,do it in player and game engine
-		    //create movement loop while key is pressed set move boolean to true in keypressed, set to false in keyreleased
-		    if (e.getKeyChar() == 'w') {
-			if (slime.getY() == 0) {return;}
-			slime.setY(slime.getY() - 5);
-		    }
-		    if (e.getKeyChar() == 's') {
-			if (slime.getY() >= (height - slime.getHeight())) {return;}
-			slime.setY(slime.getY() + 5);
-		    }
-		    if (e.getKeyChar() == 'a') {
-			if (slime.getX() == 0) {return;}
-			slime.setX(slime.getX() - 5);
-		    }
-		    if (e.getKeyChar() == 'd') {
-			if (slime.getX() >= (width - slime.getWidth())) {return;}
-			slime.setX(slime.getX() + 5);
-		    }
-		    repaint();}
-		public void keyReleased(KeyEvent e) {}
-		public void keyTyped(KeyEvent e) {}
-	    });	
-	setVisible(true);
-    }
-
-    public synchronized void start() {
-	running = true;
-	thread = new Thread(this);
-	thread.start();
+		setSize(width, height);
+		try {image = ImageIO.read(new File("GUI Images/success.jpg"));}
+		catch (Exception e) {Utilities.showErrorMessage(this, e);}
+		characters.add(slime);
+		ai.add(bird);
+		ai.add(giant);
+		ai.add(swordsman);
+		setVisible(true);
     }
 	
-    public synchronized void stop() {
-	try {thread.join();}
-	catch (InterruptedException e) {Utilities.showErrorMessage(this, e);}
+	public static ArrayList<Character> getCharacters() {return characters;}
+	
+	public void paint(Graphics g) {
+		BufferStrategy bs = getBufferStrategy();
+		if (bs == null) {
+			createBufferStrategy(3);
+			return;
+		}
+		g = bs.getDrawGraphics();
+		g.drawImage(image,0,0,width,height, null);
+		g.drawString(String.valueOf(averageFPS), 0, 0);
+		for (Character character : ai){
+			character.setY(character.getY() + (int)(Math.random() * 10 - 5));
+			character.setX(character.getX() + (int)(Math.random() * 10 - 5));
+		}
+		for (Character character : ai) {g.drawImage(character.getImage(), character.getX(), character.getY(), null);}
+		for (Character character : characters) {g.drawImage(character.getImage(), character.getX(), character.getY(), null);}
+		g.dispose();
+		bs.show();
     }
 	
-    public void tick() {
+	public void tick() {
         long pastTime = System.currentTimeMillis() - prevTick;
         prevTick = System.currentTimeMillis();
 
@@ -119,31 +97,22 @@ public class Screen extends Canvas implements Runnable{
 
     public void run() {
         running = true;
-	while(running) {
+		while (running) {
             repaint();
             tick();
-	}
+		}
+    }
+	
+    public synchronized void start() {
+		running = true;
+		thread = new Thread(this);
+		thread.start();
+    }
+	
+    public synchronized void stop() {
+		try {thread.join();}
+		catch (InterruptedException e) {Utilities.showErrorMessage(this, e);}
     }
 	
     public void update() {}
- 
-    public void paint(Graphics g) {
-	BufferStrategy bs = getBufferStrategy();
-	if (bs == null) {
-	    createBufferStrategy(3);
-	    return;
-	}
-	g = bs.getDrawGraphics();
-	g.drawImage(image,0,0,width,height, null);
-        g.drawString(String.valueOf(averageFPS), 0, 0);
-	for (Character character : ai){
-	    character.setY(character.getY() + (int)(Math.random() * 10 - 5));
-	    character.setX(character.getX() + (int)(Math.random() * 10 - 5));
-	}
-	for (Character character : ai) {g.drawImage(character.getImage(), character.getX(), character.getY(), null);}
-	for (Character character : characters) {g.drawImage(character.getImage(), character.getX(), character.getY(), null);}
-	g.dispose();
-	bs.show();
-    }
-
 }
