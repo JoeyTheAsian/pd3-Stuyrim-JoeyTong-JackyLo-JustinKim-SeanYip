@@ -19,7 +19,6 @@ public class GamePanel extends JPanel {
     private int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
     private int height = windowHeight / 6;
     private int width = windowWidth;
-	private boolean[] keysPressed = new boolean[256];
     private BufferedImage bg;
 	
     public GamePanel() {
@@ -78,24 +77,8 @@ public class GamePanel extends JPanel {
 		add(MenuButton);
 		add(InventButton);
 		add(PartyButton);
-		addKeyListener(new KeyListener() {
-				public void keyPressed(KeyEvent e) {keysPressed[e.getKeyCode()] = true;}
-				public void keyReleased(KeyEvent e) {keysPressed[e.getKeyCode()] = false;}
-				public void keyTyped(KeyEvent e) {
-					System.out.println(e);
-					movePlayer();
-				}
-			});
 		revalidate();
     }
-	
-	private void movePlayer() {
-		Character player = Screen.getCharacters().get(0);
-		if (keysPressed[KeyEvent.VK_W] && (player.getY() > 0)) {player.setY(player.getY() - 5);}
-		if (keysPressed[KeyEvent.VK_S] && (player.getY() < ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4))) {player.setY(player.getY() + 5);}
-		if (keysPressed[KeyEvent.VK_A] && (player.getY() > 0)) {player.setX(player.getX() - 5);}
-		if (keysPressed[KeyEvent.VK_D] && (player.getY() > Toolkit.getDefaultToolkit().getScreenSize().width)) {player.setX(player.getX() + 5);}
-	}
 	
     public void paintComponent(Graphics g) {
 		super.paintComponent(g);

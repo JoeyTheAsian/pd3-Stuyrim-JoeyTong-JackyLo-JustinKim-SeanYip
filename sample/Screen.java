@@ -11,9 +11,11 @@ import javax.imageio.ImageIO;
 public class Screen extends Canvas implements Runnable {
 	private static final int MAX_FPS = 60;
     private static final int FPS_SAMPLE_SIZE = 6;
-
-    private static ArrayList<Character> characters = new ArrayList<>();
-    private static ArrayList<Character> ai = new ArrayList<>();
+	
+	private boolean[] keysPressed = new boolean[256];
+	
+    private ArrayList<Character> characters = new ArrayList<>();
+    private ArrayList<Character> ai = new ArrayList<>();
     private Thread thread;
     private BufferedImage image;
 
@@ -42,10 +44,13 @@ public class Screen extends Canvas implements Runnable {
 		ai.add(bird);
 		ai.add(giant);
 		ai.add(swordsman);
+		addKeyListener(new KeyListener() {
+				public void keyPressed(KeyEvent e) {keysPressed[e.getKeyCode()] = true;}
+				public void keyReleased(KeyEvent e) {keysPressed[e.getKeyCode()] = false;}
+				public void keyTyped(KeyEvent e) {}
+		});
 		setVisible(true);
     }
-	
-	public static ArrayList<Character> getCharacters() {return characters;}
 	
 	public void paint(Graphics g) {
 		BufferStrategy bs = getBufferStrategy();
@@ -64,6 +69,26 @@ public class Screen extends Canvas implements Runnable {
 		for (Character character : characters) {g.drawImage(character.getImage(), character.getX(), character.getY(), null);}
 		g.dispose();
 		bs.show();
+    }
+
+    public void run() {
+        running = true;
+		while (running) {
+			update();
+            repaint();
+            tick();
+		}
+    }
+	
+    public synchronized void start() {
+		running = true;
+		thread = new Thread(this);
+		thread.start();
+    }
+	
+    public synchronized void stop() {
+		try {thread.join();}
+		catch (InterruptedException e) {Utilities.showErrorMessage(this, e);}
     }
 	
 	public void tick() {
@@ -94,25 +119,11 @@ public class Screen extends Canvas implements Runnable {
             }
         }
     }
-
-    public void run() {
-        running = true;
-		while (running) {
-            repaint();
-            tick();
-		}
+    
+    public void update() {
+    	if (keysPressed[KeyEvent.VK_W] && (slime.getY() > 0)) {slime.setY(slime.getY() - 5);}
+		if (keysPressed[KeyEvent.VK_S] && (slime.getY() < height)) {slime.setY(slime.getY() + 5);}
+		if (keysPressed[KeyEvent.VK_A] && (slime.getY() > 0)) {slime.setX(slime.getX() - 5);}
+		if (keysPressed[KeyEvent.VK_D] && (slime.getY() > width)) {slime.setX(slime.getX() + 5);}
     }
-	
-    public synchronized void start() {
-		running = true;
-		thread = new Thread(this);
-		thread.start();
-    }
-	
-    public synchronized void stop() {
-		try {thread.join();}
-		catch (InterruptedException e) {Utilities.showErrorMessage(this, e);}
-    }
-	
-    public void update() {}
 }
