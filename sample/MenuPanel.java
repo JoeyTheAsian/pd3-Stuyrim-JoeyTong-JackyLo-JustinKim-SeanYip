@@ -37,11 +37,12 @@ public class MenuPanel extends JPanel {
 		optionsButton.setForeground(Color.white);
 
 		startButton.addActionListener(e -> {
-				getTopLevelAncestor().add(new Screen());
+				Screen screen = new Screen();
+				getTopLevelAncestor().add(screen);
+				screen.requestFocusInWindow();
 				//	startButton.getParent().getParent().add(screen);
 				GamePanel gamePanel = new GamePanel();
 				startButton.getParent().getParent().add(gamePanel);
-				gamePanel.requestFocusInWindow();
 				startButton.getParent().getParent().repaint();
 				startButton.getParent().getParent().remove(this);
 		});

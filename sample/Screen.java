@@ -1,6 +1,8 @@
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -74,7 +76,6 @@ public class Screen extends Canvas implements Runnable {
     public void run() {
         running = true;
 		while (running) {
-			update();
             repaint();
             tick();
 		}
@@ -92,6 +93,13 @@ public class Screen extends Canvas implements Runnable {
     }
 	
 	public void tick() {
+		System.out.println("tick");
+		if (keysPressed[KeyEvent.VK_W] && (slime.getY() > 0)) {slime.setY(slime.getY() - 5);}
+		if (keysPressed[KeyEvent.VK_S] && (slime.getY() < height)) {slime.setY(slime.getY() + 5);}
+		if (keysPressed[KeyEvent.VK_A] && (slime.getY() > 0)) {slime.setX(slime.getX() - 5);}
+		if (keysPressed[KeyEvent.VK_D] && (slime.getY() > width)) {slime.setX(slime.getX() + 5);}
+		System.out.println(slime.getX() + ", " + slime.getY());
+		//
         long pastTime = System.currentTimeMillis() - prevTick;
         prevTick = System.currentTimeMillis();
 
@@ -118,12 +126,5 @@ public class Screen extends Canvas implements Runnable {
                 System.out.println(e);
             }
         }
-    }
-    
-    public void update() {
-    	if (keysPressed[KeyEvent.VK_W] && (slime.getY() > 0)) {slime.setY(slime.getY() - 5);}
-		if (keysPressed[KeyEvent.VK_S] && (slime.getY() < height)) {slime.setY(slime.getY() + 5);}
-		if (keysPressed[KeyEvent.VK_A] && (slime.getY() > 0)) {slime.setX(slime.getX() - 5);}
-		if (keysPressed[KeyEvent.VK_D] && (slime.getY() > width)) {slime.setX(slime.getX() + 5);}
     }
 }

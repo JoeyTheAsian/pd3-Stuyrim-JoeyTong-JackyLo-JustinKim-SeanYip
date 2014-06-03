@@ -38,10 +38,10 @@ public class Item implements Comparable<Item> {
 			"Legs", "Feet", "Accessory", "Consumable", "Misc"};
 		List<String> typeOrder = Arrays.asList(types);
 
-		String myRank = typeOrder.indexOf(this.getClass().getName()); //String cannot be converted to int
-		String otherRank = typeOrder.indexOf(other.getClass().getName()); //String cannot be converted to int
+		int myRank = typeOrder.indexOf(getName());
+		int otherRank = typeOrder.indexOf(other.getName());
 
-		if (myRank > otherRank) {//Binary operators < and > cannot be applied to String
+		if (myRank > otherRank) {
 			return 1;
 		} else if (myRank < otherRank) {
 			return -1;
