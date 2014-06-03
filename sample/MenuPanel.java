@@ -38,7 +38,8 @@ public class MenuPanel extends JPanel {
 
 		startButton.addActionListener(e -> {
 				Screen screen = new Screen();
-				startButton.getParent().getParent().add(screen);
+				getTopLevelAncestor().add(new Screen());
+				//	startButton.getParent().getParent().add(screen);
 				screen.requestFocusInWindow();
 				startButton.getParent().getParent().add(new GamePanel());
 				startButton.getParent().getParent().repaint();
