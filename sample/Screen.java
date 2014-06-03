@@ -9,10 +9,15 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Screen extends Canvas implements Runnable{
+
+    private static final int MAX_FPS = 60;
+    private static final int FPS_SAMPLE_SIZE = 6;
+
     private ArrayList<Character> characters = new ArrayList<>();
     private ArrayList<Character> ai = new ArrayList<>();
     private Thread thread;
@@ -29,10 +34,15 @@ public class Screen extends Canvas implements Runnable{
     private int height = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4);
     private int width = Toolkit.getDefaultToolkit().getScreenSize().width;
 
+    private long prevTick;
+    private LinkedList<Long> frames;
+    private int averageFPS;
     private boolean running;
     //    private Timer timer = new Timer(100,this);
 
     public Screen() {
+        prevTick = -1;
+        frames = new LinkedList<Long>();
 	setSize(width, height);
 	try {image = ImageIO.read(new File("GUI Images/success.jpg"));}
 	catch (Exception e) {Utilities.showErrorMessage(this, e);}
@@ -78,31 +88,40 @@ public class Screen extends Canvas implements Runnable{
 	catch (InterruptedException e) {Utilities.showErrorMessage(this, e);}
     }
 	
-    public void run(){
-	long prevTime = System.nanoTime();
-	long timer = System.currentTimeMillis();
-	final double ns = 1000000000.0/60.0;
-	double delta = 0;	
-	int frames = 0;
-	int updates = 0;
-	
-	while(running){
-	    long now = System.nanoTime();
-	    delta += (now-prevTime)/ns;
-	    prevTime = now;
-	    while(delta>=1){
-		update();
-		updates++;
-		delta--;
-	    }
-	    repaint();
-	    frames++;
-	    if(System.currentTimeMillis() - timer <1000){
-		timer+= 1000;
-		frames =0 ;
-		updates = 0;
-		System.out.println("FPS: " + frames + " UPs: " + updates);
-	    }
+    public void tick() {
+        long pastTime = System.currentTimeMillis() - prevTick;
+        prevTick = System.currentTimeMillis();
+
+        if (frames.size() == FPS_SAMPLE_SIZE) {
+            frames.remove();
+        }
+        frames.add(pastTime);
+
+        // Calculate average FPS
+        long sum = 0;
+        for (long frame : frames) {
+            sum += frame;
+        }
+        long averageFrame = sum / FPS_SAMPLE_SIZE;
+        averageFPS = (int)(1000 / averageFrame);
+
+        // Only if the time passed since the previous tick is less than one
+        // second divided by the number of maximum FPS allowed do we delay
+        // ourselves to give Time time to catch up to our rendering.
+        if (pastTime < 1000.0 / MAX_FPS) {
+            try {
+                Thread.sleep((1000 / MAX_FPS) - pastTime);
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    public void run() {
+        running = true;
+	while(running) {
+            repaint();
+            tick();
 	}
     }
 	
@@ -116,6 +135,7 @@ public class Screen extends Canvas implements Runnable{
 	}
 	g = bs.getDrawGraphics();
 	g.drawImage(image,0,0,width,height, null);
+        g.drawString(String.valueOf(averageFPS), 0, 0);
 	for (Character character : ai){
 	    character.setY(character.getY() + (int)(Math.random() * 10 - 5));
 	    character.setX(character.getX() + (int)(Math.random() * 10 - 5));
