@@ -18,6 +18,7 @@ public abstract class Unit{
     protected int maxMana, mana;
     protected double screenX, screenY;
     protected int mapX, mapY;
+    protected int CDS1 = 5; //cooldown time for special attack
 
     public String getName(){ return name; }
 
@@ -84,6 +85,10 @@ public abstract class Unit{
     public void setMapY(int ycor){ mapY = ycor; }
 
     public int getMapY(){ return mapY; }
+
+    public void setCDS1(int cds1){ CDS1 = cds1; }
+
+    public void getCDS1(){ return CDS1; }
 
     public void charge(){ mana+=10; }
 

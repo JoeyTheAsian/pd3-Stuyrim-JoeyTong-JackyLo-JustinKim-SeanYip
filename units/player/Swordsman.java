@@ -1,7 +1,10 @@
 import java.util.*;
 import java.io.*;
+import java.awt.*;
+import javax.swing.*;
 
 public class Swordsman extends Player{
+    protected Item shield = null;
 
     public Swordsman(String myName){
 	name = myName;
@@ -16,15 +19,19 @@ public class Swordsman extends Player{
 	image = new ImageIcon("Swordsman.png").getImage();
     }
     
-    public void sAttack(){//slash, deals damage to monsters and decreases ATKspeed and DEF of monsters inside range of 100?
+    public void setShield(Item shd){ shield = shd; }
+
+    public Item getShield(){ return shield; }
+
+    public void sAttack(){//circle slash, deals damage to monsters and decreases ATKspeed and DEF of monsters inside range of 100?
     
     }
   
-    public void sAttack2(){//relentless pursuit, increases dEF, ATK, and luk
+    public void sAttack2(){//relentless pursuit, increases DEF, ATK, and luk
     
     }
   
-    public void sAttack3(){//
+    public void sAttack3(){//deep stab, bleeds the enemy and decreases its speed
 
     }
 

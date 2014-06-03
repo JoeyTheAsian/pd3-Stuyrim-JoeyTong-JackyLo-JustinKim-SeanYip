@@ -1,5 +1,7 @@
 import java.util.*;
 import java.io.*;
+import java.awt.*;
+import javax.swing.*;
 
 public abstract class Player extends Unit/* implements Serializable*/{
  
@@ -14,7 +16,9 @@ public abstract class Player extends Unit/* implements Serializable*/{
 	feet = null,
 	hands = null,
 	weapon = null,
-	accessory = null;
+	accessory = null,
+	consumables = null;
+    protected int CDS2 = 100, CDS3 = 100;
 
     public void setLVL(int level){ lvl = level; }
 
@@ -47,6 +51,18 @@ public abstract class Player extends Unit/* implements Serializable*/{
     public void setAccessory(Item acs){ accessory = acs; }
 
     public Item getAccessory(){ return accessory; }
+
+    public void setConsumables(Item csm){ consumables = csm; }
+
+    public Item getConsumables(){ return consumables; }
+
+    public void setCDS2(int cds2){ CDS2 = cds2; }
+
+    public int getCDS2(){ return CDS2; }
+
+    public void setCDS3()(int cds3){ CDS3 = cds3; }
+
+    public int getCDS3(){ return CDS3; }
 
     public abstract void sAttack2();
   

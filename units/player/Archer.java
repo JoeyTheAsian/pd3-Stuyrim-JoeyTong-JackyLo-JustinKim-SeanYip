@@ -1,5 +1,7 @@
 import java.util.*;
 import java.io.*;
+import java.awt.*;
+import javax.swing.*;
 
 public class Archer extends Player{
 
@@ -17,15 +19,15 @@ public class Archer extends Player{
 	image = new ImageIcon("Archer.png").getImage();
     }
   
-    public void sAttack(){ //snare, reduces movement and ATKspeed of monsters in a given area
+    public void sAttack(){ //some arrow that knocks monsters away by 200? and decreases their DEF
         
     }
   
-    public void sAttack2(){ //increases ATKspeed and speed
+    public void sAttack2(){ //mercury shoes and a minigun bow, increases speed and ATKspeed
       
     }
   
-    public void sAttack3(){ //deadly arrows, increases ATK and luk
+    public void sAttack3(){ //deadly arrows, increases ATK and luk and slows monsters
       
     }
   
