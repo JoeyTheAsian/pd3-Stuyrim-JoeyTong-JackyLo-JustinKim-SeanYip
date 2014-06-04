@@ -5,7 +5,8 @@ import javax.swing.*;
 
 public class Giant extends Monster{
 
-    public Giant(){
+    public Giant(int x, int y){
+	super(x,y);
 	name = "Giant";
 	HP = 3000;
 	mana = 500;
@@ -21,7 +22,7 @@ public class Giant extends Monster{
 
     }
 
-    public void sAttack(){
+    public void sAttack(){ //knocks you away like a baseball, and decreases your stats
 
     }
 

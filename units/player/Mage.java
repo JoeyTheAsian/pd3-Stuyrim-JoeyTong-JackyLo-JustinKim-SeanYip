@@ -5,7 +5,8 @@ import javax.swing.*;
 
 public class Mage extends Player{
 
-    public Mage(String myName){
+    public Mage(String myName, int x, int y){
+	super(x,y);
 	name = myName;
 	HP = 1000;
 	mana = 1000;
@@ -19,15 +20,15 @@ public class Mage extends Player{
 	image = new ImageIcon("Mage.png").getImage();
     }
   
-    public void sAttack(){//life and mana drain, takes percent of health and mana from monsters in a range of 100? and heals the player the sum of their health and gives the player the sum of their mana
+    public void sAttack(){//life and mana drain, takes percent of health and mana from monsters in player's range and heals the player the sum of their health and gives the player the sum of their mana
     
     }
 
-    public void sAttack2(){//buffness, increases ATK and mana, decreases cooldown and mana cost (so u can spam kamehamehas all ova da prasez)
+    public void sAttack2(){//manly buffness, increases ATK and mana, decreases cooldown and mana cost (so u can spam kamehamehas all ova da prasez)
   
     }
   
-    public void sAttack3(){//kamehameha, deals burn in the AoE
+    public void sAttack3(){//kamehameha, deals burn for affected monsters
     
     }
     

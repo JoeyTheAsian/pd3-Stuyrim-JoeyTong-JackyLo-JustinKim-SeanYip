@@ -5,7 +5,8 @@ import javax.swing.*;
 
 public class Ram extends Monster{
 
-    public Ram(){
+    public Ram(int x, int y){
+	super(x,y);
 	name = "Ram";
 	HP = 1500;
 	mana = 500;
@@ -22,7 +23,7 @@ public class Ram extends Monster{
 
     }
 
-    public void sAttack(){
+    public void sAttack(){//knock enemies back and decreases their DEF
 
     }
 

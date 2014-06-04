@@ -20,6 +20,10 @@ public abstract class Player extends Unit/* implements Serializable*/{
 	consumables = null;
     protected int CDS2 = 100, CDS3 = 100;
 
+    public Player(int x, int y){
+	super(x,y);
+    }
+
     public void setLVL(int level){ lvl = level; }
 
     public int getLVL(){ return LVL; }

@@ -5,17 +5,18 @@ import javax.swing.*;
 
 public class Blaze extends Monster{  //Minecraft Reference
 
-  public Blaze()[
+    public Blaze(int x, int y){
+	super(x,y);
   
-  }
+    }
   
-  public void setList(){
+    public void setList(){
   
-  }
+    }
   
-  public void sAttack(){
+    public void sAttack(){// burns you
   
-  }
+    }
   
   
 }

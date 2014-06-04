@@ -5,7 +5,8 @@ import javax.swing.*;
 
 public class Alduin extends Monster{
 
-    public Alduin(){
+    public Alduin(int x, int y){
+	super(x,y);
 	name = "Alduin the Great Dragon";
 	HP = 10000;
 	mana = 500;
@@ -21,15 +22,15 @@ public class Alduin extends Monster{
 	
     }
 
-    public void sAttack(){
+    public void sAttack(){ //heavy roar, stuns surrounding enemies and significantly decreases their stats
 
     }
 
-    public void sAttack2(){
+    public void sAttack2(){ //framethrower breath, similar to kamehameha
 	
     }
 
-    public void sAttack3(){
+    public void sAttack3(){ //chomp, life drains the enemy, and increases speed and ATKspeed
 
     }
 

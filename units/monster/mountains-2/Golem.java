@@ -5,7 +5,8 @@ import javax.swing.*;
 
 public class Golem extends Monster{
 
-    public Golem(){
+    public Golem(int x, int y){
+	super(x,y);
 	name = "Golem";
 	HP = 2500;
 	mana = 500;
@@ -21,7 +22,7 @@ public class Golem extends Monster{
 
     }
 
-    public void sAttack(){
+    public void sAttack(){ //body slam, stuns you and decreases your stats
 
     }
 }

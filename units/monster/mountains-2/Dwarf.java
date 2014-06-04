@@ -5,7 +5,8 @@ import javax.swing.*;
 
 public class Dwarf extends Monster{
 
-    public Dwarf(){
+    public Dwarf(int x, int y){
+	super(x,y);
 	name = "Dwarf";
 	HP = 1500;
 	mana = 500;
@@ -21,7 +22,7 @@ public class Dwarf extends Monster{
 
     }
 
-    public void sAttack(){
+    public void sAttack(){//smacks you with his pickaxe idk
 
     }
 

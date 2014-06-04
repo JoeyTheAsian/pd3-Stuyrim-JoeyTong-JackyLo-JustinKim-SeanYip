@@ -6,7 +6,8 @@ import javax.swing.*;
 public class Swordsman extends Player{
     protected Item shield = null;
 
-    public Swordsman(String myName){
+    public Swordsman(String myName, int x, int y){
+	super(x,y);
 	name = myName;
 	HP = 1500;
 	mana = 500;
@@ -31,7 +32,7 @@ public class Swordsman extends Player{
     
     }
   
-    public void sAttack3(){//deep stab, bleeds the enemy and decreases its speed
+    public void sAttack3(){//fatal slash, bleeds the surrounding enemies and decreases its speed
 
     }
 

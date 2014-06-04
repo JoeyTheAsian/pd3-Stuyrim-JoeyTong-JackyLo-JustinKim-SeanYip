@@ -5,15 +5,15 @@ import javax.swing.*;
 
 public class Imp extends Monster{
 
-  public Imp(){
+    public Imp(int x, int y){
+	super(x,y);
+    }
   
-  }
+    public void setList(){
   
-  public void setList(){
+    }
   
-  }
-  
-  public void sAttack(){
-  
-  }
+    public void sAttack(){//teleports like a noob
+	
+    }
 }
