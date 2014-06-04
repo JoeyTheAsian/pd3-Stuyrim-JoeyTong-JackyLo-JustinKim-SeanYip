@@ -6,20 +6,23 @@ import javax.swing.*;
 public abstract class Unit{
     protected String name;
     protected int maxHP, HP;
-    protected int tempATK, ATK;
-    protected int tempDEF, DEF;
+    protected int maxATK, ATK;
+    protected int maxDEF, DEF;
     protected int EXP;
-    protected int luk;
+    protected int maxLuk, luk;
     protected int range = 20;
-    protected int tempSpeed, speed = 10;
-    protected int tempATKspeed, ATKspeed; //hit per x CENTIseconds
+    protected int maxSpeed, speed = 10;
+    protected int maxATKspeed, ATKspeed; //hit per x CENTIseconds
     protected ArrayList<Item>() list = new ArrayList<Item>();
     protected Image image;
     protected int maxMana, mana;
     //protected double screenX, screenY;
     protected int mapX, mapY;
-    protected int CDS1 = 500; //cooldown time for special attack in CENTIseconds
+    protected int CDS1 = 1000; //cooldown time for special attack in CENTIseconds
     protected boolean haveDebuff = false, haveBuff = false; //debuffs don't stack, yet
+    protected int debuffTime = 500, buffTime = 800; //lasting time for debuffs and buffs in CENTIseconds
+    protected boolean isReady1 = true; //determines if sAttack is ready
+    protected boolean isSet1 = false; //determines if sAttack is set
 
     public String getName(){ return name; }
 
@@ -105,13 +108,21 @@ public abstract class Unit{
 	//distance formula
     }
 
-    public void charge(){ mana+=10; }
+    public void charge(){
+	if (mana < maxMana)
+	    mana+=10; 
+    }
 
     public void attack(Unit u){
-	if ((int)(Math.random()*100) <= getLuk())
-	    u.setHP(u.getHP()+u.getDEF()-1.5*getATK());
-	else
-	    u.setHP(u.getHP()+u.getDEF()-getATK());
+	if (isSet1){
+	    isSet1 = false;
+	    sAttack();
+	}else{
+	    if ((int)(Math.random()*100) <= getLuk())
+		u.setHP(u.getHP()+u.getDEF()-1.5*getATK());
+	    else
+		u.setHP(u.getHP()+u.getDEF()-getATK());
+	}
     }
 
     public abstract void sAttack(); //stands for special attack

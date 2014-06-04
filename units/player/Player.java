@@ -18,7 +18,9 @@ public abstract class Player extends Unit/* implements Serializable*/{
 	weapon = null,
 	accessory = null,
 	consumables = null;
-    protected int CDS2 = 100, CDS3 = 100;
+    protected int CDS2 = 1000, CDS3 = 1000;
+    protected boolean isReady2 = true, isReady3 = true;
+    protected boolean isSet2 = false, isSet3 = false;
 
     public Player(int x, int y){
 	mapX = x;
@@ -73,6 +75,24 @@ public abstract class Player extends Unit/* implements Serializable*/{
   
     public abstract void sAttack3();
     
+    public void attack(Unit u){
+	if (isSet1){
+	    isSet1 = false;
+	    sAttack();
+	}else if (isSet2){
+	    isSet2 = false;
+	    sAttack2();
+	}else if (isSet3){
+	    isSet3 = false;
+	    sAttack3();
+	}else{
+	    if ((int)(Math.random()*100) <= getLuk())
+		u.setHP(u.getHP()+u.getDEF()-1.5*getATK());
+	    else
+		u.setHP(u.getHP()+u.getDEF()-getATK());
+	}
+    }
+
     public void LVLup(){
 	while (EXP >= LVLreq){
 	    EXP = EXP-LVLreq;
