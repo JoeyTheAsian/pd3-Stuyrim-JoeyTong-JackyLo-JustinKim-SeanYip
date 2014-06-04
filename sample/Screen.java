@@ -26,7 +26,6 @@ public class Screen extends Canvas implements Runnable {
     private Player bird = new Player("Bird.png", 250, 250);
     private Player giant = new Player("Giant.png", 250, 500);
     private Player swordsman = new Player("Swordsman.png", 500, 250);
-    //JFrame frame = (JFrame)this.getParent().getTopLevelAncestor();  
 
     //screen dimensions
     private int height = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4);
@@ -36,7 +35,7 @@ public class Screen extends Canvas implements Runnable {
     private LinkedList<Long> frames = new LinkedList<>();
     private int averageFPS;
     private boolean running;
-    //private Timer timer = new Timer(100,this);
+
 
     public Screen() {
 		setSize(width, height);
