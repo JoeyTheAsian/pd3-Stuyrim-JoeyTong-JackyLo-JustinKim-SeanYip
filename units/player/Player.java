@@ -21,7 +21,8 @@ public abstract class Player extends Unit/* implements Serializable*/{
     protected int CDS2 = 100, CDS3 = 100;
 
     public Player(int x, int y){
-	super(x,y);
+	mapX = x;
+	mapY = y;
     }
 
     public void setLVL(int level){ lvl = level; }

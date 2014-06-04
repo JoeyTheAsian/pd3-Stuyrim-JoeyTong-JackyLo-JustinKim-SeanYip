@@ -6,24 +6,20 @@ import javax.swing.*;
 public abstract class Unit{
     protected String name;
     protected int maxHP, HP;
-    protected int ATK;
-    protected int DEF;
+    protected int tempATK, ATK;
+    protected int tempDEF, DEF;
     protected int EXP;
     protected int luk;
     protected int range = 20;
-    protected int speed = 10;
-    protected int ATKspeed; //hit per x CENTIseconds
+    protected int tempSpeed, speed = 10;
+    protected int tempATKspeed, ATKspeed; //hit per x CENTIseconds
     protected ArrayList<Item>() list = new ArrayList<Item>();
     protected Image image;
     protected int maxMana, mana;
     //protected double screenX, screenY;
     protected int mapX, mapY;
     protected int CDS1 = 500; //cooldown time for special attack in CENTIseconds
-
-    public Unit(int x, int y){
-	mapX = x;
-	mapY = y;
-    }
+    protected boolean haveDebuff = false, haveBuff = false; //debuffs don't stack, yet
 
     public String getName(){ return name; }
 
@@ -63,6 +59,10 @@ public abstract class Unit{
 
     public int getATKspeed(){ return ATKspeed; }
 
+    public void setList(ArrayList<Item> lst)( list = lst; }
+
+    public ArrayList<Item> getList(){ return list; }
+
     public void setImage(String img){ image = new ImageIcon(img).getImage(); }
 
     public Image getImage(){ return image; };
@@ -76,9 +76,9 @@ public abstract class Unit{
     public int getMana(){ return mana; }
     
     /*
-    public void setScreenX(double xcor){ screenX = xcor; }
+      public void setScreenX(double xcor){ screenX = xcor; }
 
-    public int getScreenX(){ return (int) screenX; }
+      public int getScreenX(){ return (int) screenX; }
     */
 
     public void setMapX(int xcor){ mapX = xcor; }
@@ -86,9 +86,9 @@ public abstract class Unit{
     public int getMapX(){ return mapX; }
 
     /*
-    public void setScreenY(double ycor){ screenY = ycor; }
+      public void setScreenY(double ycor){ screenY = ycor; }
     
-    public int getScreenY(){ return (int) screenY; }
+      public int getScreenY(){ return (int) screenY; }
     */
 
     public void setMapY(int ycor){ mapY = ycor; }

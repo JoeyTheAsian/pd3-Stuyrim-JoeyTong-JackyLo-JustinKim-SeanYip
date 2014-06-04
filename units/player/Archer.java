@@ -20,12 +20,12 @@ public class Archer extends Player{
 	image = new ImageIcon("Archer.png").getImage();
     }
   
-    public void sAttack(){ //some arrow that knocks monsters away by 200? and decreases their DEF
-        
+    public void sAttack(){ //blunt, giant arrows that knocks surrounding monsters away by 200?
+
     }
   
     public void sAttack2(){ //mercury shoes and a minigun bow, increases speed and ATKspeed
-      
+
     }
   
     public void sAttack3(){ //deadly arrows, increases ATK and luk and slows monsters
