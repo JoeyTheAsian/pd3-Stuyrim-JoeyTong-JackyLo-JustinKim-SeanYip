@@ -3,6 +3,10 @@ import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -49,6 +53,20 @@ public class Screen extends Canvas implements Runnable {
 				public void keyPressed(KeyEvent e) {keysPressed[e.getKeyCode()] = true;}
 				public void keyReleased(KeyEvent e) {keysPressed[e.getKeyCode()] = false;}
 				public void keyTyped(KeyEvent e) {}
+		});
+		addMouseListener(new MouseListener() {
+				public void mouseClicked(MouseEvent e) {}
+				public void mouseEntered(MouseEvent e) {}
+				public void mouseExited(MouseEvent e) {}
+				public void mousePressed(MouseEvent e) {}
+				public void mouseReleased(MouseEvent e) {}
+		});
+		addMouseMotionListener(new MouseMotionListener() {
+				public void mouseDragged(MouseEvent e) {}
+				public void mouseMoved(MouseEvent e) {}
+		});
+		addMouseWheelListener(new MouseWheelListener() {
+				public void mouseWheelMoved(MouseEvent e) {}
 		});
 		setVisible(true);
     }
