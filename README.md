@@ -58,4 +58,10 @@ Project Description: 2.5D RPG game
   
   got run() method to start the actual game ticks in the Screen class. Game is now refreshing at a rate of around 120 frames per second
   
+  Jacky currently working on the player classes, specifically the special attacks
   
+  Added more variables in the Unit class to help the game engine (hopefully)
+  
+  Monster classes needed some tweaks, and monsters in the volcano level need coding
+  
+  Boss for the volcano level is TBD. Maybe the volcano level will be the last level.
