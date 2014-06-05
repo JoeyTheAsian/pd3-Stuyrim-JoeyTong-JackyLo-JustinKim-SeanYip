@@ -112,7 +112,6 @@ public class GamePanel extends JPanel {
 	
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
-	g.drawImage(bg,0,windowHeight-height,width,height, null);
     }
 
     //SCREEN CLASS
@@ -206,10 +205,9 @@ public class GamePanel extends JPanel {
 	    //draws black screen to prevent layered images and flicker
 	    g.drawImage(flickerStop,0,0,screenWidth,screenHeight, null);
 	    // Draw the current map
-	    g.drawImage(bg, 0+mapX,0+mapY, screenWidth, screenHeight, null);
-	    //    drawMap(g);
+	    drawMap(g);
 	    //draw fps
-	    g.setColor(Color.WHITE);
+	    g.setColor(Color.GREEN);
 	    g.drawString("FPS: " + averageFPS, 0, 20);
 
 	    //loops and draws all the entities players/monsters
@@ -239,7 +237,7 @@ public class GamePanel extends JPanel {
 
         private void drawTile(int x, int y, Tile tile, Graphics g) {
             g.setColor(tile.color);
-            g.fillRect(x * TILE_SCALE, y * TILE_SCALE, TILE_SCALE, TILE_SCALE);
+            g.fillRect(x * TILE_SCALE + mapX, y * TILE_SCALE + mapY, TILE_SCALE, TILE_SCALE);
         }
     
 	public void run() {
