@@ -18,20 +18,25 @@ Project Description: 2.5D RPG game
   Textures and images get dumped in images directory 
   
   Feature log: 
+  
   **6/5/14**
+  Joey:
+  
+  **Justin is getting runtime errors, we need to figure out why and fix it ASAP**
+  
   Controls fixed
   
-  Screen Frame refresh issue fixed
+  Screen Frame refresh issue fixed (Joey)
   
-  GUI expanded
+  GUI expanded (Joey, Sean)
   
-  FPS counter fully implemented
+  FPS counter fixed and fully implemented, game now runs at very constant 125 FPS (Joey, Justin)
   
-  Screen made into inner class of GamePanel for easy access to GamePanel button input
+  Screen made into inner class of GamePanel for easy access to GamePanel button input (Joey)
   
-  Map rendering almost implemented
+  Map rendering almost implemented  (Justin)
   
-  Item implementation in players in progress
+  Item implementation in players in progress (Jacky)
   
   **Game loop to be started ASAP**
     
@@ -45,11 +50,11 @@ Project Description: 2.5D RPG game
   **6/3/14**
   Joey:
   
-  Control fluidity improvied, still not correct. All coordinate logic should be done externally, preferably in still unstarted game engine
+  Control fluidity improvied, still not correct. All coordinate logic should be done externally, preferably in still unstarted game engine (Sean)
   
   **Massive frame jitter problem (white frames) Critically important that this is fixed**
   
-  Justin currently recoding GUI to have better structure
+  Justin currently recoding GUI to have better structure **Aborted** 
   
   Game engine (combat logic etc.) yet to be started. Need to start
   
@@ -64,25 +69,25 @@ Project Description: 2.5D RPG game
   
   got run() method to start the actual game ticks in the Screen class. Game is now refreshing at a rate of around 120 frames per second
   
-  Jacky currently working on the player classes, specifically the special attacks
+  currently working on the player classes, specifically the special attacks (Jacky)
   
   Added more variables in the Unit class to help the game engine (hopefully)
   
-  Monster classes needed some tweaks, and monsters in the volcano level need coding
+  Monster classes needed some tweaks, and monsters in the volcano level need coding 
   
-  Boss for the volcano level is TBD. Maybe the volcano level will be the last level.
+  Boss for the volcano level is TBD. Maybe the volcano level will be the last level. 
   
   **6/2/14** 
   
   Joey:
   
-  incomplete GUI and screen, will complete in near future
+  incomplete GUI and screen, will complete in near future (Joey)
   
-  Monster and Player classes near completion, awaiting implementation in test code
+  Monster and Player classes near completion, awaiting implementation in test code (Jacky)
   
-  Inventory code completed, sort code should be working, awaiting creation of GUI that uses Inventory code (renders into a panel) 
+  Inventory code completed, sort code should be working, awaiting creation of GUI that uses Inventory code (renders into a panel) (Justin)
   
-  Map creation started, tile classes created, awaiting implementation in screen to render map 
+  Map creation started, tile classes created, awaiting implementation in screen to render map (Justin)
   
   **Note for all textures and sprites, create placeholders I (joey) will later replace them with proper images.**
   
