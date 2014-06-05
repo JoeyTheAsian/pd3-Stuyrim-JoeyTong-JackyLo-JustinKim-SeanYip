@@ -19,31 +19,42 @@ Project Description: 2.5D RPG game
   
   Feature log: 
   
-  6/6/14 
-  
+  **6/5/14**
   Joey:
   
-  incomplete GUI and screen, will complete in near future
+  **Justin is getting runtime errors, we need to figure out why and fix it ASAP**
   
-  Monster and Player classes near completion, awaiting implementation in test code
+  Controls fixed
   
-  Inventory code completed, sort code should be working, awaiting creation of GUI that uses Inventory code (renders into a panel) 
+  Screen Frame refresh issue fixed (Joey)
   
-  Map creation started, tile classes created, awaiting implementation in screen to render map 
+  GUI expanded (Joey, Sean)
   
-  **Note for all textures and sprites, create placeholders I (joey) will later replace them with proper images.**
+  FPS counter fixed and fully implemented, game now runs at very constant 125 FPS (Joey, Justin)
   
-  Awaiting proper implementation of drawing player and monsters to screen. 
+  Screen made into inner class of GamePanel for easy access to GamePanel button input (Joey)
   
-  Sean, you need to create arraylists of Players and monsters and loop paint each one in the list
+  Map rendering almost implemented  (Justin)
   
-  **6/4/14**
+  Item implementation in players in progress (Jacky)
   
-  Control fluidity improvied, still not correct. All coordinate logic should be done externally, preferably in still unstarted game engine
+  **Game loop to be started ASAP**
+    
+  Map creation to be started
+  
+  Ability trees, ability/item hotbar to be started
+  
+  GUI skeleton nearly complete, begin testing of all game loop-related code
+  
+  
+  **6/3/14**
+  Joey:
+  
+  Control fluidity improvied, still not correct. All coordinate logic should be done externally, preferably in still unstarted game engine (Sean)
   
   **Massive frame jitter problem (white frames) Critically important that this is fixed**
   
-  Justin currently recoding GUI to have better structure
+  Justin currently recoding GUI to have better structure **Aborted** 
   
   Game engine (combat logic etc.) yet to be started. Need to start
   
@@ -58,10 +69,30 @@ Project Description: 2.5D RPG game
   
   got run() method to start the actual game ticks in the Screen class. Game is now refreshing at a rate of around 120 frames per second
   
-  Jacky currently working on the player classes, specifically the special attacks
+  currently working on the player classes, specifically the special attacks (Jacky)
   
   Added more variables in the Unit class to help the game engine (hopefully)
   
-  Monster classes needed some tweaks, and monsters in the volcano level need coding
+  Monster classes needed some tweaks, and monsters in the volcano level need coding 
   
-  Boss for the volcano level is TBD. Maybe the volcano level will be the last level.
+  Boss for the volcano level is TBD. Maybe the volcano level will be the last level. 
+  
+  **6/2/14** 
+  Joey:
+  
+  incomplete GUI and screen, will complete in near future (Joey)
+  
+  Monster and Player classes near completion, awaiting implementation in test code (Jacky)
+  
+  Inventory code completed, sort code should be working, awaiting creation of GUI that uses Inventory code (renders into a panel) (Justin)
+  
+  Map creation started, tile classes created, awaiting implementation in screen to render map (Justin)
+  
+  **Note for all textures and sprites, create placeholders I (joey) will later replace them with proper images.**
+  
+  Awaiting proper implementation of drawing player and monsters to screen. 
+  
+  Sean, you need to create arraylists of Players and monsters and loop paint each one in the list
+  
+
+  
