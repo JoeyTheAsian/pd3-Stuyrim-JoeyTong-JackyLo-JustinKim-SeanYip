@@ -231,9 +231,9 @@ public class GamePanel extends JPanel {
 	    if (pastTime < 1000.0 / MAX_FPS) {
 		try {
 		    Thread.sleep((1000 / MAX_FPS) - pastTime);
-		    System.out.println(averageFPS);
+		    System.out.print(averageFPS + " ");
 		} catch (InterruptedException e) {
-		    System.out.println(e);
+		    Utilities.showErrorMessage(this, e);
 		}
 	    }
 	}
