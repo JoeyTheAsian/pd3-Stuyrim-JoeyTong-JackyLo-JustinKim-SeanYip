@@ -31,7 +31,21 @@ public class Archer extends Player{
   
     public void sAttack(){ //blunt, giant arrows that knocks surrounding monsters away by 200?
 	if (isReady1 && 250 <= mana){
-	    
+	    for (Monster monster : surroundingMonsters /*ARRAYLIST NOT IMPLEMENTED YET*/){
+		if (monster.getMapX() < getMapX())
+		    monster.setMapX(getMapX()-141); //100*sqrt(2)
+		else if (monster.getMapX() > getMapX())
+		    monster.setMapX(getMapX()+141);
+		if (monster.getMapY() < getMapY())
+		    monster.setMapY(getMapY()-141);
+		else if (monster.getMapY() > getMapY())
+		    monster.setMapY(getMapX()+141);
+		monster.setSpeed(speed-2);
+		monster.haveDebuff = true;
+		//start debuffTime
+	    }
+	    mana -= 250;
+	    //start cooldownTime
 	}
     }
   
@@ -42,6 +56,7 @@ public class Archer extends Player{
 	    mana -= 250;
 	    haveBuff = true;
 	    //start buffTime
+	    //start cooldownTime
 	}
     }
   
@@ -52,6 +67,7 @@ public class Archer extends Player{
 	    mana -= 250;
 	    haveBuff2 = true;
 	    //start buffTime2
+	    //start cooldownTime
 	}
     }
 

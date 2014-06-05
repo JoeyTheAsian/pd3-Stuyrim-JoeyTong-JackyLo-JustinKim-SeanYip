@@ -9,15 +9,15 @@ public abstract class Unit{
     protected int maxATK, ATK;
     protected int maxDEF, DEF;
     protected int EXP;
-    protected int maxLuk, luk;
-    protected int range = 20;
-    protected int maxSpeed, speed = 10;
+    protected int maxLuk, luk; //chance of hitting a critical strike
+    protected int range = 20; //distance that allows the unit to attack
+    protected int maxSpeed, speed = 10; //how fast the unit can move
     protected int maxATKspeed, ATKspeed; //hit per x CENTIseconds
-    protected ArrayList<Item>() list = new ArrayList<Item>();
+    protected ArrayList<Item>() list = new ArrayList<Item>(); //item list
     protected Image image;
     protected int maxMana, mana;
     //protected double screenX, screenY;
-    protected int mapX, mapY;
+    protected int mapX, mapY; //coordinates
     protected int CDS1 = 1000; //cooldown time for special attack in CENTIseconds
     protected boolean haveDebuff = false, haveBuff = false; //debuffs don't stack, yet
     protected int debuffTime = 500, buffTime = 800; //lasting time for debuffs and buffs in CENTIseconds
@@ -113,12 +113,12 @@ public abstract class Unit{
 	    mana+=10; 
     }
 
-    public void attack(Unit u){
-	if (isSet1){
+    public void attack(Unit u){ //may need fix?
+	if (isSet1){ //if sAttack is set
 	    isSet1 = false;
-	    sAttack();
+	    sAttack(); //checks if sAttack is ready. If not, just attack
 	}else{
-	    if ((int)(Math.random()*100) <= getLuk())
+	    if ((int)(Math.random()*100) <= getLuk()) //chance of crit
 		u.setHP(u.getHP()+u.getDEF()-1.5*getATK());
 	    else
 		u.setHP(u.getHP()+u.getDEF()-getATK());

@@ -18,9 +18,9 @@ public abstract class Player extends Unit/* implements Serializable*/{
 	weapon = null,
 	accessory = null,
 	consumables = null;
-    protected int CDS2 = 1000, CDS3 = 1000;
-    protected boolean isReady2 = true, isReady3 = true;
-    protected boolean isSet2 = false, isSet3 = false;
+    protected int CDS2 = 1000, CDS3 = 1000; //cooldown time for sAttack2 and sAttack3
+    protected boolean isReady2 = true, isReady3 = true; //whether sAttack2 or sAttack3 is ready
+    protected boolean isSet2 = false, isSet3 = false; //whether sAttack2 or sAttack3 is ready
 
     public Player(int x, int y){
 	mapX = x;
