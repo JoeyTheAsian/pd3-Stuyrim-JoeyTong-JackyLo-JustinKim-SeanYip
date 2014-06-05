@@ -112,7 +112,7 @@ public class GamePanel extends JPanel {
 	
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
-	g.drawImage(bg,0,windowHeight-height,width,height, null);
+	g.drawImage(bg,0,windowHeight-height,windowWidth,windowHeight,null);
     }
 
     //SCREEN CLASS
@@ -163,9 +163,6 @@ public class GamePanel extends JPanel {
 	    try{flickerStop =ImageIO.read(new File("GUI Images/flickerStop.png"));
 	    }catch(Exception e){Utilities.showErrorMessage(this,e);}
 	    characters.add(slime);
-	    //	ai.add(bird);
-	    //ai.add(giant);
-	    //	ai.add(swordsman);
 
             // Temporary code until tile textures are done
             currentMap = new Map();
@@ -206,10 +203,9 @@ public class GamePanel extends JPanel {
 	    //draws black screen to prevent layered images and flicker
 	    g.drawImage(flickerStop,0,0,screenWidth,screenHeight, null);
 	    // Draw the current map
-	    g.drawImage(bg, 0+mapX,0+mapY, screenWidth, screenHeight, null);
-	    //    drawMap(g);
+	    drawMap(g);
 	    //draw fps
-	    g.setColor(Color.WHITE);
+	    g.setColor(Color.GREEN);
 	    g.drawString("FPS: " + averageFPS, 0, 20);
 
 	    //loops and draws all the entities players/monsters
@@ -239,7 +235,7 @@ public class GamePanel extends JPanel {
 
         private void drawTile(int x, int y, Tile tile, Graphics g) {
             g.setColor(tile.color);
-            g.fillRect(x * TILE_SCALE, y * TILE_SCALE, TILE_SCALE, TILE_SCALE);
+            g.fillRect(x * TILE_SCALE + mapX, y * TILE_SCALE + mapY, TILE_SCALE, TILE_SCALE);
         }
     
 	public void run() {
