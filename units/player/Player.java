@@ -93,6 +93,15 @@ public abstract class Player extends Unit/* implements Serializable*/{
 	}
     }
 
+    public ArrayList<Monster> getSurroundingEnemies(){
+	ArrayList<Monster>() surroundingMonsters = new ArrayList<Monster>();
+	for (Monster monster : /*in a global monster list*/) //for all enemies in the map
+	    if (monster.getDist(this) <= range)
+		surroundingMonsters.add(enemy);
+	return surroundingMonsters;
+    }
+
+
     public void LVLup(){
 	while (EXP >= LVLreq){
 	    EXP = EXP-LVLreq;

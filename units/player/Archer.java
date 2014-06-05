@@ -30,45 +30,39 @@ public class Archer extends Player{
     }
   
     public void sAttack(){ //blunt, giant arrows that knocks surrounding monsters away by 200?
-	if (isReady1 && 250 <= mana){
-	    for (Monster monster : surroundingMonsters /*ARRAYLIST NOT IMPLEMENTED YET*/){
-		if (monster.getMapX() < getMapX())
-		    monster.setMapX(getMapX()-141); //100*sqrt(2)
-		else if (monster.getMapX() > getMapX())
-		    monster.setMapX(getMapX()+141);
-		if (monster.getMapY() < getMapY())
-		    monster.setMapY(getMapY()-141);
-		else if (monster.getMapY() > getMapY())
-		    monster.setMapY(getMapX()+141);
-		monster.setSpeed(speed-2);
-		monster.haveDebuff = true;
-		//start debuffTime
-	    }
-	    mana -= 250;
-	    //start cooldownTime
+	for (Monster monster : getSurroundingMonsters()){
+	    if (monster.getMapX() < getMapX())
+		monster.setMapX(getMapX()-141); //100*sqrt(2)
+	    else if (monster.getMapX() > getMapX())
+		monster.setMapX(getMapX()+141);
+	    if (monster.getMapY() < getMapY())
+		monster.setMapY(getMapY()-141);
+	    else if (monster.getMapY() > getMapY())
+		monster.setMapY(getMapX()+141);
+	    monster.setSpeed(speed-2);
+	    monster.haveDebuff = true;
+	    //start debuffTime
 	}
+	mana -= 250;
+	//start cooldownTime
     }
   
     public void sAttack2(){ //mercury shoes and a minigun bow, increases speed and ATKspeed
-	if (isReady2 && 250 <= mana){
-	    speed = speed + speed*(0.25+(double)LVL*0.01);
-	    ATKspeed = ATKspeed + ATKspeed*(0.3+(double)LVL*0.01);
-	    mana -= 250;
-	    haveBuff = true;
-	    //start buffTime
-	    //start cooldownTime
-	}
+	speed = speed + speed*(0.25+(double)LVL*0.01);
+	ATKspeed = ATKspeed + ATKspeed*(0.3+(double)LVL*0.01);
+	mana -= 250;
+	haveBuff = true;
+	//start buffTime
+	//start cooldownTime
     }
   
     public void sAttack3(){ //deadly arrows, increases ATK and luk
-	if (isReady3 && 250 <= mana){
-	    ATK = ATK + ATK*(0.15+(double)LVL*0.01);
-	    luk = luk + luk*(0.15+(double)LVL*0.01);
-	    mana -= 250;
-	    haveBuff2 = true;
-	    //start buffTime2
-	    //start cooldownTime
-	}
+	ATK = ATK + ATK*(0.15+(double)LVL*0.01);
+	luk = luk + luk*(0.15+(double)LVL*0.01);
+	mana -= 250;
+	haveBuff2 = true;
+	//start buffTime2
+	//start cooldownTime
     }
 
     public void LVLup(){

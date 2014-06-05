@@ -114,7 +114,7 @@ public abstract class Unit{
     }
 
     public void attack(Unit u){ //may need fix?
-	if (isSet1){ //if sAttack is set
+	if (isSet1){ //precondition: isReady1 = true && 250 <= mana
 	    isSet1 = false;
 	    sAttack(); //checks if sAttack is ready. If not, just attack
 	}else{
@@ -126,4 +126,8 @@ public abstract class Unit{
     }
 
     public abstract void sAttack(); //stands for special attack
+
+    public abstract void finishDebuff(); //once debuff is done
+
+    public abstract void finishBuff(); //once buff is done
 }

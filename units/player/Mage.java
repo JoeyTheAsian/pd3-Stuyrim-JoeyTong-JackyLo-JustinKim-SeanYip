@@ -5,6 +5,7 @@ import javax.swing.*;
 
 public class Mage extends Player{
     protected int maxManaCost, manaCost;
+    protected int maxCDS1, maxCDS3; //sAttack1 and sAttack3 will have CDR (cooldown reduction)
 
     public Mage(String myName, int x, int y){
 	super(x,y);
@@ -13,6 +14,8 @@ public class Mage extends Player{
 	HP = maxHP;
 	maxMana = 1000;
 	mana = maxMana;
+	maxManaCost = 250;
+	manaCost = maxManaCost;
 	maxATK = 150;
 	ATK = maxATK;
 	maxDEF = 20;
@@ -25,36 +28,37 @@ public class Mage extends Player{
 	maxATKspeed = 100;
 	ATKspeed = maxATKspeed;
 	range = 120;
+	maxCDS1 = CDS1;
+	maxCDS3 = CDS3;
 	image = new ImageIcon("Mage.png").getImage();
     }
   
-    public void sAttack(){//life and mana drain, takes percent of health and mana from monsters in player's range and heals the player the sum of their health and gives the player the sum of their mana
-	if (isReady1 && manaCost <= mana){
-	    int tempHP = 0;
-	    int tempMana = 0;
-	    for (Monster monster : surroundingMonsters){
-		int tempMonsterHP = monster.getMaxHP()*(0.1 + (double)LVL*0.005);
-		int tempMonsterMana = monster.getMaxMana()*(0.1 + (double)LVL*0.005);
-		tempHP = tempHP + tempMonsterHP;
-		monster.setHP(monster.getHP() - tempMonsterHP);
-		tempMana = tempMana + tempMonsterMana;
-		monster.setHP(monster.getMana() - tempMonsterMana);
-	    }
-	    setHP(getHP() + tempHP);
-	    if (HP > maxHP)
-		HP = maxHP;
-	    setMana(getMana() + tempMana);
-	    if (mana > maxMana)
-		mana = maxMana;
+    public void sAttack(){//health drain, takes percent of health from monsters in player's range and heals the player the sum of their health
+	int tempHP = 0;
+	for (Monster monster : getSurroundingMonsters()){
+	    int tempMonsterHP = monster.getMaxHP()*(0.1 + (double)LVL*0.005);
+	    tempHP = tempHP + tempMonsterHP;
+	    monster.setHP(monster.getHP() - tempMonsterHP);
 	}
+	setHP(getHP() + tempHP);
+	if (HP > maxHP)
+	    HP = maxHP;
+	mana -= manaCost;
+	//start cooldownTime
     }
 
-    public void sAttack2(){//manly buffness, increases ATK and mana, decreases cooldown and mana cost (so u can spam kamehamehas all ova da prasez)
-  
+    public void sAttack2(){//hyper magic power, decreases cooldown and mana cost (so u can spam kamehamehas all ova da prasez)
+	manaCost = 100;
+	CDS1 = 200;
+	CDS3 = 200;
+	mana -= 250;
+	haveBuff = true;
+	//start buffTime
+	//start cooldownTime
     }
   
-    public void sAttack3(){//kamehameha, deals burn for affected monsters
-    
+    public void sAttack3(){//kamehameha that deals burns to monsters in the AoE
+	
     }
     
     public void LVLup(){
