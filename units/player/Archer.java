@@ -71,15 +71,15 @@ public class Archer extends Player{
     }
 
     public void LVLupStats(){
-	setHP(getHP()+10);
-	setATK(getATK()+25);
-	setDEF(getDEF()+5);
-	if (getLuk() < 50)
-	    setLuk(getLuk()+2);
-	if (getSpeed() < 50)
-	    setSpeed(getSpeed()+2);
-	if (getATKSpeed() > 10)
-	    setATKSpeed(getATKSpeed()-2);
+	setMaxHP(getMaxHP()+10);
+	setMaxATK(getMaxATK()+25);
+	setMaxDEF(getMaxDEF()+5);
+	if (getMaxLuk() < 50)
+	    setMaxLuk(getMaxLuk()+2);
+	if (getMaxSpeed() < 50)
+	    setMaxSpeed(getMaxSpeed()+2);
+	if (getMaxATKSpeed() > 10)
+	    setMaxATKSpeed(getMaxATKSpeed()-2);
     }
 
 }
