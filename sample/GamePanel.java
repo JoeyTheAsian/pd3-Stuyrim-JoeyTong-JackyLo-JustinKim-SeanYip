@@ -110,7 +110,6 @@ public class GamePanel extends JPanel {
 	
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
-	g.drawImage(bg,0,windowHeight/5*4,width,height, null);
     }
 
     //SCREEN CLASS
@@ -135,6 +134,10 @@ public class GamePanel extends JPanel {
 	private int mapX = 0;
 	private int mapY = 0;
 
+        // The width and height of each tile in pixels
+        private static final int TILE_SCALE = 60;
+        private Map currentMap;
+
 	//SCREEN dimensions
 	private int screenHeight = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4);
 	private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
@@ -155,6 +158,10 @@ public class GamePanel extends JPanel {
 	    //	ai.add(bird);
 	    //ai.add(giant);
 	    //	ai.add(swordsman);
+
+            // Temporary code until tile textures are done
+            currentMap = new Map();
+            currentMap.setTile(5, 5, Tile.WALL);
 
 	    //placeholder input listeners
 	    addKeyListener(new KeyListener() {
@@ -189,7 +196,6 @@ public class GamePanel extends JPanel {
 	    }
 	    Graphics g= bs.getDrawGraphics();
 	    //draws map
-	    g.drawImage(bg,0+mapX,0+mapY,screenWidth,screenHeight, null);
 	    g.setColor(Color.WHITE);
 	    //draw fps
 	    g.drawString("FPS: " + averageFPS, 0, 20);
@@ -205,9 +211,28 @@ public class GamePanel extends JPanel {
 	    for (Character character : characters) {
 		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
 	    }
+
+            // Draw the current map
+            drawMap(g);
+
 	    g.dispose();
 	    bs.show();
 	}
+
+        // Renders the tilemap of the current map to the screen
+        private void drawMap(Graphics g) {
+            Tile[][] tilemap = currentMap.getTilemap();
+            for (int i = 0; i < tilemap.length; i++) {
+                for (int j = 0; j < tilemap[i].length; j++) {
+                    drawTile(i, j, tilemap[i][j], g);
+                }
+            }
+        }
+
+        private void drawTile(int x, int y, Tile tile, Graphics g) {
+            g.setColor(tile.color);
+            g.fillRect(x * TILE_SCALE, y * TILE_SCALE, TILE_SCALE, TILE_SCALE);
+        }
     
 	public void run() {
 	    while (running) {
