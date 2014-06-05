@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.imageio.ImageIO;
 
-public class Screen extends Canvas implements Runnable {
+public class Screen extends Canvas implements Runnable{
     private static final int MAX_FPS = 60;
     private static final int FPS_SAMPLE_SIZE = 6;
 	
@@ -24,7 +24,7 @@ public class Screen extends Canvas implements Runnable {
     private ArrayList<Character> characters = new ArrayList<>();
     private ArrayList<Character> ai = new ArrayList<>();
     private Thread thread;
-    private BufferedImage image;
+    private BufferedImage bg;
 
     //for testing putposes
     private Player slime = new Player("Slime.png", 100, 100);
@@ -33,7 +33,7 @@ public class Screen extends Canvas implements Runnable {
     private Player swordsman = new Player("Swordsman.png", 500, 250);
 
     //screen dimensions
-    private int height = ((Toolkit.getDefaultToolkit().getScreenSize().height-73)/5*4);
+    private int height = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4);
     private int width = Toolkit.getDefaultToolkit().getScreenSize().width;
 	
     private long prevTick = -1;
@@ -44,12 +44,12 @@ public class Screen extends Canvas implements Runnable {
 
     public Screen() {
 	setSize(width, height);
-	try {image = ImageIO.read(new File("GUI Images/success.jpg"));}
+	try {bg = ImageIO.read(new File("GUI Images/success.jpg"));}
 	catch (Exception e) {Utilities.showErrorMessage(this, e);}
 	characters.add(slime);
-	ai.add(bird);
-	ai.add(giant);
-	ai.add(swordsman);
+	//	ai.add(bird);
+	//ai.add(giant);
+	//	ai.add(swordsman);
 	addKeyListener(new KeyListener() {
 		public void keyPressed(KeyEvent e) {keysPressed[e.getKeyCode()] = true;}
 		public void keyReleased(KeyEvent e) {keysPressed[e.getKeyCode()] = false;}
@@ -74,11 +74,14 @@ public class Screen extends Canvas implements Runnable {
 	start();
     }
 	
-    public void paint(Gra   createBufferStrategy(2);
+    public void render(){
+	BufferStrategy bs = getBufferStrategy();
+	if(bs  == null){
+	    createBufferStrategy(3);
 	    return;
 	}
-	g = bs.getDrawGraphics();
-	g.drawImage(image,0,0,width,height, null);
+	Graphics g= bs.getDrawGraphics();
+	g.drawImage(bg,0,0,width,height, null);
 	g.drawString(String.valueOf(averageFPS), 0, 0);
 	for (Character character : ai){
 	    character.setY(character.getY() + (int)(Math.random() * 10 - 5));
@@ -86,16 +89,14 @@ public class Screen extends Canvas implements Runnable {
 	}
 	for (Character character : ai) {g.drawImage(character.getImage(), character.getX(), character.getY(), null);}
 	for (Character character : characters) {g.drawImage(character.getImage(), character.getX(), character.getY(), null);}
+	g.dispose();
 	bs.show();
-	//g.dispose();
     }
-
+    
     public void run() {
-        running = true;
 	while (running) {
- 
-            tick();
-	    repaint();
+	    render();
+	    tick();
 	}
     }
 	
@@ -115,7 +116,6 @@ public class Screen extends Canvas implements Runnable {
 	if (keysPressed[KeyEvent.VK_S] && (slime.getY() < height)) {slime.setY(slime.getY() + 1);}
 	if (keysPressed[KeyEvent.VK_A] && (slime.getY() > 0)) {slime.setX(slime.getX() - 1);}
 	if (keysPressed[KeyEvent.VK_D] && (slime.getY() < width)) {slime.setX(slime.getX() + 1);}
-	//	System.out.println(slime.getX() + ", " + slime.getY());
 	
         long pastTime = System.currentTimeMillis() - prevTick;
         prevTick = System.currentTimeMillis();
@@ -142,8 +142,7 @@ public class Screen extends Canvas implements Runnable {
 	        System.out.println(averageFPS);
             } catch (InterruptedException e) {
                 System.out.println(e);
-		}
+	    }
 	}
-    
     }
 }
