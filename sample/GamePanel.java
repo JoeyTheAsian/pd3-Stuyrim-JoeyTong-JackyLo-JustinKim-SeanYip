@@ -123,7 +123,8 @@ public class GamePanel extends JPanel {
 	private Player bird = new Player("Bird.png", 250, 250);
 	private Player giant = new Player("Giant.png", 250, 500);
 	private Player swordsman = new Player("Swordsman.png", 500, 250);
-
+	private int mapX = 0;
+	private int mapY = 0;
 	//screen dimensions
 	private int screenHeight = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4);
 	private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
@@ -173,7 +174,7 @@ public class GamePanel extends JPanel {
 		return;
 	    }
 	    Graphics g= bs.getDrawGraphics();
-	    g.drawImage(bg,0,0,screenWidth,screenHeight, null);
+	    g.drawImage(bg,0+mapX,0+mapY,screenWidth,screenHeight, null);
 	    g.drawString(String.valueOf(averageFPS), 0, 0);
 	    for (Character character : ai){
 		character.setY(character.getY() + (int)(Math.random() * 10 - 5));
@@ -204,10 +205,22 @@ public class GamePanel extends JPanel {
 	}
 	
 	public void tick() {
-	    if (keysPressed[KeyEvent.VK_W] && (slime.getY() > 0)) {slime.setY(slime.getY() - 1);}
-	    if (keysPressed[KeyEvent.VK_S] && (slime.getY() < screenHeight)) {slime.setY(slime.getY() + 1);}
-	    if (keysPressed[KeyEvent.VK_A] && (slime.getY() > 0)) {slime.setX(slime.getX() - 1);}
-	    if (keysPressed[KeyEvent.VK_D] && (slime.getY() < screenWidth)) {slime.setX(slime.getX() + 1);}
+	    if (keysPressed[KeyEvent.VK_W] && (slime.getY() > 0)) {
+		//	slime.setY(slime.getY() - 1);
+		mapY--;
+	    }
+	    if (keysPressed[KeyEvent.VK_S] && (slime.getY() < screenHeight)) {
+		//	slime.setY(slime.getY() + 1);
+		mapY++;
+	    }
+	    if (keysPressed[KeyEvent.VK_A] && (slime.getY() > 0)) {
+		//	slime.setX(slime.getX() - 1);
+		mapX--;
+	    }
+	    if (keysPressed[KeyEvent.VK_D] && (slime.getY() < screenWidth)) {
+		//	slime.setX(slime.getX() + 1);
+		mapX ++;
+	    }
 	
 	    long pastTime = System.currentTimeMillis() - prevTick;
 	    prevTick = System.currentTimeMillis();
