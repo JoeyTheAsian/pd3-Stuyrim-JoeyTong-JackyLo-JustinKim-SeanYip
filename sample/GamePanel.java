@@ -112,6 +112,7 @@ public class GamePanel extends JPanel {
 	
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
+	g.drawImage(bg,0,windowHeight-height,windowWidth,windowHeight,null);
     }
 
     //SCREEN CLASS
@@ -162,9 +163,6 @@ public class GamePanel extends JPanel {
 	    try{flickerStop =ImageIO.read(new File("GUI Images/flickerStop.png"));
 	    }catch(Exception e){Utilities.showErrorMessage(this,e);}
 	    characters.add(slime);
-	    //	ai.add(bird);
-	    //ai.add(giant);
-	    //	ai.add(swordsman);
 
             // Temporary code until tile textures are done
             currentMap = new Map();
