@@ -24,12 +24,17 @@ import javax.swing.SwingConstants;
 import javax.imageio.ImageIO;
 
 public class GamePanel extends JPanel {
+    //dimensions of the window
     private int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height-37;
     private int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+    //dimensions of the bottom portion of the screen with all the buttons
     private int height = windowHeight / 6;
     private int width = windowWidth;
-    private BufferedImage bg;
+
+    private BufferedImage bg;//background
+
     public Screen screen = new Screen();
+
     public GamePanel() {
 	setLayout(null);
 	setBounds(0, 0 , windowWidth, windowHeight);
@@ -54,9 +59,7 @@ public class GamePanel extends JPanel {
 	InventButton.setForeground(Color.white);
 	InventButton.addActionListener(e -> {
 
-
 	    });
-
 	JButton PartyButton = new JButton("Party");
 	PartyButton.setOpaque(false);
 	PartyButton.setBorderPainted(false);
@@ -83,14 +86,17 @@ public class GamePanel extends JPanel {
 	MenuButton.addActionListener(e -> {
 
 	    });
+
 	//GRABS ALL PARTY DATA INCLUDING HP, MANA, ETC
 	JTextArea PlayerData = new JTextArea();
 	PlayerData.setSize(width/6,height);
 	PlayerData.setLocation(0,windowHeight/5*4);
+
+	//PUT THE PLAYERDATA IN HERE
 	PlayerData.append("Player 1: \nHP: gethp()    |    Mana: getMana()     |    otherstuff");
 	PlayerData.setOpaque(false);
 	PlayerData.setVisible(true);
-	//PUT THE PLAYERDATA IN HERE
+
 
 	screen = new Screen();
 
@@ -106,13 +112,16 @@ public class GamePanel extends JPanel {
 	super.paintComponent(g);
 	g.drawImage(bg,0,windowHeight/5*4,width,height, null);
     }
+
     //SCREEN CLASS
     public class Screen extends Canvas implements Runnable{
+	//FPS counter variables
 	private static final int MAX_FPS = 60;
 	private static final int FPS_SAMPLE_SIZE = 6;
-	
+	//keymap of all possible inputs?
 	private boolean[] keysPressed = new boolean[256];
-	
+
+	//arraylists containing all entities on screen, painted by while loop in screen
 	private ArrayList<Character> characters = new ArrayList<>();
 	private ArrayList<Character> ai = new ArrayList<>();
 	private Thread thread;
@@ -125,10 +134,13 @@ public class GamePanel extends JPanel {
 	private Player swordsman = new Player("Swordsman.png", 500, 250);
 	private int mapX = 0;
 	private int mapY = 0;
-	//screen dimensions
+
+	//SCREEN dimensions
 	private int screenHeight = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4);
 	private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
 	
+
+	//more FPS stuff
 	private long prevTick = -1;
 	private LinkedList<Long> frames = new LinkedList<>();
 	private int averageFPS;
@@ -143,6 +155,8 @@ public class GamePanel extends JPanel {
 	    //	ai.add(bird);
 	    //ai.add(giant);
 	    //	ai.add(swordsman);
+
+	    //placeholder input listeners
 	    addKeyListener(new KeyListener() {
 		    public void keyPressed(KeyEvent e) {keysPressed[e.getKeyCode()] = true;}
 		    public void keyReleased(KeyEvent e) {keysPressed[e.getKeyCode()] = false;}
@@ -162,11 +176,11 @@ public class GamePanel extends JPanel {
 	    addMouseWheelListener(new MouseWheelListener() {
 		    public void mouseWheelMoved(MouseWheelEvent e) {}
 		});
-
-
 	    setVisible(true);
 	}
 	
+
+	//renders the screen
 	public void render(){
 	    BufferStrategy bs = getBufferStrategy();
 	    if(bs  == null){
@@ -174,14 +188,23 @@ public class GamePanel extends JPanel {
 		return;
 	    }
 	    Graphics g= bs.getDrawGraphics();
+	    //draws map
 	    g.drawImage(bg,0+mapX,0+mapY,screenWidth,screenHeight, null);
-	    g.drawString(String.valueOf(averageFPS), 0, 0);
+	    g.setColor(Color.WHITE);
+	    //draw fps
+	    g.drawString("FPS: " + averageFPS, 0, 20);
+
+	    //loops and draws all the entities players/monsters
 	    for (Character character : ai){
 		character.setY(character.getY() + (int)(Math.random() * 10 - 5));
 		character.setX(character.getX() + (int)(Math.random() * 10 - 5));
 	    }
-	    for (Character character : ai) {g.drawImage(character.getImage(), character.getX(), character.getY(), null);}
-	    for (Character character : characters) {g.drawImage(character.getImage(), character.getX(), character.getY(), null);}
+	    for (Character character : ai) {
+		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
+	    }
+	    for (Character character : characters) {
+		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
+	    }
 	    g.dispose();
 	    bs.show();
 	}
@@ -204,6 +227,7 @@ public class GamePanel extends JPanel {
 	    catch (InterruptedException e) {Utilities.showErrorMessage(this, e);}
 	}
 	
+	//updates game screen data
 	public void tick() {
 	    if (keysPressed[KeyEvent.VK_W] && (slime.getY() > 0)) {
 		//	slime.setY(slime.getY() - 1);
@@ -244,7 +268,6 @@ public class GamePanel extends JPanel {
 	    if (pastTime < 1000.0 / MAX_FPS) {
 		try {
 		    Thread.sleep((1000 / MAX_FPS) - pastTime);
-		    System.out.print(averageFPS + " ");
 		} catch (InterruptedException e) {
 		    Utilities.showErrorMessage(this, e);
 		}

@@ -20,11 +20,5 @@ public class Game extends JFrame {
 	setSize(width, height);
 	setVisible(true);
     }
-	
-    /*    public void paint(Graphics g) {
-	super.paint(g);
-	g.dispose();
-	}*/
-    
 }
 
