@@ -12,17 +12,23 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 	
 public class MenuPanel extends JPanel {
+    //dimensions
     private int height =Toolkit.getDefaultToolkit().getScreenSize().height-37, width = Toolkit.getDefaultToolkit().getScreenSize().width;
     private JButton optionsButton = new JButton("Options") , startButton = new JButton ("Start");
+    //buttong texture
     private Image img;
+    //menu background
     private BufferedImage BG;
 
     public MenuPanel() {
+	//i'd prefer null layout just because it's easier to handle in my opinion
 	setLayout(null);
 	setSize(width, height);
+
 	try {BG = ImageIO.read(new File("stuyrim.png"));}
 	catch (Exception e) {Utilities.showErrorMessage(this, e);}
 		
+	//buttons
 	optionsButton.addActionListener(e -> {});
 	optionsButton.setOpaque(false);
 	optionsButton.setBorderPainted(false);
@@ -37,10 +43,11 @@ public class MenuPanel extends JPanel {
 	optionsButton.setForeground(Color.white);
 
 	startButton.addActionListener(e -> {
+		//create a new GamePanel, add it, start it, and get keyboard focus
 		GamePanel GamePanel = new GamePanel();
 		startButton.getParent().getParent().add(GamePanel);
-		GamePanel.requestFocusInWindow();
 		GamePanel.screen.start();
+		GamePanel.screen.requestFocusInWindow();
 		startButton.getParent().getParent().repaint();
 		startButton.getParent().getParent().remove(this);
 	    });
@@ -54,7 +61,7 @@ public class MenuPanel extends JPanel {
 	startButton.setLocation((width/3*2)-(width/20), (height/7*6)-(height/40));
 	startButton.setIcon(new ImageIcon(img));
 	startButton.setForeground(Color.white);
-
+	
 	add(optionsButton);
 	add(startButton);
 	setVisible(true);
