@@ -18,7 +18,9 @@ Project Description: 2.5D RPG game
   Textures and images get dumped in images directory 
   
   Feature log: 
-  **6/5/14**
+  
+  *6/5/14*
+  
   Joey:
   
   Begin migration of test code into Game Loop class (Justin)
@@ -28,10 +30,10 @@ Project Description: 2.5D RPG game
   Screen flicker failsafe implemented (paint black screen) (Joey)
   
   
-  **6/4/14**
+  *6/4/14*
   Joey:
   
-  **Justin is getting runtime errors, we need to figure out why and fix it ASAP**  Fixed
+  *Justin is getting runtime errors, we need to figure out why and fix it ASAP*  Fixed
   
   Controls fixed
   
@@ -47,7 +49,7 @@ Project Description: 2.5D RPG game
   
   Item implementation in players in progress (Jacky)
   
-  **Game loop to be started ASAP**
+  *Game loop to be started ASAP*
     
   Map creation to be started
   
@@ -56,12 +58,12 @@ Project Description: 2.5D RPG game
   GUI skeleton nearly complete, begin testing of all game loop-related code
   
   
-  **6/3/14**
+  *6/3/14*
   Joey:
   
   Control fluidity improvied, still not correct. All coordinate logic should be done externally, preferably in still unstarted game engine (Sean)
   
-  **Massive frame jitter problem (white frames) Critically important that this is fixed**
+  *Massive frame jitter problem (white frames) Critically important that this is fixed*
   
   Justin currently recoding GUI to have better structure **Aborted** 
   
@@ -72,7 +74,7 @@ Project Description: 2.5D RPG game
   
   MenuPanel "Options" button still dead weight, don't forget to make this actually have function when more features are implemented. Things like window resize may be useful
   
-  **CRITICAL Item class and inventory sort makes use of item types "head, body, legs, hands, feet, shield, weapon, consumables etc. all of these item types must be written **
+  *CRITICAL Item class and inventory sort makes use of item types "head, body, legs, hands, feet, shield, weapon, consumables etc. all of these item types must be written*
   
   JTextArea "PlayerData" added. In the future will hold all player data, and party member data if that is implemented
   
@@ -86,7 +88,7 @@ Project Description: 2.5D RPG game
   
   Boss for the volcano level is TBD. Maybe the volcano level will be the last level. 
   
-  **6/2/14** 
+  *6/2/14*
   Joey:
   
   incomplete GUI and screen, will complete in near future (Joey)
@@ -97,7 +99,7 @@ Project Description: 2.5D RPG game
   
   Map creation started, tile classes created, awaiting implementation in screen to render map (Justin)
   
-  **Note for all textures and sprites, create placeholders I (joey) will later replace them with proper images.**
+  *Note for all textures and sprites, create placeholders I (joey) will later replace them with proper images.*
   
   Awaiting proper implementation of drawing player and monsters to screen. 
   
