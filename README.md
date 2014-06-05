@@ -78,7 +78,6 @@ Project Description: 2.5D RPG game
   Boss for the volcano level is TBD. Maybe the volcano level will be the last level. 
   
   **6/2/14** 
-  
   Joey:
   
   incomplete GUI and screen, will complete in near future (Joey)
