@@ -18,11 +18,20 @@ Project Description: 2.5D RPG game
   Textures and images get dumped in images directory 
   
   Feature log: 
-  
   **6/5/14**
   Joey:
   
-  **Justin is getting runtime errors, we need to figure out why and fix it ASAP**
+  Begin migration of test code into Game Loop class (Justin)
+  
+  tile map rendering fully implemented (Justin)
+  
+  Screen flicker failsafe implemented (paint black screen) (Joey)
+  
+  
+  **6/4/14**
+  Joey:
+  
+  **Justin is getting runtime errors, we need to figure out why and fix it ASAP**  Fixed
   
   Controls fixed
   
