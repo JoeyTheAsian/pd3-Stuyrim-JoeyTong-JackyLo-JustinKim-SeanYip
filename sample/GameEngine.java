@@ -12,7 +12,6 @@ public class GameEngine implements Runnable  {
     private ArrayList<Character> characters;
     private ArrayList<Character> ai;
 
-
     public GameEngine() {
         prevTick = -1;
         tickTimes = new LinkedList<Long>();
@@ -109,5 +108,26 @@ public class GameEngine implements Runnable  {
 
     public boolean isRunning() {
         return running;
+    }
+
+
+    // Keyboard event methods to be called from GamePanel or Screen or
+    // whatever you intend
+    public void keyPressed(KeyEvent event) {
+        int keyCode = event.getKeyCode();
+        if (keyCode == KeyEvent.VK_W) {
+        } else if (keyCode == KeyEvent.VK_A) {
+        } else if (keyCode == KeyEvent.VK_S) {
+        } else if (keyCode == KeyEvent.VK_D) {
+        }
+    }
+
+    public void keyReleased(KeyEvent event) {
+        int keyCode = event.getKeyCode();
+        if (keyCode == KeyEvent.VK_W) {
+        } else if (keyCode == KeyEvent.VK_A) {
+        } else if (keyCode == KeyEvent.VK_S) {
+        } else if (keyCode == KeyEvent.VK_D) {
+        }
     }
 }
