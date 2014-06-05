@@ -28,7 +28,7 @@ public class GamePanel extends JPanel {
     private int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height-37;
     private int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
     //dimensions of the bottom portion of the screen with all the buttons
-    private int height = windowHeight / 6;
+    private int height = windowHeight /5+10;
     private int width = windowWidth;
 
     private BufferedImage bg;//background
@@ -51,14 +51,15 @@ public class GamePanel extends JPanel {
 	InventButton.setVerticalTextPosition(SwingConstants.CENTER);
 	InventButton.setHorizontalTextPosition(SwingConstants.CENTER);
 	InventButton.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-	InventButton.setBounds(windowWidth/6*5,windowHeight/5*4,width/6,height/3);
+	InventButton.setBounds(windowWidth/6*5,windowHeight-height,width/6,height/4);
 	//get button texture
 	Image i1 = new ImageIcon("GUI Images/Button.png").getImage().getScaledInstance
 	    (InventButton.getWidth(),InventButton.getHeight(),java.awt.Image.SCALE_SMOOTH);
 	InventButton.setIcon(new ImageIcon(i1));
 	InventButton.setForeground(Color.white);
 	InventButton.addActionListener(e -> {
-
+		//return input focus to screen after pressing on gamepanel
+		screen.requestFocusInWindow();
 	    });
 	JButton PartyButton = new JButton("Party");
 	PartyButton.setOpaque(false);
@@ -67,11 +68,11 @@ public class GamePanel extends JPanel {
 	PartyButton.setVerticalTextPosition(SwingConstants.CENTER);
 	PartyButton.setHorizontalTextPosition(SwingConstants.CENTER);
 	PartyButton.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-	PartyButton.setBounds(windowWidth/6*5,windowHeight/5*4+height/3,width/6,height/3);
+	PartyButton.setBounds(windowWidth/6*5,(windowHeight-height)+height/4,width/6,height/4);
 	PartyButton.setIcon(new ImageIcon(i1));
 	PartyButton.setForeground(Color.white);
 	PartyButton.addActionListener(e -> {
-
+		screen.requestFocusInWindow();
 	    });
 	JButton MenuButton = new JButton("Menu");
 	MenuButton.setOpaque(false);
@@ -80,15 +81,16 @@ public class GamePanel extends JPanel {
 	MenuButton.setVerticalTextPosition(SwingConstants.CENTER);
 	MenuButton.setHorizontalTextPosition(SwingConstants.CENTER);
 	MenuButton.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-	MenuButton.setBounds(windowWidth/6*5,windowHeight/5*4+(height/3*2),width/6,height/3);
+	MenuButton.setBounds(windowWidth/6*5,(windowHeight-height)+(height/4*2),width/6,height/4);
 	MenuButton.setIcon(new ImageIcon(i1));
 	MenuButton.setForeground(Color.white);
 	MenuButton.addActionListener(e -> {
-
+		screen.requestFocusInWindow();
 	    });
 
 	//GRABS ALL PARTY DATA INCLUDING HP, MANA, ETC
 	JTextArea PlayerData = new JTextArea();
+	PlayerData.setSelectedTextColor(Color.WHITE);
 	PlayerData.setSize(width/6,height);
 	PlayerData.setLocation(0,windowHeight/5*4);
 
@@ -110,6 +112,7 @@ public class GamePanel extends JPanel {
 	
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
+	g.drawImage(bg,0,windowHeight-height,width,height, null);
     }
 
     //SCREEN CLASS
@@ -126,6 +129,9 @@ public class GamePanel extends JPanel {
 	private Thread thread;
 	private BufferedImage bg;
 
+	private BufferedImage flickerStop;
+
+
 	//for testing putposes
 	private Player slime = new Player("Slime.png", 100, 100);
 	private Player bird = new Player("Bird.png", 250, 250);
@@ -134,12 +140,12 @@ public class GamePanel extends JPanel {
 	private int mapX = 0;
 	private int mapY = 0;
 
-        // The width and height of each tile in pixels
-        private static final int TILE_SCALE = 60;
-        private Map currentMap;
+           // The width and height of each tile in pixels
+           private static final int TILE_SCALE = 60;
+           private Map currentMap;
 
 	//SCREEN dimensions
-	private int screenHeight = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4);
+	private int screenHeight = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4-10);
 	private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
 	
 
@@ -148,12 +154,14 @@ public class GamePanel extends JPanel {
 	private LinkedList<Long> frames = new LinkedList<>();
 	private int averageFPS;
 	private boolean running;
-
+	
 
 	public Screen() {
 	    setSize(screenWidth, screenHeight);
-	    try {bg = ImageIO.read(new File("GUI Images/success.jpg"));}
-	    catch (Exception e) {Utilities.showErrorMessage(this, e);}
+	    try {bg = ImageIO.read(new File("GUI Images/success.jpg"));
+	    }catch (Exception e) {Utilities.showErrorMessage(this, e);}
+	    try{flickerStop =ImageIO.read(new File("GUI Images/flickerStop.png"));
+	    }catch(Exception e){Utilities.showErrorMessage(this,e);}
 	    characters.add(slime);
 	    //	ai.add(bird);
 	    //ai.add(giant);
@@ -195,9 +203,13 @@ public class GamePanel extends JPanel {
 		return;
 	    }
 	    Graphics g= bs.getDrawGraphics();
-	    //draws map
-	    g.setColor(Color.WHITE);
+	    //draws black screen to prevent layered images and flicker
+	    g.drawImage(flickerStop,0,0,screenWidth,screenHeight, null);
+	    // Draw the current map
+	    g.drawImage(bg, 0+mapX,0+mapY, screenWidth, screenHeight, null);
+	    //    drawMap(g);
 	    //draw fps
+	    g.setColor(Color.WHITE);
 	    g.drawString("FPS: " + averageFPS, 0, 20);
 
 	    //loops and draws all the entities players/monsters
@@ -211,17 +223,13 @@ public class GamePanel extends JPanel {
 	    for (Character character : characters) {
 		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
 	    }
-
-            // Draw the current map
-            drawMap(g);
-
 	    g.dispose();
 	    bs.show();
 	}
 
         // Renders the tilemap of the current map to the screen
         private void drawMap(Graphics g) {
-            Tile[][] tilemap = currentMap.getTilemap();
+            Tile[][] tilemap = currentMap.getTileMap();
             for (int i = 0; i < tilemap.length; i++) {
                 for (int j = 0; j < tilemap[i].length; j++) {
                     drawTile(i, j, tilemap[i][j], g);
@@ -236,8 +244,8 @@ public class GamePanel extends JPanel {
     
 	public void run() {
 	    while (running) {
-		render();
 		tick();
+		render();
 	    }
 	}
 	
@@ -272,7 +280,6 @@ public class GamePanel extends JPanel {
 	    }
 	
 	    long pastTime = System.currentTimeMillis() - prevTick;
-	    prevTick = System.currentTimeMillis();
 
 	    if (frames.size() == FPS_SAMPLE_SIZE) {
 		frames.remove();
@@ -286,13 +293,13 @@ public class GamePanel extends JPanel {
 	    }
 	    long averageFrame = sum / FPS_SAMPLE_SIZE;
 	    averageFPS = (int)(1000 / averageFrame);
-
+	    prevTick = System.currentTimeMillis();
 	    // Only if the time passed since the previous tick is less than one
 	    // second divided by the number of maximum FPS allowed do we delay
 	    // ourselves to give Time time to catch up to our rendering.
 	    if (pastTime < 1000.0 / MAX_FPS) {
 		try {
-		    Thread.sleep((1000 / MAX_FPS) - pastTime);
+		    Thread.sleep((1000 / MAX_FPS)-pastTime);
 		} catch (InterruptedException e) {
 		    Utilities.showErrorMessage(this, e);
 		}
