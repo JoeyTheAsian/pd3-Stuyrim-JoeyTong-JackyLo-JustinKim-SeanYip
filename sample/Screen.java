@@ -74,10 +74,7 @@ public class Screen extends Canvas implements Runnable {
 	start();
     }
 	
-    public void paint(Graphics g) {
-	BufferStrategy bs = getBufferStrategy();
-	if (bs == null) {
-	    createBufferStrategy(3);
+    public void paint(Gra   createBufferStrategy(2);
 	    return;
 	}
 	g = bs.getDrawGraphics();
@@ -89,15 +86,16 @@ public class Screen extends Canvas implements Runnable {
 	}
 	for (Character character : ai) {g.drawImage(character.getImage(), character.getX(), character.getY(), null);}
 	for (Character character : characters) {g.drawImage(character.getImage(), character.getX(), character.getY(), null);}
-	g.dispose();
 	bs.show();
+	//g.dispose();
     }
 
     public void run() {
         running = true;
 	while (running) {
-            repaint();
+ 
             tick();
+	    repaint();
 	}
     }
 	
@@ -113,13 +111,12 @@ public class Screen extends Canvas implements Runnable {
     }
 	
     public void tick() {
-	//System.out.println("tick");
 	if (keysPressed[KeyEvent.VK_W] && (slime.getY() > 0)) {slime.setY(slime.getY() - 1);}
 	if (keysPressed[KeyEvent.VK_S] && (slime.getY() < height)) {slime.setY(slime.getY() + 1);}
 	if (keysPressed[KeyEvent.VK_A] && (slime.getY() > 0)) {slime.setX(slime.getX() - 1);}
-	if (keysPressed[KeyEvent.VK_D] && (slime.getY() > width)) {slime.setX(slime.getX() + 1);}
+	if (keysPressed[KeyEvent.VK_D] && (slime.getY() < width)) {slime.setX(slime.getX() + 1);}
 	//	System.out.println(slime.getX() + ", " + slime.getY());
-
+	
         long pastTime = System.currentTimeMillis() - prevTick;
         prevTick = System.currentTimeMillis();
 
@@ -135,16 +132,18 @@ public class Screen extends Canvas implements Runnable {
         }
         long averageFrame = sum / FPS_SAMPLE_SIZE;
         averageFPS = (int)(1000 / averageFrame);
-	System.out.println(averageFPS);
+
         // Only if the time passed since the previous tick is less than one
         // second divided by the number of maximum FPS allowed do we delay
         // ourselves to give Time time to catch up to our rendering.
-        if (pastTime < 1000.0 / MAX_FPS) {
+	if (pastTime < 1000.0 / MAX_FPS) {
             try {
                 Thread.sleep((1000 / MAX_FPS) - pastTime);
+	        System.out.println(averageFPS);
             } catch (InterruptedException e) {
                 System.out.println(e);
-            }
-        }
+		}
+	}
+    
     }
 }
