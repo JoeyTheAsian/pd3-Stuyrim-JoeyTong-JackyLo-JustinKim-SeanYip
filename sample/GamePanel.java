@@ -58,8 +58,8 @@ public class GamePanel extends JPanel {
 	InventButton.setIcon(new ImageIcon(i1));
 	InventButton.setForeground(Color.white);
 	InventButton.addActionListener(e -> {
-		//return input focus to screen after pressing on gamepanel
-		screen.requestFocusInWindow();
+		screen.stop();
+		//screen.requestFocusInWindow();
 	    });
 	JButton PartyButton = new JButton("Party");
 	PartyButton.setOpaque(false);
@@ -72,7 +72,8 @@ public class GamePanel extends JPanel {
 	PartyButton.setIcon(new ImageIcon(i1));
 	PartyButton.setForeground(Color.white);
 	PartyButton.addActionListener(e -> {
-		screen.requestFocusInWindow();
+		screen.start();
+		//screen.requestFocusInWindow();
 	    });
 	JButton MenuButton = new JButton("Menu");
 	MenuButton.setOpaque(false);
@@ -127,7 +128,6 @@ public class GamePanel extends JPanel {
 	private ArrayList<Character> characters = new ArrayList<>();
 	private ArrayList<Character> ai = new ArrayList<>();
 	private Thread thread;
-	private BufferedImage bg;
 
 	private BufferedImage flickerStop;
 
@@ -158,8 +158,6 @@ public class GamePanel extends JPanel {
 
 	public Screen() {
 	    setSize(screenWidth, screenHeight);
-	    try {bg = ImageIO.read(new File("GUI Images/success.jpg"));
-	    }catch (Exception e) {Utilities.showErrorMessage(this, e);}
 	    try{flickerStop =ImageIO.read(new File("GUI Images/flickerStop.png"));
 	    }catch(Exception e){Utilities.showErrorMessage(this,e);}
 	    characters.add(slime);
@@ -260,19 +258,19 @@ public class GamePanel extends JPanel {
 	public void tick() {
 	    if (keysPressed[KeyEvent.VK_W] && (slime.getY() > 0)) {
 		//	slime.setY(slime.getY() - 1);
-		mapY--;
+		mapY++;
 	    }
 	    if (keysPressed[KeyEvent.VK_S] && (slime.getY() < screenHeight)) {
 		//	slime.setY(slime.getY() + 1);
-		mapY++;
+		mapY--;
 	    }
 	    if (keysPressed[KeyEvent.VK_A] && (slime.getY() > 0)) {
 		//	slime.setX(slime.getX() - 1);
-		mapX--;
+		mapX ++;
 	    }
 	    if (keysPressed[KeyEvent.VK_D] && (slime.getY() < screenWidth)) {
 		//	slime.setX(slime.getX() + 1);
-		mapX ++;
+		mapX--;
 	    }
 	
 	    long pastTime = System.currentTimeMillis() - prevTick;
