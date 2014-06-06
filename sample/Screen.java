@@ -113,13 +113,13 @@ public class Screen extends Canvas implements Runnable {
     }
 	
     public void tick() {
-	System.out.println("tick");
+	//System.out.println("tick");
 	if (keysPressed[KeyEvent.VK_W] && (slime.getY() > 0)) {slime.setY(slime.getY() - 1);}
 	if (keysPressed[KeyEvent.VK_S] && (slime.getY() < height)) {slime.setY(slime.getY() + 1);}
 	if (keysPressed[KeyEvent.VK_A] && (slime.getY() > 0)) {slime.setX(slime.getX() - 1);}
 	if (keysPressed[KeyEvent.VK_D] && (slime.getY() > width)) {slime.setX(slime.getX() + 1);}
-	System.out.println(slime.getX() + ", " + slime.getY());
-	//
+	//	System.out.println(slime.getX() + ", " + slime.getY());
+
         long pastTime = System.currentTimeMillis() - prevTick;
         prevTick = System.currentTimeMillis();
 
@@ -135,7 +135,7 @@ public class Screen extends Canvas implements Runnable {
         }
         long averageFrame = sum / FPS_SAMPLE_SIZE;
         averageFPS = (int)(1000 / averageFrame);
-
+	System.out.println(averageFPS);
         // Only if the time passed since the previous tick is less than one
         // second divided by the number of maximum FPS allowed do we delay
         // ourselves to give Time time to catch up to our rendering.
