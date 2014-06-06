@@ -1,3 +1,7 @@
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 public class GameEngine implements Runnable  {
 
     private static final int MAX_TICKS_PER_SEC = 60;
@@ -15,11 +19,11 @@ public class GameEngine implements Runnable  {
     public GameEngine() {
         prevTick = -1;
         tickTimes = new LinkedList<Long>();
-        characters = new ArrayList<Character();
-        ai = new ArrayList<Character();
+        characters = new ArrayList<Character>();
+        ai = new ArrayList<Character>();
 
         // Testing
-        private Character slime, bird, giant, swordsman;
+        Character slime, bird, giant, swordsman;
         slime = new Character("Slime.png", 100, 100);
         bird = new Character("Bird.png", 250, 250);
         giant = new Character("Giant.png", 250, 500);
@@ -64,7 +68,7 @@ public class GameEngine implements Runnable  {
     public void tick() {
         long pastTime = System.currentTimeMillis() - prevTick;
 
-        if (tickTimes.size() == TPS_SAMPLE_SIZE) {
+        if (tickTimes.size() == TICKS_SAMPLE_SIZE) {
             tickTimes.remove();
         }
         tickTimes.add(pastTime);
@@ -74,7 +78,7 @@ public class GameEngine implements Runnable  {
         for (long tick : tickTimes) {
             sum += tick;
         }
-        long averageTickTime = sum / TPS_SAMPLE_SIZE;
+        long averageTickTime = sum / TICKS_SAMPLE_SIZE;
         averageTPS = (int)(1000 / averageTickTime);
 
         prevTick = System.currentTimeMillis();
@@ -83,7 +87,7 @@ public class GameEngine implements Runnable  {
         // maximum number of ticks per second.
         if (pastTime < 1000.0 / MAX_TICKS_PER_SEC) {
             try {
-                Thread.sleep((1000.0 / MAX_FPS) - pastTime);
+                Thread.sleep((long)(1000.0 / MAX_TICKS_PER_SEC) - pastTime);
             } catch (InterruptedException e) {
                 System.out.println(e);
             }
@@ -98,8 +102,12 @@ public class GameEngine implements Runnable  {
         }
     }
 
-    public ArrayList<Character>[] getCharacters() {
-        return {players, monsters};
+    // Wow holy shit
+    public ArrayList<ArrayList<Character>> getCharacters() {
+        ArrayList<ArrayList<Character>> retAry = new ArrayList<ArrayList<Character>>();
+        retAry.add(characters);
+        retAry.add(ai);
+        return retAry;
     }
 
     public int getAverageTPS() {
