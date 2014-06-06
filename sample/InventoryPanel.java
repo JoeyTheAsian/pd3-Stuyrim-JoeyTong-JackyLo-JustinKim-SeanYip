@@ -41,20 +41,26 @@ public class InventoryPanel extends JPanel {
 	inventoryTableScrollPane = new JScrollPane(inventoryTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 	try {image = ImageIO.read(new File("GUI Images/trimmed wood background.png"));}
 	catch (Exception e) {Utilities.showErrorMessage(this, e);}
-	add(inventoryTableScrollPane);
+		add(inventoryTableScrollPane);
 	addFocusListener(new FocusListener() {
-			public void focusGained(FocusEvent e) {}
-			public void focusLost(FocusEvent e) {requestFocusInWindow();}	
-	});
+		public void focusGained(FocusEvent e) {}
+		public void focusLost(FocusEvent e) {
+		    requestFocusInWindow();
+		}	
+		});
 	setVisible(false);
     }
 	
-	public Inventory getInventory() {return inventory;}
-	
+    public Inventory getInventory() {
+	return inventory;
+    }
+		
+    public void setInventory(Inventory inventory) {
+	this.inventory = inventory;
+    }
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	g.drawImage(image,0,0,width,height,null);
     }
-	
-	public void setInventory(Inventory inventory) {this.inventory = inventory;}
+
 }

@@ -37,7 +37,7 @@ public class GamePanel extends JPanel {
     private int width = windowWidth;
     //player inventory will probably be removed in the future after testing
     private Inventory inventory = new Inventory();
-	private InventoryPanel invent = new InventoryPanel(inventory);
+    private InventoryPanel invent = new InventoryPanel(inventory);
     private PartyPanel party = new PartyPanel();
     Screen screen = new Screen();
     
@@ -129,6 +129,7 @@ public class GamePanel extends JPanel {
 	playerData.append("Player 1: \nHP: gethp()    |    Mana: getMana()     |    otherstuff");
 
 	//creates inventory panel
+	invent.setSize(windowWidth/2, windowHeight/2);
 	invent.setLocation(windowWidth/4, windowHeight/4);
 	
 
