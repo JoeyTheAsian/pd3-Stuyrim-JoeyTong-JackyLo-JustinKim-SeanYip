@@ -146,9 +146,12 @@ public class GamePanel extends JPanel {
 
 	private BufferedImage flickerStop;
 
+	//SCREEN dimensions
+	private int screenHeight = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4-10);
+	private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
 
 	//for testing putposes
-	private Player slime = new Player("Slime.png", 100, 100);
+	private Player slime = new Player("Slime.png", screenWidth/2, screenHeight/2);
 	private Player bird = new Player("Bird.png", 250, 250);
 	private Player giant = new Player("Giant.png", 250, 500);
 	private Player swordsman = new Player("Swordsman.png", 500, 250);
@@ -158,11 +161,6 @@ public class GamePanel extends JPanel {
 	// The width and height of each tile in pixels
 	private static final int TILE_SCALE = 60;
 	private Map currentMap;
-
-	//SCREEN dimensions
-	private int screenHeight = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4-10);
-	private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-	
 
 	//more FPS stuff
 	private long prevTick = -1;
@@ -176,7 +174,9 @@ public class GamePanel extends JPanel {
 	    try{flickerStop =ImageIO.read(new File("GUI Images/flickerStop.png"));
 	    }catch(Exception e){Utilities.showErrorMessage(this,e);}
 	    characters.add(slime);
-
+	    ai.add(bird);
+	    ai.add(giant);
+	    ai.add(swordsman);
             // Temporary code until tile textures are done
             currentMap = new Map();
             currentMap.setTile(5, 5, Tile.WALL);
@@ -223,8 +223,8 @@ public class GamePanel extends JPanel {
 
 	    //loops and draws all the entities players/monsters
 	    for (Character character : ai){
-		character.setY(character.getY() + (int)(Math.random() * 10 - 5));
-		character.setX(character.getX() + (int)(Math.random() * 10 - 5));
+		character.setY(character.getY() + (int)(Math.random()*3)-1);
+		character.setX(character.getX() + (int)(Math.random()*3)-1);
 	    }
 	    for (Character character : ai) {
 		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
@@ -274,18 +274,26 @@ public class GamePanel extends JPanel {
 	    if (keysPressed[KeyEvent.VK_W] && (slime.getY() > 0)) {
 		//	slime.setY(slime.getY() - 1);
 		mapY++;
+		for (Character monster : ai)
+		    monster.setY(monster.getY()+1);
 	    }
 	    if (keysPressed[KeyEvent.VK_S] && (slime.getY() < screenHeight)) {
 		//	slime.setY(slime.getY() + 1);
 		mapY--;
+		for (Character monster : ai)
+		    monster.setY(monster.getY()-1);
 	    }
 	    if (keysPressed[KeyEvent.VK_A] && (slime.getY() > 0)) {
 		//	slime.setX(slime.getX() - 1);
 		mapX ++;
+		for (Character monster : ai)
+		    monster.setX(monster.getX()+1);
 	    }
 	    if (keysPressed[KeyEvent.VK_D] && (slime.getY() < screenWidth)) {
 		//	slime.setX(slime.getX() + 1);
 		mapX--;
+		for (Character monster : ai)
+		    monster.setX(monster.getX()-1);
 	    }
 	
 	    long pastTime = System.currentTimeMillis() - prevTick;
