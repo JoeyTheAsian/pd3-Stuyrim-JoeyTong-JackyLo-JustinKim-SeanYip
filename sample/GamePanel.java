@@ -94,11 +94,13 @@ public class GamePanel extends JPanel {
 	PlayerData.setSelectedTextColor(Color.WHITE);
 	PlayerData.setSize(width/6,height);
 	PlayerData.setLocation(0,windowHeight/5*4);
-
-	//PUT THE PLAYERDATA IN HERE
-	PlayerData.append("Player 1: \nHP: gethp()    |    Mana: getMana()     |    otherstuff");
 	PlayerData.setOpaque(false);
 	PlayerData.setVisible(true);
+	PlayerData.setForeground(Color.WHITE);
+	PlayerData.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+	//PUT THE PLAYERDATA IN HER
+	PlayerData.append("Player 1: \nHP: gethp()    |    Mana: getMana()     |    otherstuff");
+
 
 
 	screen = new Screen();
