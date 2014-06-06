@@ -17,12 +17,17 @@ public class Screen extends Canvas implements Runnable, ActionListener {
         private ArrayList<Character> ai = new ArrayList<>();
 	private Thread thread;
 	private BufferedImage image;
+
+    //for testing putposes
 	private Player slime = new Player("Slime.png", 100, 100);
         private Player bird = new Player("Bird.png", 250, 250);
         private Player giant = new Player("Giant.png", 250, 500);
         private Player swordsman = new Player("Swordsman.png", 500, 250);
+
+    //screen dimensions
 	private int height = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4);
 	private int width = Toolkit.getDefaultToolkit().getScreenSize().width;
+
 	private boolean running;
         private Timer timer = new Timer(100,this);
 
@@ -35,9 +40,9 @@ public class Screen extends Canvas implements Runnable, ActionListener {
 		ai.add(giant);
 		ai.add(swordsman);
 		addKeyListener(new KeyListener() {
-				public void keyPressed(KeyEvent e) {}
-				public void keyReleased(KeyEvent e) {}
-				public void keyTyped(KeyEvent e) {
+				public void keyPressed(KeyEvent e) {
+				    //don't put control logic into screen class,do it in player and game engine
+				    //create movement loop while key is pressed set move boolean to true in keypressed, set to false in keyreleased
 					if (e.getKeyChar() == 'w') {
 						if (slime.getY() == 0) {return;}
 						slime.setY(slime.getY() - 5);
@@ -54,9 +59,11 @@ public class Screen extends Canvas implements Runnable, ActionListener {
 						if (slime.getX() >= (width - slime.getWidth())) {return;}
 						slime.setX(slime.getX() + 5);
 					}
-					repaint();
-				}
+					repaint();}
+				public void keyReleased(KeyEvent e) {}
+				public void keyTyped(KeyEvent e) {}
 		    });
+		//what is timer used for? 
 		timer.start();
 		setVisible(true);
 	}
@@ -105,7 +112,7 @@ public class Screen extends Canvas implements Runnable, ActionListener {
 		bs.show();
 	}
 		
-
+    //this just moves the monsters around randomly? 
     
         public void actionPerformed(ActionEvent q){
 	    for (Character character : ai){
