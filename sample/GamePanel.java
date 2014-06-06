@@ -223,8 +223,14 @@ public class GamePanel extends JPanel {
 
 	    //loops and draws all the entities players/monsters
 	    for (Character character : ai){
-		character.setY(character.getY() + (int)(Math.random()*3)-1);
-		character.setX(character.getX() + (int)(Math.random()*3)-1);
+		double changeX = slime.getX() - character.getX();
+		double changeY = slime.getY() - character.getY();
+		double distance = Math.sqrt( changeX*changeX + changeY*changeY );
+		if (distance < 100.0){}
+		else{
+		    character.setX(character.getX() + (int)(2*changeX/distance));
+		    character.setY(character.getY() + (int)(2*changeY/distance));
+		}
 	    }
 	    for (Character character : ai) {
 		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
@@ -273,27 +279,27 @@ public class GamePanel extends JPanel {
 	public void tick() {
 	    if (keysPressed[KeyEvent.VK_W] && (slime.getY() > 0)) {
 		//	slime.setY(slime.getY() - 1);
-		mapY++;
+		mapY+=2;
 		for (Character monster : ai)
-		    monster.setY(monster.getY()+1);
+		    monster.setY(monster.getY()+2);
 	    }
 	    if (keysPressed[KeyEvent.VK_S] && (slime.getY() < screenHeight)) {
 		//	slime.setY(slime.getY() + 1);
-		mapY--;
+		mapY-=2;
 		for (Character monster : ai)
-		    monster.setY(monster.getY()-1);
+		    monster.setY(monster.getY()-2);
 	    }
 	    if (keysPressed[KeyEvent.VK_A] && (slime.getY() > 0)) {
 		//	slime.setX(slime.getX() - 1);
-		mapX ++;
+		mapX +=2;
 		for (Character monster : ai)
-		    monster.setX(monster.getX()+1);
+		    monster.setX(monster.getX()+2);
 	    }
 	    if (keysPressed[KeyEvent.VK_D] && (slime.getY() < screenWidth)) {
 		//	slime.setX(slime.getX() + 1);
-		mapX--;
+		mapX-=2;
 		for (Character monster : ai)
-		    monster.setX(monster.getX()-1);
+		    monster.setX(monster.getX()-2);
 	    }
 	
 	    long pastTime = System.currentTimeMillis() - prevTick;
