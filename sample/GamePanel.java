@@ -32,9 +32,13 @@ public class GamePanel extends JPanel {
     private int width = windowWidth;
 
     private BufferedImage bg;//background
+    //player inventory will probably be removed in the future after testing
+    private ArrayList <Item> inventory= new ArrayList <Item>();
 
     public Screen screen = new Screen();
-
+    public InventoryPanel invent = new InventoryPanel(new ArrayList <Item>());
+    
+    
     public GamePanel() {
 	setLayout(null);
 	setBounds(0, 0 , windowWidth, windowHeight);
@@ -58,8 +62,14 @@ public class GamePanel extends JPanel {
 	InventButton.setIcon(new ImageIcon(i1));
 	InventButton.setForeground(Color.white);
 	InventButton.addActionListener(e -> {
-
-		//screen.requestFocusInWindow();
+		if(invent.isVisible()){
+		    invent.setVisible(false);
+		    screen.requestFocusInWindow();
+		}else if(!invent.isVisible()){
+		    invent.setVisible(true);
+		    invent.requestFocusInWindow();
+		    invent.updateInventory(inventory);
+		}
 	    });
 	JButton PartyButton = new JButton("Party");
 	PartyButton.setOpaque(false);
@@ -100,9 +110,14 @@ public class GamePanel extends JPanel {
 	//PUT THE PLAYERDATA IN HER
 	PlayerData.append("Player 1: \nHP: gethp()    |    Mana: getMana()     |    otherstuff");
 
+	//creates inventory panel
+	invent.setSize(windowWidth/2, windowHeight/2);
+	invent.setLocation(windowWidth/4, windowHeight/4);
+	
 
 	screen = new Screen();
-
+	
+	add(invent);
 	add(PlayerData);
 	add(MenuButton);
 	add(InventButton);
@@ -140,9 +155,9 @@ public class GamePanel extends JPanel {
 	private int mapX = 0;
 	private int mapY = 0;
 
-           // The width and height of each tile in pixels
-           private static final int TILE_SCALE = 60;
-           private Map currentMap;
+	// The width and height of each tile in pixels
+	private static final int TILE_SCALE = 60;
+	private Map currentMap;
 
 	//SCREEN dimensions
 	private int screenHeight = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4-10);
