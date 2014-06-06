@@ -54,6 +54,7 @@ Project Description: 2.5D RPG game
   
   
   *6/4/14*
+  
   Joey:
   
   *Justin is getting runtime errors, we need to figure out why and fix it ASAP*  Fixed
@@ -82,6 +83,7 @@ Project Description: 2.5D RPG game
   
   
   *6/3/14*
+  
   Joey:
   
   Control fluidity improvied, still not correct. All coordinate logic should be done externally, preferably in still unstarted game engine (Sean)
@@ -112,6 +114,7 @@ Project Description: 2.5D RPG game
   Boss for the volcano level is TBD. Maybe the volcano level will be the last level. 
   
   *6/2/14*
+  
   Joey:
   
   incomplete GUI and screen, will complete in near future (Joey)
