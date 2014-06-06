@@ -21,19 +21,34 @@ public class Swordsman extends Player{
     }
     
     public void setShield(Item shd){ shield = shd; }
-
     public Item getShield(){ return shield; }
 
     public void sAttack(){//circle slash, deals damage to monsters and decreases ATKspeed and DEF of monsters inside range of 100?
-    
+	for (Monster monster : getSurroundingMonsters(100)){
+	    attack(monster);
+	    monster.setDEF(monster.getDEF()-getDEF()*0.2);
+	    monster.setATKspeed(monster.getATKspeed()-getATKspeed()*0.2);
+	}
     }
   
-    public void sAttack2(){//relentless pursuit, increases DEF, ATK, and luk
-    
+    public void sAttack2(){//relentless pursuit, increases DEF, ATK, and luk, and heals you
+	HP = HP + maxHP*0.25;
+	if (HP > maxHP)
+	    HP = maxHP;
+	DEF = DEF + maxDEF*0.1;
+	ATK = ATK + maxATK*0.1;
+	luk = luk + maxLuk*0.1;
+	haveBuff = true;
     }
   
     public void sAttack3(){//fatal slash, bleeds the surrounding enemies and decreases its speed
 
+    }
+
+    public void finishBuff(){
+	ATK = maxATK;
+	DEF = maxDEF;
+	luk = maxLuk;
     }
 
     public void LVLup(){
@@ -42,14 +57,13 @@ public class Swordsman extends Player{
     }
 
     public void LVLupStats(){
-	setHP(getHP()+25);
-	setATK(getATK()+10);
-	setDEF(getDEF()+10);
-	setLuk(getLuk()+1);
+	setMaxHP(getMaxHP()+25);
+	setMaxATK(getMaxATK()+10);
+	setMaxDEF(getMaxDEF()+10);
+	setMaxLuk(getMaxLuk()+1);
 	if (getLVL()%2 == 0){
-	    setSpeed(getSpeed()+1);
-	    setATKSpeed(getATKSpeed()-1);
+	    setMaxSpeed(getMaxSpeed()+1);
+	    setMaxATKSpeed(getMaxATKSpeed()-1);
 	}
     }
-
 }

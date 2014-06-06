@@ -124,7 +124,9 @@ public abstract class Unit{
 
     public void charge(){
 	if (mana < maxMana)
-	    mana+=10; 
+	    mana+=10;
+	else
+	    mana = maxMana;
     }
 
     public void finishDebuff(){ //once debuff is done

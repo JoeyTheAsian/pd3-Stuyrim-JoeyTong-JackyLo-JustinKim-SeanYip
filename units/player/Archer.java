@@ -28,9 +28,14 @@ public class Archer extends Player{
 	range = 150;
 	image = new ImageIcon("Archer.png").getImage();
     }
+
+    public void setHaveBuff2(boolean bf2){ haveBuff2 = bf2; }
+    public boolean getHaveBuff2(){ return haveBuff2; }
+
+    public int getBuffTime2(){ return buffTime2; }
   
     public void sAttack(){ //blunt, giant arrows that knocks surrounding monsters away by 200?
-	for (Monster monster : getSurroundingMonsters()){
+	for (Monster monster : getSurroundingMonsters(range)){
 	    if (monster.getMapX() < getMapX())
 		monster.setMapX(getMapX()-141); //100*sqrt(2)
 	    else if (monster.getMapX() > getMapX())
@@ -39,7 +44,7 @@ public class Archer extends Player{
 		monster.setMapY(getMapY()-141);
 	    else if (monster.getMapY() > getMapY())
 		monster.setMapY(getMapX()+141);
-	    monster.setSpeed(speed-2);
+	    monster.setSpeed(getSpeed()-2);
 	    monster.haveDebuff = true;
 	    //start debuffTime
 	}
@@ -48,8 +53,8 @@ public class Archer extends Player{
     }
   
     public void sAttack2(){ //mercury shoes and a minigun bow, increases speed and ATKspeed
-	speed = speed + speed*(0.25+(double)LVL*0.01);
-	ATKspeed = ATKspeed + ATKspeed*(0.3+(double)LVL*0.01);
+	speed = speed + maxSpeed*0.25;
+	ATKspeed = ATKspeed + maxATKspeed*0.3;
 	mana -= 250;
 	haveBuff = true;
 	//start buffTime
@@ -57,12 +62,22 @@ public class Archer extends Player{
     }
   
     public void sAttack3(){ //deadly arrows, increases ATK and luk
-	ATK = ATK + ATK*(0.15+(double)LVL*0.01);
-	luk = luk + luk*(0.15+(double)LVL*0.01);
+	ATK = ATK + maxATK*0.15;
+	luk = luk + maxLuk*0.15;
 	mana -= 250;
 	haveBuff2 = true;
 	//start buffTime2
 	//start cooldownTime
+    }
+
+    public void finishBuff(){
+	speed = maxSpeed;
+	ATKspeed = maxATKspeed;
+    }
+
+    public void finishBuff2(){
+	ATK = maxATK;
+	luk = maxLuk;
     }
 
     public void LVLup(){
@@ -81,5 +96,4 @@ public class Archer extends Player{
 	if (getMaxATKSpeed() > 10)
 	    setMaxATKSpeed(getMaxATKSpeed()-2);
     }
-
 }

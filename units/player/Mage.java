@@ -33,9 +33,12 @@ public class Mage extends Player{
 	image = new ImageIcon("Mage.png").getImage();
     }
   
+    public void setManaCost(int mncst){ manaCost = mncst; }
+    public void getManaCost(){ return manaCost; }
+
     public void sAttack(){//health drain, takes percent of health from monsters in player's range and heals the player the sum of their health
 	int tempHP = 0;
-	for (Monster monster : getSurroundingMonsters()){
+	for (Monster monster : getSurroundingMonsters(range)){
 	    int tempMonsterHP = monster.getMaxHP()*(0.1 + (double)LVL*0.005);
 	    tempHP = tempHP + tempMonsterHP;
 	    monster.setHP(monster.getHP() - tempMonsterHP);
@@ -47,7 +50,8 @@ public class Mage extends Player{
 	//start cooldownTime
     }
 
-    public void sAttack2(){//hyper magic power, decreases cooldown and mana cost (so u can spam kamehamehas all ova da prasez)
+    public void sAttack2(){//hyper magic spam, increases ATK, decreases cooldown and mana cost (so u can spam kamehamehas all ova da prasez)
+	ATK = ATK + maxATK*0.15;
 	manaCost = 100;
 	CDS1 = 200;
 	CDS3 = 200;
@@ -61,22 +65,27 @@ public class Mage extends Player{
 	
     }
     
+    public void finishBuff(){
+	ATK = maxATK;
+	CDS1 = maxCDS1;
+	CDS3 = maxCDS3;
+    }
+
     public void LVLup(){
 	super.LVLup();
 	LVLupStats();
     }
 
     public void LVLupStats(){
-	setHP(getHP()+10);
-	setATK(getATK()+50);
-	setDEF(getDEF()+5);
+	setMaxHP(getMaxHP()+10);
+	setMaxATK(getMaxATK()+50);
+	setMaxDEF(getMaxDEF()+5);
 	if (getLVL()%2 == 0){
-	    setLuk(getLuk+1);
-	    setSpeed(getSpeed()+1);
+	    setMaxLuk(getMaxLuk()+1);
+	    setMaxSpeed(getMaxSpeed()+1);
 	}
 	if (getLVL()%3 == 0){
-	    setATKSpeed(getATKSpeed()-1);
+	    setMaxATKSpeed(getMaxATKSpeed()-1);
 	}
     }
-
 }

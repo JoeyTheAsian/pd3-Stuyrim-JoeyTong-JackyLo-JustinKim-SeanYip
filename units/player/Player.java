@@ -100,7 +100,7 @@ public abstract class Player extends Unit/* implements Serializable*/{
 		u.setHP(u.getHP()+u.getDEF()-getATK());
 	}
     }
-
+    //NEED FIX
     public ArrayList<Monster> getSurroundingEnemies(int rng /*within the range*/){
 	ArrayList<Monster>() surroundingMonsters = new ArrayList<Monster>();
 	for (Monster monster : /*in a global monster list*/) //for all enemies in the map
