@@ -10,6 +10,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JTextArea;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -74,6 +75,15 @@ public class GamePanel extends JPanel {
 		MenuButton.addActionListener(e -> {
 
 			});
+		//GRABS ALL PARTY DATA INCLUDING HP, MANA, ETC
+		JTextArea PlayerData = new JTextArea();
+		PlayerData.setSize(width/5,height);
+		PlayerData.setLocation(0,0);
+		PlayerData.append("Player 1: /n HP: gethp()    |    Mana: getMana()     |    otherstuff");
+		PlayerData.setOpaque(false);
+		
+		//PUT THE PLAYERDATA IN HERE
+		add(PlayerData);
 		add(MenuButton);
 		add(InventButton);
 		add(PartyButton);
