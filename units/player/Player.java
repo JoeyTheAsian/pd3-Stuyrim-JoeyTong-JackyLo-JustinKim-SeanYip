@@ -27,6 +27,7 @@ public abstract class Player extends Unit/* implements Serializable*/{
     public Player(int x, int y){
 	mapX = x;
 	mapY = y;
+	gold = 0;
     }
 
     public void setLVL(int level){ lvl = level; }
@@ -105,7 +106,7 @@ public abstract class Player extends Unit/* implements Serializable*/{
 	ArrayList<Monster>() surroundingMonsters = new ArrayList<Monster>();
 	for (Monster monster : /*in a global monster list*/) //for all enemies in the map
 	    if (monster.getDist(this) <= rng)
-		surroundingMonsters.add(enemy);
+		surroundingMonsters.add(monster);
 	return surroundingMonsters;
     }
 
@@ -119,4 +120,5 @@ public abstract class Player extends Unit/* implements Serializable*/{
 
     public abstract void LVLupStats();
 
+    public abstract ArrayList<Monster> getEnemiesInRange(int rng);
 }

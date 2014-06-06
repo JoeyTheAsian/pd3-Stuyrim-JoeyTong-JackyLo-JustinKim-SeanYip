@@ -61,10 +61,40 @@ public class Mage extends Player{
 	//start cooldownTime
     }
   
-    public void sAttack3(){//kamehameha that deals burns to monsters in the AoE
-	
+    public void sAttack3(){//kamehameha that slows to monsters in the AoE
+	//mouse position and coordinates
+	//get distance from mouse position to player and divide x coord and y coord by 20 - 30
+	//make variables for that
+	Projectile p = new Projectile(mapX,mapY);
+	while (/*p is inside the screen*/){
+	    for (Monster monster : p.getSurroundingEnemies(range)){
+		attack(monster);
+		monster.setSpeed(monster.getSpeed()-monster.getMaxSpeed()*0.1);
+	    }
+	    //p.setMapX(p.getMapX() +- x variable)
+	    //p.setMapY(p.getMapY() +- y variable)
+	}	
     }
     
+    private class Projectile extends Unit{ //for kamehameha
+	
+	public Projectile(int x, int y){
+	    mapX = x;
+	    mapY = y;
+	}
+
+	public ArrayList<Monster> getSurroundingEnemies(int rng){
+	    ArrayList<Monster>() surroundingMonsters = new ArrayList<Monster>();
+	    for (Monster monster : /*in a global monster list*/)
+		if (monster.getDist(this) <= rng)
+		    surroundingMonsters.add(monster);
+	    return surroundingMonsters();
+	}
+	
+	public void finishBuff(){}
+	public void sAttack(){}
+    }
+
     public void finishBuff(){
 	ATK = maxATK;
 	CDS1 = maxCDS1;

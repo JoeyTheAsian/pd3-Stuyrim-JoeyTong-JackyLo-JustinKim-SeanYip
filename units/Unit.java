@@ -19,10 +19,11 @@ public abstract class Unit{
     //protected double screenX, screenY;
     protected int mapX, mapY; //coordinates
     protected int CDS1 = 1000; //cooldown time for special attack in CENTIseconds
-    protected boolean haveDebuff = false, haveBuff = false; //debuffs don't stack, yet
+    protected boolean haveDebuff = false, haveBuff = false; //debuffs don't stack, they replace each other
     protected int debuffTime = 500, buffTime = 800; //lasting time for debuffs and buffs in CENTIseconds
     protected boolean isReady1 = true; //determines if sAttack is ready
     protected boolean isSet1 = false; //determines if sAttack is set
+    protected int gold;
 
     public String getName(){ return name; }
 
@@ -116,9 +117,12 @@ public abstract class Unit{
     public void setIsSet1(boolean is1){ isSet1 = is1; }
     public boolean getIsSet1(){ return isSet1; }
 
+    public void setGold(int gd){ gold = gd; }
+    public int getGold(){ return gold; }
+
     public int getDist(Unit u){ //gets the distance from Unit u
-	return Math.sqrt( Math.pow((getMapX()-u.getMapX()),2) +
-			  Math.pow((getMapY()-u.getMapY()),2));
+	return Math.sqrt( Math.abs( Math.pow((getMapX()-u.getMapX()),2) ) +
+			  Math.abs( Math.pow((getMapY()-u.getMapY()),2) ) );
 	//distance formula
     }
 
@@ -129,7 +133,7 @@ public abstract class Unit{
 	    mana = maxMana;
     }
 
-    public void finishDebuff(){ //once debuff is done
+    public void finishDebuff(){ //once debuff is done or if another debuff is added on top of the debuff
 	if (ATK != maxATK)
 	    ATK = maxATK;
 	if (DEF != maxDEF)

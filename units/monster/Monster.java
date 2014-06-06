@@ -8,10 +8,10 @@ public abstract class Monster extends Unit{
 	mapY = y;
     }
 
-    public ArrayList<Player> getSurroundingPlayers(){ //only for bosses
+    public ArrayList<Player> getSurroundingPlayers(int rng){ //only for bosses
 	ArrayList<Player>() surroundingPlayers = new ArrayList<Players>();
 	for (Player player : /*in a global player list*/) //for all players in the map
-	    if (player.getDist(this) <= range)
+	    if (player.getDist(this) <= rng)
 		surroundingPlayers.add(player);
 	return surroundingPlayers;
     }
@@ -27,5 +27,7 @@ public abstract class Monster extends Unit{
 		u.setHP(u.getHP()+u.getDEF()-getATK());
 	}
     }
+
+    public abstract ArrayList<Player> getPlayersInRange(int range);
 
 }
