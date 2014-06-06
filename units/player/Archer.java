@@ -17,15 +17,15 @@ public class Archer extends Player{
 	image = new ImageIcon("Archer.png").getImage();
     }
   
-    public void sAttack(){
+    public void sAttack(){ //snare, reduces movement and ATKspeed of monsters in a given area
+        
+    }
+  
+    public void sAttack2(){ //increases ATKspeed and speed
       
     }
   
-    public void sAttack2(){
-      
-    }
-  
-    public void sAttack3(){
+    public void sAttack3(){ //deadly arrows, increases ATK and luk
       
     }
   
