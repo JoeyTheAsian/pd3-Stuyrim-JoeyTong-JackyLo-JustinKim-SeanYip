@@ -37,6 +37,14 @@ Project Description: 2.5D RPG game
   
   Sean, you need to create arraylists of Players and monsters and loop paint each one in the list
   
+  **6/4/14**
+  
+  Control fluidity improvied, still not correct. All coordinate logic should be done externally, preferably in still unstarted game engine
+  
+  **Massive frame jitter problem (white frames) Critically important that this is fixed**
+  
+  Justin currently recoding GUI to have better structure
+  
   Game engine (combat logic etc.) yet to be started. Need to start
   
   
@@ -45,4 +53,9 @@ Project Description: 2.5D RPG game
   MenuPanel "Options" button still dead weight, don't forget to make this actually have function when more features are implemented. Things like window resize may be useful
   
   **CRITICAL Item class and inventory sort makes use of item types "head, body, legs, hands, feet, shield, weapon, consumables etc. all of these item types must be written **
+  
+  JTextArea "PlayerData" added. In the future will hold all player data, and party member data if that is implemented
+  
+  got run() method to start the actual game ticks in the Screen class. Game is now refreshing at a rate of around 120 frames per second
+  
   
