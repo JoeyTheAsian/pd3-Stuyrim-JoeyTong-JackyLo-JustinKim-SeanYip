@@ -7,18 +7,22 @@ import java.io.File;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import javax.swing.ScrollPaneConstants;
 import javax.imageio.ImageIO;
 import java.awt.Toolkit;
 
 public class InventoryPanel extends JPanel {
-    private ArrayList<Item> inventory;
+    private Inventory inventory;
     private JTable inventoryTable;
     private JScrollPane inventoryTableScrollPane;
     private BufferedImage image;
     private int height =  (Toolkit.getDefaultToolkit().getScreenSize().height-37)/2;
     private int width =  (Toolkit.getDefaultToolkit().getScreenSize().width)/2;
-    public InventoryPanel(ArrayList<Item> inventory) {
+
+    public InventoryPanel(Inventory inventory) { //I did not see the Inventory class in the /items directory
+	this.inventory = inventory;
 	Object[][] inventoryTableData = new Object[inventory.size()][5];
 	for (int i = 0; i < inventory.size(); i++) {
 	    inventoryTableData[i][0] = new Boolean(false); //When using constructor JTable(Object[][], Object[]), booleans are automatically converted to checkboxes.
@@ -27,27 +31,23 @@ public class InventoryPanel extends JPanel {
 	    //inventoryTableData[i][3] = inventory.get(i).getType();
 	    inventoryTableData[i][4] = inventory.get(i).getRarity();
 	}
-		
-	//Item.compareTo will probably not be used. javax.swing.table.TableRowSorter uses java.util.Comparator to sort.
-	//problem with that is that the items have to be sorted through a heierarchy sort (rarity, level, name,) can't remember the order
+	inventoryTable = new JTable(inventoryTableData, new String[] {"Equip", "Name", "Level", "Type", "Rarity"});
+	TableRowSorter<TableModel> inventoryTableRowSorter = new TableRowSorter<>(inventoryTable.getModel());
+	//inventoryTableRowSorter.setComparator(0, (Item i1, Item i2) -> i1.isEquipped().compareTo(i2.isEquipped())); //isEquipped has not been implmented yet
+	inventoryTableRowSorter.setComparator(1, (Item i1, Item i2) -> i1.getName().compareTo(i2.getName()));
+	inventoryTableRowSorter.setComparator(2, (Item i1, Item i2) -> (new Integer(i1.getLevel())).compareTo(i2.getLevel()));
+	//inventoryTableRowSorter.setComparator(3, (Item i1, Item i2) -> i1.getType().compareTo(i2.getType()));
+	inventoryTableRowSorter.setComparator(4, (Item i1, Item i2) -> (new Integer(i1.getRarity())).compareTo(i2.getRarity()));
+	inventoryTable.setRowSorter(inventoryTableRowSorter);
+	inventoryTableScrollPane = new JScrollPane(inventoryTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 	try {image = ImageIO.read(new File("GUI Images/trimmed wood background.png"));}
 	catch (Exception e) {Utilities.showErrorMessage(this, e);}
+	add(inventoryTableScrollPane);
 	setVisible(false);
     }
-    public void updateInventory(ArrayList<Item> inventory){
-	Object[][] inventoryTableData = new Object[inventory.size()][5];
-	for (int i = 0; i < inventory.size(); i++) {
-	    inventoryTableData[i][0] = new Boolean(false); //When using constructor JTable(Object[][], Object[]), booleans are automatically converted to checkboxes.
-	    inventoryTableData[i][1] = inventory.get(i).getName();
-	    inventoryTableData[i][2] = inventory.get(i).getLevel();
-	    //inventoryTableData[i][3] = inventory.get(i).getType();
-	    inventoryTableData[i][4] = inventory.get(i).getRarity();
-	}
-		
-    }
-    public void paintComponent(Graphics g){
+	
+    public void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	g.drawImage(image,0,0,width,height,null);
-    }
+    } 
 }
-

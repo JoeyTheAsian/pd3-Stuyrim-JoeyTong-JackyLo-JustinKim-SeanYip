@@ -14,7 +14,7 @@ public abstract class Unit{
     protected int maxSpeed, speed = 10; //how fast the unit can move
     protected int maxATKspeed, ATKspeed; //hit per x CENTIseconds
     protected ArrayList<Item>() list = new ArrayList<Item>(); //item list
-    protected Image image;
+    protected Image left, right, up, down; //directions of the units for the images
     protected int maxMana, mana;
     //protected double screenX, screenY;
     protected int mapX, mapY; //coordinates
@@ -73,8 +73,17 @@ public abstract class Unit{
 
     public ArrayList<Item> getList(){ return list; }
 
-    public void setImage(String img){ image = new ImageIcon(img).getImage(); }
-    public Image getImage(){ return image; };
+    public void setLeft(String img){ left = new ImageIcon(img).getImage(); }
+    public Image getLeft(){ return left; }
+
+    public void setRight(String img){ right = new ImageIcon(img).getImage(); }
+    public Image getRight(){ return right; }
+
+    public void setUp(String img){ up = new ImageIcon(img).getImage(); }
+    public Image getUp(){ return up; }
+
+    public void setDown(String img){ down = new ImageIcon(img).getImage(); }
+    public Image getDown(){ return down; }
     
     public void setMaxMana(int mn){ maxMana = mn; }
     public int getMaxMana(){ return maxMana; }
