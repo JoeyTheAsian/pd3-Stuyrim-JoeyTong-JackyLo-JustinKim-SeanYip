@@ -1,7 +1,9 @@
 Notes/ToDo:
--figure out item list
+-figure out item implementation in player
 -tweak stats
--add more monsters
+-figure out volcano boss
 -fix luk and speed
    -luk should be critical rate (0 - 50%)
    -speed should be movement, not evasion (max = 25?)
+-included a lot of accessor and mutator methods for all(?) of the variables in the unit classes
+-attack is HACKNSLASH
