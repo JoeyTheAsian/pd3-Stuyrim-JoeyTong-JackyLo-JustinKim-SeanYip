@@ -18,6 +18,29 @@ Project Description: 2.5D RPG game
   Textures and images get dumped in images directory 
   
   Feature log: 
+  *6/6/14*
+
+  Joey:
+
+  Creation of Inventory JPanel (Sean)
+  
+  Implementation if items into Inventory, etc. (Sean)
+    
+  Implementation of Inventory panel into Screen, bringing up inventory upon pressing inventory button (Joey)
+  
+  Creation of updateInventory method to update inventory upon pressing inventory button (Joey)
+  
+  *inventory sort still needs to be implemented, could be done engine side or panel side*
+  
+  More updates to Monster, player unit (Jacky)
+  
+  Implementation of gold to players (Jacky)
+  
+  Creation of special Attack method, working out attack animations, collision detection etc (Jacky)
+  
+  Further work on migrating game engine logic to GameEngine (Justin)
+  
+  
   
   *6/5/14*
   
