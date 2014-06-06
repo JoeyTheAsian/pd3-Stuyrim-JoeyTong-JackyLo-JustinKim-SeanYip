@@ -12,10 +12,10 @@ public enum Tile {
 
     FLOOR   (0, Color.WHITE),   WALL(1, Color.BLACK);
     public int id;
-    public Color colour;
+    public Color color;
 
-    Tile(int id, Color colour) {
+    Tile(int id, Color color) {
         this.id = id;
-        this.colour = colour;
+        this.color = color;
     }
 }
