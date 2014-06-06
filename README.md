@@ -18,6 +18,29 @@ Project Description: 2.5D RPG game
   Textures and images get dumped in images directory 
   
   Feature log: 
+  *6/6/14*
+
+  Joey:
+
+  Creation of Inventory JPanel (Sean)
+  
+  Implementation if items into Inventory, etc. (Sean)
+    
+  Implementation of Inventory panel into Screen, bringing up inventory upon pressing inventory button (Joey)
+  
+  Creation of updateInventory method to update inventory upon pressing inventory button (Joey)
+  
+  *inventory sort still needs to be implemented, could be done engine side or panel side*
+  
+  More updates to Monster, player unit (Jacky)
+  
+  Implementation of gold to players (Jacky)
+  
+  Creation of special Attack method, working out attack animations, collision detection etc (Jacky)
+  
+  Further work on migrating game engine logic to GameEngine (Justin)
+  
+  
   
   *6/5/14*
   
@@ -31,6 +54,7 @@ Project Description: 2.5D RPG game
   
   
   *6/4/14*
+  
   Joey:
   
   *Justin is getting runtime errors, we need to figure out why and fix it ASAP*  Fixed
@@ -59,6 +83,7 @@ Project Description: 2.5D RPG game
   
   
   *6/3/14*
+  
   Joey:
   
   Control fluidity improvied, still not correct. All coordinate logic should be done externally, preferably in still unstarted game engine (Sean)
@@ -89,6 +114,7 @@ Project Description: 2.5D RPG game
   Boss for the volcano level is TBD. Maybe the volcano level will be the last level. 
   
   *6/2/14*
+  
   Joey:
   
   incomplete GUI and screen, will complete in near future (Joey)

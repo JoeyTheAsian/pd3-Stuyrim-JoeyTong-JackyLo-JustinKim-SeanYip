@@ -37,12 +37,12 @@ public class GamePanel extends JPanel {
 
     public Screen screen = new Screen();
     public InventoryPanel invent = new InventoryPanel(new ArrayList <Item>());
-    
+    public PartyPanel party = new PartyPanel();
     
     public GamePanel() {
 	setLayout(null);
 	setBounds(0, 0 , windowWidth, windowHeight);
-	try {bg = ImageIO.read(new File("GUI Images/wood background.png"));}
+	try {bg = ImageIO.read(new File("GUI Images/trimmed paper background.png"));}
 	catch (Exception e) {Utilities.showErrorMessage(this, e);}
 	setVisible(true);
 
@@ -55,9 +55,11 @@ public class GamePanel extends JPanel {
 	InventButton.setVerticalTextPosition(SwingConstants.CENTER);
 	InventButton.setHorizontalTextPosition(SwingConstants.CENTER);
 	InventButton.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-	InventButton.setBounds(windowWidth/6*5,windowHeight-height,width/6,height/4);
-	//get button texture
-	Image i1 = new ImageIcon("GUI Images/Button.png").getImage().getScaledInstance
+	InventButton.setBounds(windowWidth/6*5,windowHeight-height+10,width/6,height/4);
+	//get button textures
+	Image i1 = new ImageIcon("GUI Images/Button.png").getImage().getScaledInstance           
+	    (InventButton.getWidth(),InventButton.getHeight(),java.awt.Image.SCALE_SMOOTH);
+	Image i2 = new ImageIcon("GUI Images/Button1.png").getImage().getScaledInstance
 	    (InventButton.getWidth(),InventButton.getHeight(),java.awt.Image.SCALE_SMOOTH);
 	InventButton.setIcon(new ImageIcon(i1));
 	InventButton.setForeground(Color.white);
@@ -65,10 +67,14 @@ public class GamePanel extends JPanel {
 		if(invent.isVisible()){
 		    invent.setVisible(false);
 		    screen.requestFocusInWindow();
+		    InventButton.setIcon(new ImageIcon(i1));
+		    screen.resume();
 		}else if(!invent.isVisible()){
+		    screen.pause();
 		    invent.setVisible(true);
 		    invent.requestFocusInWindow();
 		    invent.updateInventory(inventory);
+		    InventButton.setIcon(new ImageIcon(i2));
 		}
 	    });
 	JButton PartyButton = new JButton("Party");
@@ -78,11 +84,21 @@ public class GamePanel extends JPanel {
 	PartyButton.setVerticalTextPosition(SwingConstants.CENTER);
 	PartyButton.setHorizontalTextPosition(SwingConstants.CENTER);
 	PartyButton.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-	PartyButton.setBounds(windowWidth/6*5,(windowHeight-height)+height/4,width/6,height/4);
+	PartyButton.setBounds(windowWidth/6*5,(windowHeight-height)+(height/4)+10,width/6,height/4);
 	PartyButton.setIcon(new ImageIcon(i1));
 	PartyButton.setForeground(Color.white);
 	PartyButton.addActionListener(e -> {
-		//screen.requestFocusInWindow();
+		if(party.isVisible()){
+		    party.setVisible(false);
+		    screen.requestFocusInWindow();
+		    PartyButton.setIcon(new ImageIcon(i1));
+		    screen.resume();
+		}else if(!party.isVisible()){
+		    screen.pause();
+		    party.setVisible(true);
+		    party.requestFocusInWindow();
+		    PartyButton.setIcon(new ImageIcon(i2));		       	            
+		}
 	    });
 	JButton MenuButton = new JButton("Menu");
 	MenuButton.setOpaque(false);
@@ -91,7 +107,7 @@ public class GamePanel extends JPanel {
 	MenuButton.setVerticalTextPosition(SwingConstants.CENTER);
 	MenuButton.setHorizontalTextPosition(SwingConstants.CENTER);
 	MenuButton.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-	MenuButton.setBounds(windowWidth/6*5,(windowHeight-height)+(height/4*2),width/6,height/4);
+	MenuButton.setBounds(windowWidth/6*5,(windowHeight-height)+(height/4*2)+10,width/6,height/4);
 	MenuButton.setIcon(new ImageIcon(i1));
 	MenuButton.setForeground(Color.white);
 	MenuButton.addActionListener(e -> {
@@ -117,6 +133,7 @@ public class GamePanel extends JPanel {
 
 	screen = new Screen();
 	
+	add(party);
 	add(invent);
 	add(PlayerData);
 	add(MenuButton);
@@ -128,7 +145,7 @@ public class GamePanel extends JPanel {
 	
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
-	g.drawImage(bg,0,windowHeight-height,windowWidth,windowHeight,null);
+	g.drawImage(bg,0,windowHeight-height,width,height,null);
     }
 
     //SCREEN CLASS
@@ -203,7 +220,6 @@ public class GamePanel extends JPanel {
 		});
 	    setVisible(true);
 	}
-	
 
 	//renders the screen
 	public void render(){
@@ -256,6 +272,7 @@ public class GamePanel extends JPanel {
 		tick();
 		render();
 	    }
+
 	}
 	
 	public synchronized void start() {
@@ -268,7 +285,12 @@ public class GamePanel extends JPanel {
 	    try {thread.join();}
 	    catch (InterruptedException e) {Utilities.showErrorMessage(this, e);}
 	}
-	
+	public void pause(){
+	    //running = false;
+	}
+	public void resume(){
+	    //    running = true;
+	}
 	//updates game screen data
 	public void tick() {
 	    if (keysPressed[KeyEvent.VK_W] && (slime.getY() > 0)) {

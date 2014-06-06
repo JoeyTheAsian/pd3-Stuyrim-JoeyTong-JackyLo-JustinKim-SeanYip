@@ -25,7 +25,7 @@ public class MenuPanel extends JPanel {
 	setLayout(null);
 	setSize(width, height);
 
-	try {BG = ImageIO.read(new File("stuyrim.png"));}
+	try {BG = ImageIO.read(new File("GUI Images/stuyrim.png"));}
 	catch (Exception e) {Utilities.showErrorMessage(this, e);}
 		
 	//buttons
