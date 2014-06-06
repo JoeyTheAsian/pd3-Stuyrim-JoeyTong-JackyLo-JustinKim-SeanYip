@@ -58,7 +58,7 @@ public class GamePanel extends JPanel {
 	InventButton.setIcon(new ImageIcon(i1));
 	InventButton.setForeground(Color.white);
 	InventButton.addActionListener(e -> {
-		screen.stop();
+
 		//screen.requestFocusInWindow();
 	    });
 	JButton PartyButton = new JButton("Party");
@@ -72,7 +72,6 @@ public class GamePanel extends JPanel {
 	PartyButton.setIcon(new ImageIcon(i1));
 	PartyButton.setForeground(Color.white);
 	PartyButton.addActionListener(e -> {
-		screen.start();
 		//screen.requestFocusInWindow();
 	    });
 	JButton MenuButton = new JButton("Menu");
@@ -100,7 +99,6 @@ public class GamePanel extends JPanel {
 	PlayerData.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 	//PUT THE PLAYERDATA IN HER
 	PlayerData.append("Player 1: \nHP: gethp()    |    Mana: getMana()     |    otherstuff");
-
 
 
 	screen = new Screen();
