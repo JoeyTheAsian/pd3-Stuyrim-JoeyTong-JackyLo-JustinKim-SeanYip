@@ -1,6 +1,6 @@
 public class GameEngine implements Runnable  {
 
-    private static final int MAX_TICKS_PER_SEC = 120;
+    private static final int MAX_TICKS_PER_SEC = 60;
     private static final int TICKS_SAMPLE_SIZE = 12;
 
     private Thread thread;
