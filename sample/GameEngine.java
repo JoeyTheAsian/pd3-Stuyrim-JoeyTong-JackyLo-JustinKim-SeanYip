@@ -83,7 +83,7 @@ public class GameEngine implements Runnable  {
         // maximum number of ticks per second.
         if (pastTime < 1000.0 / MAX_TICKS_PER_SEC) {
             try {
-                Thread.sleep((1000 / MAX_FPS) - pastTime);
+                Thread.sleep((1000.0 / MAX_FPS) - pastTime);
             } catch (InterruptedException e) {
                 System.out.println(e);
             }

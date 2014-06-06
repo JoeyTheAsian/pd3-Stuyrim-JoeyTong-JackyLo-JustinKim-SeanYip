@@ -293,7 +293,7 @@ public class GamePanel extends JPanel {
 	    // ourselves to give Time time to catch up to our rendering.
 	    if (pastTime < 1000.0 / MAX_FPS) {
 		try {
-		    Thread.sleep((1000 / MAX_FPS)-pastTime);
+		    Thread.sleep((1000.0 / MAX_FPS)-pastTime);
 		} catch (InterruptedException e) {
 		    Utilities.showErrorMessage(this, e);
 		}
