@@ -183,9 +183,9 @@ public class GamePanel extends JPanel {
 	    try{flickerStop =ImageIO.read(new File("GUI Images/flickerStop.png"));
 	    }catch(Exception e){Utilities.showErrorMessage(this,e);}
 	    characters.add(slime);
-	    ai.add(bird);
-	    ai.add(giant);
-	    ai.add(swordsman);
+	    //ai.add(bird);
+	    //ai.add(giant);
+	    //ai.add(swordsman);
             // Temporary code until tile textures are done
             currentMap = new Map();
             currentMap.setTile(5, 5, Tile.WALL);
@@ -232,7 +232,7 @@ public class GamePanel extends JPanel {
 		double changeX = slime.getX() - character.getX();
 		double changeY = slime.getY() - character.getY();
 		double distance = Math.sqrt( changeX*changeX + changeY*changeY );
-		if (distance < 100.0){}
+		if (distance < 250.0 || distance > 750){}
 		else{
 		    character.setX(character.getX() + (int)(2*changeX/distance));
 		    character.setY(character.getY() + (int)(2*changeY/distance));
@@ -287,6 +287,24 @@ public class GamePanel extends JPanel {
 	public void resume(){
 	    //    running = true;
 	}
+	//chance of spawning a monster
+	public void chanceOfSpawn(){
+	    int[][]side = {{0,(int)(Math.random()*screenHeight)},
+			   {screenWidth,(int)(Math.random()*screenHeight)},
+			   {(int)(Math.random()*screenWidth),0},
+			   {(int)(Math.random()*screenWidth),screenHeight}};
+	    double chance = Math.random();
+	    int temp = (int)(Math.random()*4);
+	    if (chance > 0.003)
+		return;
+	    else if (chance > 0.002)
+		ai.add(new Player("Swordsman.png",side[temp][0],side[temp][1]));
+	    else if (chance > 0.001)
+		ai.add(new Player("Bird.png",side[temp][0],side[temp][1]));
+	    else
+		ai.add(new Player("Giant.png",side[temp][0],side[temp][1]));
+	}
+
 	//updates game screen data
 	public void tick() {
 	    if (keysPressed[VK_W] && (slime.getY() > 0)) {
@@ -294,24 +312,28 @@ public class GamePanel extends JPanel {
 		mapY+=2;
 		for (Character monster : ai)
 		    monster.setY(monster.getY()+2);
+		chanceOfSpawn();
 	    }
 	    if (keysPressed[VK_S] && (slime.getY() < screenHeight)) {
 		//	slime.setY(slime.getY() + 1);
 		mapY-=2;
 		for (Character monster : ai)
 		    monster.setY(monster.getY()-2);
+		chanceOfSpawn();
 	    }
 	    if (keysPressed[VK_A] && (slime.getY() > 0)) {
 		//	slime.setX(slime.getX() - 1);
 		mapX +=2;
 		for (Character monster : ai)
 		    monster.setX(monster.getX()+2);
+		chanceOfSpawn();
 	    }
 	    if (keysPressed[VK_D] && (slime.getY() < screenWidth)) {
 		//	slime.setX(slime.getX() + 1);
 		mapX-=2;
 		for (Character monster : ai)
 		    monster.setX(monster.getX()-2);
+		chanceOfSpawn();
 	    }
 	
 	    long pastTime = System.currentTimeMillis() - prevTick;
