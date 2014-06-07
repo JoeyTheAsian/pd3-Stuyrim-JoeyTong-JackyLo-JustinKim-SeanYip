@@ -5,6 +5,10 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import static java.awt.event.KeyEvent.VK_A;
+import static java.awt.event.KeyEvent.VK_D;
+import static java.awt.event.KeyEvent.VK_S;
+import static java.awt.event.KeyEvent.VK_W;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.awt.event.MouseEvent;
@@ -30,13 +34,15 @@ public class GamePanel extends JPanel {
     //dimensions of the bottom portion of the screen with all the buttons
     private int height = windowHeight /5+10;
     private int width = windowWidth;
-
+	
+	private boolean[] keysPressed = new boolean[256];
+	
     private BufferedImage bg;//background
     //player inventory will probably be removed in the future after testing
-    private ArrayList <Item> inventory= new ArrayList <Item>();
+    private Inventory inventory = new Inventory();
 
     public Screen screen = new Screen();
-    public InventoryPanel invent = new InventoryPanel(new ArrayList <Item>());
+    public InventoryPanel InventoryPanel = new InventoryPanel(inventory);
     
     
     public GamePanel() {
@@ -62,15 +68,20 @@ public class GamePanel extends JPanel {
 	InventButton.setIcon(new ImageIcon(i1));
 	InventButton.setForeground(Color.white);
 	InventButton.addActionListener(e -> {
-		if(invent.isVisible()){
-		    invent.setVisible(false);
+		keysPressed[VK_W] = false;
+		keysPressed[VK_S] = false;
+		keysPressed[VK_A] = false;
+		keysPressed[VK_D] = false;
+		if (InventoryPanel.isVisible()) {
+		    InventoryPanel.setVisible(false);
 		    screen.requestFocusInWindow();
-		}else if(!invent.isVisible()){
-		    invent.setVisible(true);
-		    invent.requestFocusInWindow();
-		    invent.updateInventory(inventory);
 		}
-	    });
+		else if (!InventoryPanel.isVisible()) {
+		    InventoryPanel.setVisible(true);
+		    InventoryPanel.requestFocusInWindow();
+		    //invent.updateInventory(inventory);
+		}
+	});
 	JButton PartyButton = new JButton("Party");
 	PartyButton.setOpaque(false);
 	PartyButton.setBorderPainted(false);
@@ -111,18 +122,18 @@ public class GamePanel extends JPanel {
 	PlayerData.append("Player 1: \nHP: gethp()    |    Mana: getMana()     |    otherstuff");
 
 	//creates inventory panel
-	invent.setSize(windowWidth/2, windowHeight/2);
-	invent.setLocation(windowWidth/4, windowHeight/4);
+	InventoryPanel.setSize(windowWidth/2, windowHeight/2);
+	InventoryPanel.setLocation(windowWidth/4, windowHeight/4);
 	
 
 	screen = new Screen();
 	
-	add(invent);
 	add(PlayerData);
 	add(MenuButton);
 	add(InventButton);
 	add(PartyButton);
 	add(screen);
+	add(InventoryPanel);
 	revalidate();
     }
 	
@@ -136,8 +147,6 @@ public class GamePanel extends JPanel {
 	//FPS counter variables
 	private static final int MAX_FPS = 60;
 	private static final int FPS_SAMPLE_SIZE = 6;
-	//keymap of all possible inputs?
-	private boolean[] keysPressed = new boolean[256];
 
 	//arraylists containing all entities on screen, painted by while loop in screen
 	private ArrayList<Character> characters = new ArrayList<>();
@@ -223,12 +232,10 @@ public class GamePanel extends JPanel {
 
 	    //loops and draws all the entities players/monsters
 	    for (Character character : ai){
-		//distance formula
 		double changeX = slime.getX() - character.getX();
 		double changeY = slime.getY() - character.getY();
 		double distance = Math.sqrt( changeX*changeX + changeY*changeY );
-
-		if (distance < 100.0 || distance > 600.0){}
+		if (distance < 100.0){}
 		else{
 		    character.setX(character.getX() + (int)(2*changeX/distance));
 		    character.setY(character.getY() + (int)(2*changeY/distance));
@@ -279,25 +286,25 @@ public class GamePanel extends JPanel {
 	
 	//updates game screen data
 	public void tick() {
-	    if (keysPressed[KeyEvent.VK_W] && (slime.getY() > 0)) {
+	    if (keysPressed[VK_W] && (slime.getY() > 0)) {
 		//	slime.setY(slime.getY() - 1);
 		mapY+=2;
 		for (Character monster : ai)
 		    monster.setY(monster.getY()+2);
 	    }
-	    if (keysPressed[KeyEvent.VK_S] && (slime.getY() < screenHeight)) {
+	    if (keysPressed[VK_S] && (slime.getY() < screenHeight)) {
 		//	slime.setY(slime.getY() + 1);
 		mapY-=2;
 		for (Character monster : ai)
 		    monster.setY(monster.getY()-2);
 	    }
-	    if (keysPressed[KeyEvent.VK_A] && (slime.getY() > 0)) {
+	    if (keysPressed[VK_A] && (slime.getY() > 0)) {
 		//	slime.setX(slime.getX() - 1);
 		mapX +=2;
 		for (Character monster : ai)
 		    monster.setX(monster.getX()+2);
 	    }
-	    if (keysPressed[KeyEvent.VK_D] && (slime.getY() < screenWidth)) {
+	    if (keysPressed[VK_D] && (slime.getY() < screenWidth)) {
 		//	slime.setX(slime.getX() + 1);
 		mapX-=2;
 		for (Character monster : ai)

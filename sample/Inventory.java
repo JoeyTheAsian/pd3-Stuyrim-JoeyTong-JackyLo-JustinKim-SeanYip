@@ -52,7 +52,7 @@ public class Inventory implements Collection<Item> {
 	
 	public boolean isEmpty() {return inventory.isEmpty();}
 	
-	public Iterator<Item> iterator() {return new Iterator() {
+	public Iterator<Item> iterator() {return new Iterator<Item>() {
 		int currentIndex = 0;
 		public boolean hasNext() {return currentIndex < MAX_SIZE;}
 		public Item next() {return inventory.get(currentIndex++);}
