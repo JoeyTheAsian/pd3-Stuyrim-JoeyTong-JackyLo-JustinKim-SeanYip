@@ -19,7 +19,7 @@ Project Description: 2.5D RPG game
   
   Feature log: 
  
-  *6/6/14*
+  **6/6/14**
 
   Joey:
 
@@ -51,7 +51,7 @@ Project Description: 2.5D RPG game
   
   GameEngine now functional.
   
-  *6/5/14*
+  **6/5/14**
   
   Joey:
   
@@ -62,7 +62,7 @@ Project Description: 2.5D RPG game
   Screen flicker failsafe implemented (paint black screen) (Joey)
   
   
-  *6/4/14*
+  **6/4/14**
   
   Joey:
   
@@ -91,7 +91,7 @@ Project Description: 2.5D RPG game
   GUI skeleton nearly complete, begin testing of all game loop-related code
   
   
-  *6/3/14*
+  **6/3/14**
   
   Joey:
   
@@ -122,7 +122,7 @@ Project Description: 2.5D RPG game
   
   Boss for the volcano level is TBD. Maybe the volcano level will be the last level. 
   
-  *6/2/14*
+  **6/2/14**
   
   Joey:
   
