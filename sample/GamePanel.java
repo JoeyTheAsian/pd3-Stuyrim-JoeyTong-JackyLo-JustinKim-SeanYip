@@ -42,10 +42,8 @@ public class GamePanel extends JPanel {
     private Inventory inventory = new Inventory();
 
     public Screen screen = new Screen();
-    public InventoryPanel invent = new InventoryPanel(new ArrayList <Item>());
     public PartyPanel party = new PartyPanel();
-
-    InventoryPanel InventoryPanel = new InventoryPanel(inventory);
+    public InventoryPanel invent = new InventoryPanel(inventory);
     
     
     public GamePanel() {
@@ -77,8 +75,8 @@ public class GamePanel extends JPanel {
 		keysPressed[VK_S] = false;
 		keysPressed[VK_A] = false;
 		keysPressed[VK_D] = false;
-		if (InventoryPanel.isVisible()) {
-		    InventoryPanel.setVisible(false);
+		if (invent.isVisible()) {
+		    invent.setVisible(false);
 		    screen.requestFocusInWindow();
 		    InventButton.setIcon(new ImageIcon(i1));
 		}else if(!invent.isVisible()){
@@ -88,7 +86,7 @@ public class GamePanel extends JPanel {
 		    //invent.updateInventory(inventory);
 		    InventButton.setIcon(new ImageIcon(i2));
 		}
-	});
+	    });
 	JButton PartyButton = new JButton("Party");
 	PartyButton.setOpaque(false);
 	PartyButton.setBorderPainted(false);
@@ -139,8 +137,8 @@ public class GamePanel extends JPanel {
 	PlayerData.append("Player 1: \nHP: gethp()    |    Mana: getMana()     |    otherstuff");
 
 	//creates inventory panel
-	InventoryPanel.setSize(windowWidth/2, windowHeight/2);
-	InventoryPanel.setLocation(windowWidth/4, windowHeight/4);
+	invent.setSize(windowWidth/2, windowHeight/2);
+	invent.setLocation(windowWidth/4, windowHeight/4);
 	
 
 	screen = new Screen();
@@ -152,7 +150,6 @@ public class GamePanel extends JPanel {
 	add(InventButton);
 	add(PartyButton);
 	add(screen);
-	add(InventoryPanel);
 	revalidate();
     }
 	
