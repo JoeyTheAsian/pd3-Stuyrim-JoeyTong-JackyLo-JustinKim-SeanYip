@@ -18,7 +18,8 @@ Project Description: 2.5D RPG game
   Textures and images get dumped in images directory 
   
   Feature log: 
-  *6/6/14*
+ 
+  **6/6/14**
 
   Joey:
 
@@ -30,9 +31,15 @@ Project Description: 2.5D RPG game
   
   Creation of updateInventory method to update inventory upon pressing inventory button (Joey)
   
+  Creation of PartyPanel and implementation into GamePanel (Joey) 
+  
+  Edited the Visual look of the UI (Joey)
+  
   *inventory sort still needs to be implemented, could be done engine side or panel side*
   
   More updates to Monster, player unit (Jacky)
+  
+  Creation of rudimentary AI, monsters now follow the player on the screen (Jacky)
   
   Implementation of gold to players (Jacky)
   
@@ -42,9 +49,9 @@ Project Description: 2.5D RPG game
   
   Further work on migrating game engine logic to GameEngine (Justin)
   
+  GameEngine now functional.
   
-  
-  *6/5/14*
+  **6/5/14**
   
   Joey:
   
@@ -55,7 +62,7 @@ Project Description: 2.5D RPG game
   Screen flicker failsafe implemented (paint black screen) (Joey)
   
   
-  *6/4/14*
+  **6/4/14**
   
   Joey:
   
@@ -84,7 +91,7 @@ Project Description: 2.5D RPG game
   GUI skeleton nearly complete, begin testing of all game loop-related code
   
   
-  *6/3/14*
+  **6/3/14**
   
   Joey:
   
@@ -115,7 +122,7 @@ Project Description: 2.5D RPG game
   
   Boss for the volcano level is TBD. Maybe the volcano level will be the last level. 
   
-  *6/2/14*
+  **6/2/14**
   
   Joey:
   
