@@ -18,6 +18,7 @@ Project Description: 2.5D RPG game
   Textures and images get dumped in images directory 
   
   Feature log: 
+ 
   *6/6/14*
 
   Joey:
