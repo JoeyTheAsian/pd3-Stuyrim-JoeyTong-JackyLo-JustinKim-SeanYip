@@ -19,7 +19,10 @@ Project Description: 2.5D RPG game
   
   Feature log: 
 
- 
+  **6/7/14**
+  
+  Implemented monster spawning and made them lose interest to the player after a distance (Jacky)
+  
   **6/6/14**
 
 
