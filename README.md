@@ -38,6 +38,8 @@ Project Description: 2.5D RPG game
   
   Creation of special Attack method, working out attack animations, collision detection etc (Jacky)
   
+  Made characters follow player in Gamepanel (Jacky)
+  
   Further work on migrating game engine logic to GameEngine (Justin)
   
   
