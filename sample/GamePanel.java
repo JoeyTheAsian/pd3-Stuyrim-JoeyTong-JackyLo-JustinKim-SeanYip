@@ -28,23 +28,18 @@ import javax.swing.SwingConstants;
 import javax.imageio.ImageIO;
 
 public class GamePanel extends JPanel {
-    //dimensions of the window
+	private boolean[] keysPressed = new boolean[256];
+	private BufferedImage bg; //background
     private int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height-37;
     private int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
     //dimensions of the bottom portion of the screen with all the buttons
     private int height = windowHeight /5+10;
     private int width = windowWidth;
-	
-    private boolean[] keysPressed = new boolean[256];
-	
-    private BufferedImage bg;//background
     //player inventory will probably be removed in the future after testing
     private Inventory inventory = new Inventory();
-
-    public Screen screen = new Screen();
-    public PartyPanel party = new PartyPanel();
-    public InventoryPanel invent = new InventoryPanel(inventory);
-    
+	private InventoryPanel invent = new InventoryPanel(inventory);
+    private PartyPanel party = new PartyPanel();
+    Screen screen = new Screen();
     
     public GamePanel() {
 	setLayout(null);
@@ -53,24 +48,21 @@ public class GamePanel extends JPanel {
 	catch (Exception e) {Utilities.showErrorMessage(this, e);}
 	setVisible(true);
 
-
 	//add buttons
-	JButton InventButton = new JButton("Inventory");
-	InventButton.setOpaque(false);
-	InventButton.setBorderPainted(false);
-	InventButton.setContentAreaFilled(false);
-	InventButton.setVerticalTextPosition(SwingConstants.CENTER);
-	InventButton.setHorizontalTextPosition(SwingConstants.CENTER);
-	InventButton.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-	InventButton.setBounds(windowWidth/6*5,windowHeight-height+10,width/6,height/4);
+	JButton inventoryButton = new JButton("Inventory");
+	inventoryButton.setOpaque(false);
+	inventoryButton.setBorderPainted(false);
+	inventoryButton.setContentAreaFilled(false);
+	inventoryButton.setVerticalTextPosition(SwingConstants.CENTER);
+	inventoryButton.setHorizontalTextPosition(SwingConstants.CENTER);
+	inventoryButton.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+	inventoryButton.setBounds(windowWidth/6*5,windowHeight-height+10,width/6,height/4);
 	//get button textures
-	Image i1 = new ImageIcon("GUI Images/Button.png").getImage().getScaledInstance           
-	    (InventButton.getWidth(),InventButton.getHeight(),java.awt.Image.SCALE_SMOOTH);
-	Image i2 = new ImageIcon("GUI Images/Button1.png").getImage().getScaledInstance
-	    (InventButton.getWidth(),InventButton.getHeight(),java.awt.Image.SCALE_SMOOTH);
-	InventButton.setIcon(new ImageIcon(i1));
-	InventButton.setForeground(Color.white);
-	InventButton.addActionListener(e -> {
+	Image i1 = new ImageIcon("GUI Images/Button.png").getImage().getScaledInstance(inventoryButton.getWidth(),inventoryButton.getHeight(),java.awt.Image.SCALE_SMOOTH);
+	Image i2 = new ImageIcon("GUI Images/Button1.png").getImage().getScaledInstance(inventoryButton.getWidth(),inventoryButton.getHeight(),java.awt.Image.SCALE_SMOOTH);
+	inventoryButton.setIcon(new ImageIcon(i1));
+	inventoryButton.setForeground(Color.white);
+	inventoryButton.addActionListener(e -> {
 		keysPressed[VK_W] = false;
 		keysPressed[VK_S] = false;
 		keysPressed[VK_A] = false;
@@ -78,66 +70,65 @@ public class GamePanel extends JPanel {
 		if (invent.isVisible()) {
 		    invent.setVisible(false);
 		    screen.requestFocusInWindow();
-		    InventButton.setIcon(new ImageIcon(i1));
+		    inventoryButton.setIcon(new ImageIcon(i1));
 		}else if(!invent.isVisible()){
 		    screen.pause();
 		    invent.setVisible(true);
 		    invent.requestFocusInWindow();
 		    //invent.updateInventory(inventory);
-		    InventButton.setIcon(new ImageIcon(i2));
+		    inventoryButton.setIcon(new ImageIcon(i2));
 		}
 	    });
-	JButton PartyButton = new JButton("Party");
-	PartyButton.setOpaque(false);
-	PartyButton.setBorderPainted(false);
-	PartyButton.setContentAreaFilled(false);
-	PartyButton.setVerticalTextPosition(SwingConstants.CENTER);
-	PartyButton.setHorizontalTextPosition(SwingConstants.CENTER);
-	PartyButton.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-	PartyButton.setBounds(windowWidth/6*5,(windowHeight-height)+(height/4)+10,width/6,height/4);
-	PartyButton.setIcon(new ImageIcon(i1));
-	PartyButton.setForeground(Color.white);
-	PartyButton.addActionListener(e -> {
+	JButton partyButton = new JButton("Party");
+	partyButton.setOpaque(false);
+	partyButton.setBorderPainted(false);
+	partyButton.setContentAreaFilled(false);
+	partyButton.setVerticalTextPosition(SwingConstants.CENTER);
+	partyButton.setHorizontalTextPosition(SwingConstants.CENTER);
+	partyButton.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+	partyButton.setBounds(windowWidth/6*5,(windowHeight-height)+(height/4)+10,width/6,height/4);
+	partyButton.setIcon(new ImageIcon(i1));
+	partyButton.setForeground(Color.white);
+	partyButton.addActionListener(e -> {
 		if(party.isVisible()){
 		    party.setVisible(false);
 		    screen.requestFocusInWindow();
-		    PartyButton.setIcon(new ImageIcon(i1));
+		    partyButton.setIcon(new ImageIcon(i1));
 		    screen.resume();
 		}else if(!party.isVisible()){
 		    screen.pause();
 		    party.setVisible(true);
 		    party.requestFocusInWindow();
-		    PartyButton.setIcon(new ImageIcon(i2));		       	            
+		    partyButton.setIcon(new ImageIcon(i2));		       	            
 		}
 	    });
-	JButton MenuButton = new JButton("Menu");
-	MenuButton.setOpaque(false);
-	MenuButton.setBorderPainted(false);
-	MenuButton.setContentAreaFilled(false);
-	MenuButton.setVerticalTextPosition(SwingConstants.CENTER);
-	MenuButton.setHorizontalTextPosition(SwingConstants.CENTER);
-	MenuButton.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-	MenuButton.setBounds(windowWidth/6*5,(windowHeight-height)+(height/4*2)+10,width/6,height/4);
-	MenuButton.setIcon(new ImageIcon(i1));
-	MenuButton.setForeground(Color.white);
-	MenuButton.addActionListener(e -> {
+	JButton menuButton = new JButton("Menu");
+	menuButton.setOpaque(false);
+	menuButton.setBorderPainted(false);
+	menuButton.setContentAreaFilled(false);
+	menuButton.setVerticalTextPosition(SwingConstants.CENTER);
+	menuButton.setHorizontalTextPosition(SwingConstants.CENTER);
+	menuButton.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+	menuButton.setBounds(windowWidth/6*5,(windowHeight-height)+(height/4*2)+10,width/6,height/4);
+	menuButton.setIcon(new ImageIcon(i1));
+	menuButton.setForeground(Color.white);
+	menuButton.addActionListener(e -> {
 		screen.requestFocusInWindow();
 	    });
 
 	//GRABS ALL PARTY DATA INCLUDING HP, MANA, ETC
-	JTextArea PlayerData = new JTextArea();
-	PlayerData.setSelectedTextColor(Color.WHITE);
-	PlayerData.setSize(width/6,height);
-	PlayerData.setLocation(0,windowHeight/5*4);
-	PlayerData.setOpaque(false);
-	PlayerData.setVisible(true);
-	PlayerData.setForeground(Color.WHITE);
-	PlayerData.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+	JTextArea playerData = new JTextArea();
+	playerData.setSelectedTextColor(Color.WHITE);
+	playerData.setSize(width/6,height);
+	playerData.setLocation(0,windowHeight/5*4);
+	playerData.setOpaque(false);
+	playerData.setVisible(true);
+	playerData.setForeground(Color.WHITE);
+	playerData.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 	//PUT THE PLAYERDATA IN HER
-	PlayerData.append("Player 1: \nHP: gethp()    |    Mana: getMana()     |    otherstuff");
+	playerData.append("Player 1: \nHP: gethp()    |    Mana: getMana()     |    otherstuff");
 
 	//creates inventory panel
-	invent.setSize(windowWidth/2, windowHeight/2);
 	invent.setLocation(windowWidth/4, windowHeight/4);
 	
 
@@ -145,10 +136,10 @@ public class GamePanel extends JPanel {
 
 	add(party);
 	add(invent);
-	add(PlayerData);
-	add(MenuButton);
-	add(InventButton);
-	add(PartyButton);
+	add(playerData);
+	add(menuButton);
+	add(inventoryButton);
+	add(partyButton);
 	add(screen);
 	revalidate();
     }
@@ -158,40 +149,32 @@ public class GamePanel extends JPanel {
 	g.drawImage(bg,0,windowHeight-height,width,height,null);
     }
 
-    //SCREEN CLASS
     public class Screen extends Canvas implements Runnable{
 	//FPS counter variables
 	private static final int MAX_FPS = 60;
 	private static final int FPS_SAMPLE_SIZE = 6;
-
+	// The width and height of each tile in pixels
+	private static final int TILE_SCALE = 60;
 	//arraylists containing all entities on screen, painted by while loop in screen
 	private ArrayList<Character> characters = new ArrayList<>();
 	private ArrayList<Character> ai = new ArrayList<>();
-	private Thread thread;
-
+	private boolean running;
 	private BufferedImage flickerStop;
-
+	private int averageFPS;
+	private int mapX = 0;
+	private int mapY = 0;
 	//SCREEN dimensions
 	private int screenHeight = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4-10);
 	private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-
+	private LinkedList<Long> frames = new LinkedList<>();
+	private long prevTick = -1;
+	private Map currentMap;
 	//for testing putposes
 	private Player slime = new Player("Slime.png", screenWidth/2, screenHeight/2);
 	private Player bird = new Player("Bird.png", 250, 250);
 	private Player giant = new Player("Giant.png", 250, 500);
 	private Player swordsman = new Player("Swordsman.png", 500, 250);
-	private int mapX = 0;
-	private int mapY = 0;
-
-	// The width and height of each tile in pixels
-	private static final int TILE_SCALE = 60;
-	private Map currentMap;
-
-	//more FPS stuff
-	private long prevTick = -1;
-	private LinkedList<Long> frames = new LinkedList<>();
-	private int averageFPS;
-	private boolean running;
+	private Thread thread;
 	
 
 	public Screen() {
@@ -205,9 +188,7 @@ public class GamePanel extends JPanel {
             // Temporary code until tile textures are done
             currentMap = new Map();
             currentMap.setTile(5, 5, Tile.WALL);
-
-	    //placeholder input listeners
-	    addKeyListener(new KeyListener() {
+		addKeyListener(new KeyListener() {
 		    public void keyPressed(KeyEvent e) {keysPressed[e.getKeyCode()] = true;}
 		    public void keyReleased(KeyEvent e) {keysPressed[e.getKeyCode()] = false;}
 		    public void keyTyped(KeyEvent e) {}

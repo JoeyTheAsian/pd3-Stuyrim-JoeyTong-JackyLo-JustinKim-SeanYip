@@ -1,17 +1,16 @@
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Color;
+import java.awt.Toolkit;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.io.File;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import javax.swing.ScrollPaneConstants;
-import javax.imageio.ImageIO;
-import java.awt.Toolkit;
 
 public class InventoryPanel extends JPanel {
     private Inventory inventory;
@@ -43,11 +42,19 @@ public class InventoryPanel extends JPanel {
 	try {image = ImageIO.read(new File("GUI Images/trimmed wood background.png"));}
 	catch (Exception e) {Utilities.showErrorMessage(this, e);}
 	add(inventoryTableScrollPane);
+	addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {}
+			public void focusLost(FocusEvent e) {requestFocusInWindow();}	
+	});
 	setVisible(false);
     }
+	
+	public Inventory getInventory() {return inventory;}
 	
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	g.drawImage(image,0,0,width,height,null);
-    } 
+    }
+	
+	public void setInventory(Inventory inventory) {this.inventory = inventory;}
 }

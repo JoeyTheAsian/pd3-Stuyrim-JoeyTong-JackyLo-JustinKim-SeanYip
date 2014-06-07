@@ -3,6 +3,8 @@ import java.awt.image.BufferedImage;
 import java.awt.Toolkit;
 import java.io.File;
 import java.awt.Graphics;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -21,6 +23,10 @@ public class PartyPanel extends JPanel{
 	setLayout(null);
 	setSize(width,height);
 	setLocation(width*3,0);
+	addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {}
+			public void focusLost(FocusEvent e) {requestFocusInWindow();}	
+	});
 	setVisible(false);
     }
     public void paintComponent(Graphics g){
