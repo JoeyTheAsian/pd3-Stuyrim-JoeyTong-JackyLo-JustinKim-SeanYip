@@ -17,7 +17,10 @@ public class Swordsman extends Player{
 	luk = 3;
 	speed = 5;
 	ATKspeed = 50;
-	image = new ImageIcon("Swordsman.png").getImage();
+	setLeft("Swordsman_left.png");
+	setRight("Swordsman_right.png");
+	setUp("Swordsman_up.png");
+	setDown("Swordsman_down.png");
     }
     
     public void setShield(Item shd){ shield = shd; }
@@ -42,7 +45,7 @@ public class Swordsman extends Player{
     }
   
     public void sAttack3(){//fatal slash, bleeds the surrounding enemies and decreases its speed
-
+	
     }
 
     public void finishBuff(){

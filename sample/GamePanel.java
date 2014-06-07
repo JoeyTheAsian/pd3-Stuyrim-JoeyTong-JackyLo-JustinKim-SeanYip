@@ -223,10 +223,12 @@ public class GamePanel extends JPanel {
 
 	    //loops and draws all the entities players/monsters
 	    for (Character character : ai){
+		//distance formula
 		double changeX = slime.getX() - character.getX();
 		double changeY = slime.getY() - character.getY();
 		double distance = Math.sqrt( changeX*changeX + changeY*changeY );
-		if (distance < 100.0){}
+
+		if (distance < 100.0 || distance > 600.0){}
 		else{
 		    character.setX(character.getX() + (int)(2*changeX/distance));
 		    character.setY(character.getY() + (int)(2*changeY/distance));
