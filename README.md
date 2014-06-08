@@ -27,13 +27,13 @@ Project Description: 2.5D RPG game
   
   subsets of animation update:
     
-      added up, down, left right, upanimated, downanimated, leftanimated rightanimated image states for Player (Joey)
+    added up, down, left right, upanimated, downanimated, leftanimated rightanimated image states for Player (Joey)
   
-      Changed drawn image to an image rather than bufferedimage because of gif compatability issues with bufferedimage (Joey)
+    Changed drawn image to an image rather than bufferedimage because of gif compatability issues with bufferedimage (Joey)
       
-      Created animation stops in screen class, sets player to idled directional image when movement input stops (Joey)
+    Created animation stops in screen class, sets player to idled directional image when movement input stops (Joey)
       
-      Optimized Animations by writing in conditional within setImage() methods to prevent excessive changes to the image variable (Joey) 
+    Optimized Animations by writing in conditional within setImage() methods to prevent excessive changes to the image variable (Joey) 
       
         
   Fixed the non transparency issue with inventory panel (Joey)
