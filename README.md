@@ -50,7 +50,7 @@ Project Description: 2.5D RPG game
   
   Made various control failsafes to prevent bugs when interacting with GUI (Joey)
   
-  Made InventoryPanel nullify all active keyboard input before accessing the Inventory to prevent continued movement or animations (Joey) 
+  Made InventoryPanel nullify all active keyboard input before accessing the Inventory to prevent continued movement and animations (Joey) 
   
   **6/7/14**
   
