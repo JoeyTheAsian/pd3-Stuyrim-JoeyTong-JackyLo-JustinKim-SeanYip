@@ -21,7 +21,36 @@ Project Description: 2.5D RPG game
   
   **6/8/14**
   
+  So much stuff added I can't even begin to describe it all, but I will (Joey)
   
+  Player movement animations fully implemented, only issue is minor frame skips upon first moving in the process of drawing all the animations (Joey)
+  
+  subsets of animation update:
+    
+  -added up, down, left right, upanimated, downanimated, leftanimated rightanimated image states for Player (Joey)
+  
+  -Changed drawn image to an image rather than bufferedimage because of gif compatability issues with bufferedimage (Joey)
+      
+  -Created animation stops in screen class, sets player to idled directional image when movement input stops (Joey)
+      
+  -Optimized Animations by writing in conditional within setImage() methods to prevent excessive changes to the image variable (Joey) 
+      
+        
+  Fixed the non transparency issue with inventory panel (Joey)
+  
+  Fixed various inconsistencies with variables in the Screen class (Joey)
+  
+  Created character loops that act on a specified character in the characters arraylist rather than a specific character(Joey) 
+  
+  Fixed various GUI sizing issues GUI looks much cleaner now (Joey) 
+  
+  Fixed unaccessable components issue in the GamePanel, they were instanced in the constructor (Joey)
+  
+  Made the PlayerData TextField loop through all players in the character arraylist and display their information real-time (Joey)
+  
+  Made various control failsafes to prevent bugs when interacting with GUI (Joey)
+  
+  Made InventoryPanel nullify all active keyboard input before accessing the Inventory to prevent continued movement and animations (Joey) 
   
   **6/7/14**
   
@@ -32,9 +61,6 @@ Project Description: 2.5D RPG game
   Implemented directional movement corresponding to respective sprite image (sprite changes base on direction) (Joey)
   
   **6/6/14**
-
-
-  Joey:
 
   Creation of Inventory JPanel (Sean)
   
@@ -78,23 +104,14 @@ Project Description: 2.5D RPG game
   
   **6/5/14**
   
-  Joey:
-  
   Begin migration of test code into Game Loop class (Justin)
   
   tile map rendering fully implemented (Justin)
   
   Screen flicker failsafe implemented (paint black screen) (Joey)
   
-  
-<<<<<<< HEAD
-  *6/4/14*
-=======
   **6/4/14**
->>>>>>> e1127588a7059e554557a371453344fa494a175a
-  
-  Joey:
-  
+
   *Justin is getting runtime errors, we need to figure out why and fix it ASAP*  Fixed
   
   Controls fixed
@@ -119,14 +136,7 @@ Project Description: 2.5D RPG game
   
   GUI skeleton nearly complete, begin testing of all game loop-related code
   
-  
-<<<<<<< HEAD
-  *6/3/14*
-=======
   **6/3/14**
->>>>>>> e1127588a7059e554557a371453344fa494a175a
-  
-  Joey:
   
   Control fluidity improvied, still not correct. All coordinate logic should be done externally, preferably in still unstarted game engine (Sean)
   
@@ -155,12 +165,8 @@ Project Description: 2.5D RPG game
   
   Boss for the volcano level is TBD. Maybe the volcano level will be the last level. 
   
-<<<<<<< HEAD
-  *6/2/14*
-=======
   **6/2/14**
->>>>>>> e1127588a7059e554557a371453344fa494a175a
-  
+ 
   Joey:
   
   incomplete GUI and screen, will complete in near future (Joey)
