@@ -13,10 +13,10 @@ public abstract class Unit{
     protected int range = 20; //distance that allows the unit to attack
     protected int maxSpeed, speed = 10; //how fast the unit can move
     protected int maxATKspeed, ATKspeed; //hit per x CENTIseconds
-    protected ArrayList<Item>() list = new ArrayList<Item>(); //item list
+    protected ArrayList<Item>() list = new ArrayList<>(); //item list
     protected Image left, right, up, down; //directions of the units for the images
     protected int maxMana, mana;
-    //protected double screenX, screenY;
+    protected double screenX, screenY;
     protected int mapX, mapY; //coordinates
     protected int CDS1 = 1000; //cooldown time for special attack in CENTIseconds
     protected boolean haveDebuff = false, haveBuff = false; //debuffs don't stack, they replace each other
@@ -91,18 +91,18 @@ public abstract class Unit{
     public void setMana(int mn) { mana = mn; }
     public int getMana(){ return mana; }
     
-    /*
-      public void setScreenX(double xcor){ screenX = xcor; }
-      public int getScreenX(){ return (int) screenX; }
-    */
+    
+    public void setScreenX(double xcor){ screenX = xcor; }
+    public int getScreenX(){ return (int) screenX; }
+    
 
     public void setMapX(int xcor){ mapX = xcor; }
     public int getMapX(){ return mapX; }
 
-    /*
-      public void setScreenY(double ycor){ screenY = ycor; }
-      public int getScreenY(){ return (int) screenY; }
-    */
+    
+    public void setScreenY(double ycor){ screenY = ycor; }
+    public int getScreenY(){ return (int) screenY; }
+    
 
     public void setMapY(int ycor){ mapY = ycor; }
     public int getMapY(){ return mapY; }

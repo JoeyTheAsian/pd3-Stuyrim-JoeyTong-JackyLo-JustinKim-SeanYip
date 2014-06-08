@@ -7,14 +7,15 @@ public abstract class Monster extends Unit{
 	mapX = x;
 	mapY = y;
     }
-
+    /*
     public ArrayList<Player> getSurroundingPlayers(int rng){ //only for bosses
 	ArrayList<Player>() surroundingPlayers = new ArrayList<Players>();
-	for (Player player : /*in a global player list*/) //for all players in the map
+	for (Player player : in a global player list) //for all players in the map
 	    if (player.getDist(this) <= rng)
 		surroundingPlayers.add(player);
 	return surroundingPlayers;
     }
+    */
 
     public void attack(Player u){ //may need fix?
 	if (isSet1){ //precondition: isReady1 = true && 250 <= mana

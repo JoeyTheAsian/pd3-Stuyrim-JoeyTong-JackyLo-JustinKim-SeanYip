@@ -285,7 +285,8 @@ public class GamePanel extends JPanel {
 	public void resume(){
 	    //    running = true;
 	}
-	//chance of spawning a monster
+
+	//chance of spawning each monster is 0.1% and it will spawn in one of the four sides of the screen
 	public void chanceOfSpawn(){
 	    int[][]side = {{0,(int)(Math.random()*screenHeight)},
 			   {screenWidth,(int)(Math.random()*screenHeight)},

@@ -103,8 +103,8 @@ public abstract class Player extends Unit/* implements Serializable*/{
     }
     //NEED FIX
     public ArrayList<Monster> getSurroundingEnemies(int rng /*within the range*/){
-	ArrayList<Monster>() surroundingMonsters = new ArrayList<Monster>();
-	for (Monster monster : /*in a global monster list*/) //for all enemies in the map
+	ArrayList<Monster>() surroundingMonsters = new ArrayList<>();
+	for (Monster monster : /*global monster list*/) //for all enemies in the map
 	    if (monster.getDist(this) <= rng)
 		surroundingMonsters.add(monster);
 	return surroundingMonsters;
