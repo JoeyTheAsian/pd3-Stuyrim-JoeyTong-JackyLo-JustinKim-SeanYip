@@ -293,11 +293,11 @@ public class GamePanel extends JPanel {
 			   {(int)(Math.random()*screenWidth),screenHeight}};
 	    double chance = Math.random();
 	    int temp = (int)(Math.random()*4);
-	    if (chance > 0.0003)
+	    if (chance > 0.003)
 		return;
-	    else if (chance < 0.0002)
-		ai.add(new Player("Swordsman.png",side[temp][0],side[temp][1]));
-	    else if (chance < 0.0001)
+	    else if (chance > 0.002)
+		ai.add(new Player("swordsman down.png",side[temp][0],side[temp][1]));
+	    else if (chance > 0.001)
 		ai.add(new Player("Bird.png",side[temp][0],side[temp][1]));
 	    else
 		ai.add(new Player("Giant.png",side[temp][0],side[temp][1]));
@@ -326,7 +326,7 @@ public class GamePanel extends JPanel {
 		mapX +=2;
 		slime.setLeft();
 		for (Character monster : ai)
-		    monster.setX(monster.getX()-2);
+		    monster.setX(monster.getX()+2);
 		chanceOfSpawn();
 	    }
 	    if (keysPressed[VK_D] && (slime.getY() < screenWidth)) {
