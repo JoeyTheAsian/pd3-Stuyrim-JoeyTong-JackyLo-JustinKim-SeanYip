@@ -192,7 +192,6 @@ public class GamePanel extends JPanel {
 	    characters.add(player);
 
             currentMap = new Map();
-            currentMap.setTile(5, 5, Tile.WALL);
 	    addKeyListener(new KeyListener() {
 		    public void keyPressed(KeyEvent e) {keysPressed[e.getKeyCode()] = true;}
 		    public void keyReleased(KeyEvent e) {
@@ -266,8 +265,13 @@ public class GamePanel extends JPanel {
         }
 
         private void drawTile(int x, int y, Tile tile, Graphics g) {
-            g.setColor(tile.color);
-            g.fillRect(x * TILE_SCALE + mapX, y * TILE_SCALE + mapY, TILE_SCALE, TILE_SCALE);
+            try {
+                Image image = ImageIO.read(new File(tile.texture));
+                g.drawImage(image, x * TILE_SCALE + mapX, y * TILE_SCALE + mapY,
+                            TILE_SCALE, TILE_SCALE, null);
+            } catch (Exception e) {
+                Utilities.showErrorMessage(this, e);
+            }
         }
     
 	public void run() {

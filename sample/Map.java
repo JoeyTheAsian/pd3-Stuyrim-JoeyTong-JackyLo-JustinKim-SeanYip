@@ -7,7 +7,7 @@ public class Map {
 
     public Map() {
         tilemap = new Tile[NUM_COLS][NUM_ROWS];
-        setAll(Tile.FLOOR);
+        setAll(Tile.GRASS);
     }
 
     public String toString() {
