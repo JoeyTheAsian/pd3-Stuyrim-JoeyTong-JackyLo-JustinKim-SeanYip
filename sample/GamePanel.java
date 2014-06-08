@@ -31,14 +31,16 @@ public class GamePanel extends JPanel {
     private int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height-37;
     private int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
     //dimensions of the bottom portion of the screen with all the buttons
-    private int height = windowHeight /5+10;
+    private int height = windowHeight /5;
     private int width = windowWidth;
     //player inventory will probably be removed in the future after testing
     private Inventory inventory = new Inventory();
     private InventoryPanel invent = new InventoryPanel(inventory);
     private PartyPanel party = new PartyPanel();
     Screen screen = new Screen();
-    
+    private JTextArea playerData;
+    private JButton inventoryButton, menuButton, partyButton;
+ 
     public GamePanel() {
 	setLayout(null);
 	setBounds(0, 0 , windowWidth, windowHeight);
@@ -47,44 +49,47 @@ public class GamePanel extends JPanel {
 	setVisible(true);
 
 	//add buttons
-	JButton inventoryButton = new JButton("Inventory");
+	inventoryButton = new JButton("Inventory");
 	inventoryButton.setOpaque(false);
 	inventoryButton.setBorderPainted(false);
 	inventoryButton.setContentAreaFilled(false);
 	inventoryButton.setVerticalTextPosition(SwingConstants.CENTER);
 	inventoryButton.setHorizontalTextPosition(SwingConstants.CENTER);
 	inventoryButton.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-	inventoryButton.setBounds(windowWidth/6*5,windowHeight-height+10,width/6,height/4);
+	inventoryButton.setBounds(windowWidth/6*5-(width/70),windowHeight-height+(height/30),width/6,(height-(height/30))/3);
 	//get button textures
 	Image i1 = new ImageIcon("GUI Images/Button.png").getImage().getScaledInstance(inventoryButton.getWidth(),inventoryButton.getHeight(),java.awt.Image.SCALE_SMOOTH);
 	Image i2 = new ImageIcon("GUI Images/Button1.png").getImage().getScaledInstance(inventoryButton.getWidth(),inventoryButton.getHeight(),java.awt.Image.SCALE_SMOOTH);
 	inventoryButton.setIcon(new ImageIcon(i1));
 	inventoryButton.setForeground(Color.white);
 	inventoryButton.addActionListener(e -> {
-		keysPressed[VK_W] = false;
-		keysPressed[VK_S] = false;
-		keysPressed[VK_A] = false;
-		keysPressed[VK_D] = false;
+		    for(int i = 0; i < 256; i++){
+			if(keysPressed[i]){
+			    keysReleased[i] = true;
+			    keysPressed[i] = false;
+			}
+		    }
+		//if it's there, take it out and give focus to screen, if it isn't put it in ,update items and take focus
 		if (invent.isVisible()) {
 		    invent.setVisible(false);
 		    screen.requestFocusInWindow();
 		    inventoryButton.setIcon(new ImageIcon(i1));
 		}else if(!invent.isVisible()){
-		    screen.pause();
+		    //nullifies all input before opening 
 		    invent.setVisible(true);
 		    invent.requestFocusInWindow();
 		    //invent.updateInventory(inventory);
 		    inventoryButton.setIcon(new ImageIcon(i2));
 		}
 	    });
-	JButton partyButton = new JButton("Party");
+	partyButton = new JButton("Party");
 	partyButton.setOpaque(false);
 	partyButton.setBorderPainted(false);
 	partyButton.setContentAreaFilled(false);
 	partyButton.setVerticalTextPosition(SwingConstants.CENTER);
 	partyButton.setHorizontalTextPosition(SwingConstants.CENTER);
 	partyButton.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-	partyButton.setBounds(windowWidth/6*5,(windowHeight-height)+(height/4)+10,width/6,height/4);
+	partyButton.setBounds(windowWidth/6*5-(width/70),(windowHeight-height)+(height/4)+(height/30),width/6,(height-(height/30))/3);
 	partyButton.setIcon(new ImageIcon(i1));
 	partyButton.setForeground(Color.white);
 	partyButton.addActionListener(e -> {
@@ -92,22 +97,20 @@ public class GamePanel extends JPanel {
 		    party.setVisible(false);
 		    screen.requestFocusInWindow();
 		    partyButton.setIcon(new ImageIcon(i1));
-		    screen.resume();
 		}else if(!party.isVisible()){
-		    screen.pause();
 		    party.setVisible(true);
 		    party.requestFocusInWindow();
 		    partyButton.setIcon(new ImageIcon(i2));		       	            
 		}
 	    });
-	JButton menuButton = new JButton("Menu");
+	menuButton = new JButton("Menu");
 	menuButton.setOpaque(false);
 	menuButton.setBorderPainted(false);
 	menuButton.setContentAreaFilled(false);
 	menuButton.setVerticalTextPosition(SwingConstants.CENTER);
 	menuButton.setHorizontalTextPosition(SwingConstants.CENTER);
 	menuButton.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-	menuButton.setBounds(windowWidth/6*5,(windowHeight-height)+(height/4*2)+10,width/6,height/4);
+	menuButton.setBounds(windowWidth/6*5-(width/70),(windowHeight-height)+(height/4*2)+(height/30),width/6,(height-(height/30))/3);
 	menuButton.setIcon(new ImageIcon(i1));
 	menuButton.setForeground(Color.white);
 	menuButton.addActionListener(e -> {
@@ -115,22 +118,23 @@ public class GamePanel extends JPanel {
 	    });
 
 	//GRABS ALL PARTY DATA INCLUDING HP, MANA, ETC
-	JTextArea playerData = new JTextArea();
+	playerData = new JTextArea();
 	playerData.setSelectedTextColor(Color.WHITE);
 	playerData.setSize(width/6,height);
-	playerData.setLocation(0+(width/50),(windowHeight/5*4)+(height/15));
+	playerData.setLocation(0+(width/50),(windowHeight/5*4)+(height/30));
 	playerData.setOpaque(false);
 	playerData.setVisible(true);
+	playerData.setEditable(false);
+	playerData.setHighlighter(null);
+	playerData.setDragEnabled(false);
 	playerData.setForeground(Color.WHITE);
-	playerData.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-	//PUT THE PLAYERDATA IN HER
-	playerData.append("Player 1: \nHP: gethp()    |    Mana: getMana()     |    otherstuff");
+	playerData.setFont(new Font("TimesRoman", Font.PLAIN, height/15));
+	//PUT THE PLAYERDATA IN HERE
 
 	//creates inventory panel
 	invent.setSize(windowWidth/2, windowHeight/2);
 	invent.setLocation(windowWidth/4, windowHeight/4);
 	
-
 	screen = new Screen();
 
 	add(party);
@@ -145,7 +149,11 @@ public class GamePanel extends JPanel {
 	
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
-	g.drawImage(bg,0,windowHeight-height,width,height,null);
+	g.drawImage(bg,0,windowHeight/5*4,width,height,null);
+	for(int i = 0; i < screen.characters.size(); i++){
+	playerData.setText("Player " + i + ": " + "\nHP: " +  screen.characters.get(i).getHP()+"/"+screen.characters.get(i).getMaxHP()
+			   + "\nMana: " + screen.characters.get(i).getMana()+"/"+screen.characters.get(i).getMaxMana());
+	}
     }
 
     public class Screen extends Canvas implements Runnable{
@@ -156,15 +164,13 @@ public class GamePanel extends JPanel {
 	// The width and height of each tile in pixels
 	private static final int TILE_SCALE = 60;
 	//arraylists containing all entities on screen, painted by while loop in screen
-	private ArrayList<Player> characters = new ArrayList<>();
-	private ArrayList<Character> ai = new ArrayList<>();
 
 	private boolean running;
 	private int averageFPS;
 	private int mapX = 0;
 	private int mapY = 0;
 	//SCREEN dimensions
-	private int screenHeight = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4-10);
+	private int screenHeight = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4);
 	private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
 	private LinkedList<Long> frames = new LinkedList<>();
 	private long prevTick = -1;
@@ -175,7 +181,9 @@ public class GamePanel extends JPanel {
 	private Player giant = new Player("sprites/Giant.png", 250, 500);
 	private Player swordsman = new Player("sprites/swordsman down.png", 500, 250);
 	private Thread thread;
-	
+     
+	private ArrayList<Player> characters = new ArrayList<>();
+	private ArrayList<Character> ai = new ArrayList<>();
 
 	public Screen() {
 	    setSize(screenWidth, screenHeight);
@@ -278,12 +286,6 @@ public class GamePanel extends JPanel {
 	public synchronized void stop() {
 	    try {thread.join();}
 	    catch (InterruptedException e) {Utilities.showErrorMessage(this, e);}
-	}
-	public void pause(){
-	    //running = false;
-	}
-	public void resume(){
-	    //    running = true;
 	}
 
 	//chance of spawning each monster is 0.1% and it will spawn in one of the four sides of the screen
