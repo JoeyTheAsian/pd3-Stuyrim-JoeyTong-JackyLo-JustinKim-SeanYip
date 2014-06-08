@@ -18,10 +18,18 @@ Project Description: 2.5D RPG game
   Textures and images get dumped in images directory 
   
   Feature log: 
-
+  
+  **6/8/14**
+  
+  
+  
   **6/7/14**
   
   Implemented monster spawning and made them lose interest to the player after a distance (Jacky)
+  
+  Created some basic animations and idle sprites for swordsman. (Joey)
+  
+  Implemented directional movement corresponding to respective sprite image (sprite changes base on direction) (Joey)
   
   **6/6/14**
 
