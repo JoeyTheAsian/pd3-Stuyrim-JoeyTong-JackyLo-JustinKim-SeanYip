@@ -1,6 +1,8 @@
+import java.awt.image.BufferedImage;
+
 public class Player extends Character {
     private Item weapon, shield, head, torso, back, hands, legs, feet, accessory, consumable, misc;
-    
+
 	
     public Player() {super();}
     public Player(String imageLocation, int x, int y) {super(imageLocation, x, y);}
@@ -28,5 +30,7 @@ public class Player extends Character {
     public final void setAccessory(Item accessory) {this.accessory = accessory;}
     public final void setConsumable(Item consumable) {this.consumable = consumable;}
     public final void setMisc(Item misc) {this.misc = misc;}
-	    
+
+ 
+    
 }

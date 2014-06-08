@@ -48,6 +48,9 @@ public class InventoryPanel extends JPanel {
 		    requestFocusInWindow();
 		}	
 		});
+	inventoryTable.setOpaque(false);
+	inventoryTableScrollPane.setOpaque(false);
+	inventoryTableScrollPane.getViewport().setOpaque(false);
 	setVisible(false);
     }
 	

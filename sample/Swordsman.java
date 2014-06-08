@@ -1,28 +1,33 @@
 import java.util.*;
 import java.io.*;
 import java.awt.*;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 import javax.imageio.ImageIO;
 import java.io.File;
 
 public class Swordsman extends Player{
-    private BufferedImage down, up, left, right;
     protected Item shield = null;
     public Swordsman(){super();}
     public Swordsman(String imageLocation, int x, int y){
 	super(imageLocation,x,y);
 	try{
-	left = ImageIO.read(new File("swordsman left.png"));
-	right = ImageIO.read(new File("swordsman right.png"));
-	up = ImageIO.read(new File("swordsman up.png"));
-	down = ImageIO.read(new File("swordsman down.png"));
+	 //get all the swordsman graphics
+	 //if image isn't already that image, set it to the image
+ 	//to prevent unnecessary resetting of images (gifs would stutter)
+	    //LEFT AND RIGHT ANIMATIONS NOT DRAWN YET
+	down = ImageIO.read(new File("sprites/swordsman down.png"));
+	up = ImageIO.read(new File("sprites/swordsman up.png"));
+	left = ImageIO.read(new File("sprites/swordsman left.png"));
+	right = ImageIO.read(new File("sprites/swordsman right.png"));
+	downAnimated = (new ImageIcon("sprites/swordsman down animated.gif").getImage());
+	upAnimated = (new ImageIcon("sprites/swordsman up animated.gif").getImage());
+	leftAnimated =(new ImageIcon("sprites/swordsman left.png").getImage());
+	rightAnimated =(new ImageIcon("sprites/swordsman right.png").getImage());
 	}catch(Exception e){
 	    Utilities.showErrorMessage(null,e);
 	}
     }
-    public final void setDown() {setImage(down);}
-    public final void setUp(){setImage (up);}
-    public final void setLeft() {setImage (left);}
-    public final void setRight() {setImage( right);}
+
 }

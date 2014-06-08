@@ -29,6 +29,7 @@ import javax.imageio.ImageIO;
 
 public class GamePanel extends JPanel {
     private boolean[] keysPressed = new boolean[256];
+    private boolean[] keysReleased = new boolean[256];
     private BufferedImage bg; //background
     private int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height-37;
     private int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
@@ -120,7 +121,7 @@ public class GamePanel extends JPanel {
 	JTextArea playerData = new JTextArea();
 	playerData.setSelectedTextColor(Color.WHITE);
 	playerData.setSize(width/6,height);
-	playerData.setLocation(0,windowHeight/5*4);
+	playerData.setLocation(0+(width/50),(windowHeight/5*4)+(height/15));
 	playerData.setOpaque(false);
 	playerData.setVisible(true);
 	playerData.setForeground(Color.WHITE);
@@ -158,7 +159,7 @@ public class GamePanel extends JPanel {
 	// The width and height of each tile in pixels
 	private static final int TILE_SCALE = 60;
 	//arraylists containing all entities on screen, painted by while loop in screen
-	private ArrayList<Character> characters = new ArrayList<>();
+	private ArrayList<Player> characters = new ArrayList<>();
 	private ArrayList<Character> ai = new ArrayList<>();
 
 	private boolean running;
@@ -172,10 +173,10 @@ public class GamePanel extends JPanel {
 	private long prevTick = -1;
 	private Map currentMap;
 	//for testing putposes
-	private Swordsman slime = new Swordsman("swordsman down.png", screenWidth/2, screenHeight/2);
-	private Player bird = new Player("Bird.png", 250, 250);
-	private Player giant = new Player("Giant.png", 250, 500);
-	private Player swordsman = new Player("swordsman down.png", 500, 250);
+	private Swordsman player = new Swordsman("sprites/swordsman down.png", screenWidth/2, screenHeight/2);
+	private Player bird = new Player("sprites/Bird.png", 250, 250);
+	private Player giant = new Player("sprites/Giant.png", 250, 500);
+	private Player swordsman = new Player("sprites/swordsman down.png", 500, 250);
 	private Thread thread;
 	
 
@@ -183,13 +184,16 @@ public class GamePanel extends JPanel {
 	    setSize(screenWidth, screenHeight);
 	    try{flickerStop =ImageIO.read(new File("GUI Images/flickerStop.png"));
 	    }catch(Exception e){Utilities.showErrorMessage(this,e);}
-	    characters.add(slime);
+	    characters.add(player);
 
             currentMap = new Map();
             currentMap.setTile(5, 5, Tile.WALL);
 	    addKeyListener(new KeyListener() {
 		    public void keyPressed(KeyEvent e) {keysPressed[e.getKeyCode()] = true;}
-		    public void keyReleased(KeyEvent e) {keysPressed[e.getKeyCode()] = false;}
+		    public void keyReleased(KeyEvent e) {
+			keysPressed[e.getKeyCode()] = false;
+			keysReleased[e.getKeyCode()] = true;
+		    }
 		    public void keyTyped(KeyEvent e) {}
 		});
 	    addMouseListener(new MouseListener() {
@@ -227,8 +231,8 @@ public class GamePanel extends JPanel {
 
 	    //loops and draws all the entities players/monsters
 	    for (Character character : ai){
-		double changeX = slime.getX() - character.getX();
-		double changeY = slime.getY() - character.getY();
+		double changeX = characters.get(0).getX() - character.getX();
+		double changeY = characters.get(0).getY() - character.getY();
 		double distance = Math.sqrt( changeX*changeX + changeY*changeY );
 		if (distance < 250.0 || distance > 750){}
 		else{
@@ -266,7 +270,6 @@ public class GamePanel extends JPanel {
 		tick();
 		render();
 	    }
-
 	}
 	
 	public synchronized void start() {
@@ -297,47 +300,61 @@ public class GamePanel extends JPanel {
 	    if (chance > 0.003)
 		return;
 	    else if (chance > 0.002)
-		ai.add(new Player("swordsman down.png",side[temp][0],side[temp][1]));
+		ai.add(new Player("sprites/swordsman down.png",side[temp][0],side[temp][1]));
 	    else if (chance > 0.001)
-		ai.add(new Player("Bird.png",side[temp][0],side[temp][1]));
+		ai.add(new Player("sprites/Bird.png",side[temp][0],side[temp][1]));
 	    else
-		ai.add(new Player("Giant.png",side[temp][0],side[temp][1]));
+		ai.add(new Player("sprites/Giant.png",side[temp][0],side[temp][1]));
 	}
 
 	//updates game screen data
 	public void tick() {
-	    if (keysPressed[VK_W] && (slime.getY() > 0)) {
+	    if (keysPressed[VK_W]) {
 		//	slime.setY(slime.getY() - 1);
 		mapY+=2;
-		slime.setUp();
+		characters.get(0).setUpAnimated();
 		for (Character monster : ai)
 		    monster.setY(monster.getY()+2);
 		chanceOfSpawn();
 	    }
-	    if (keysPressed[VK_S] && (slime.getY() < screenHeight)) {
-		//	slime.setY(slime.getY() + 1);
+	    if (keysPressed[VK_S]) {
 		mapY-=2;
-		slime.setDown();
+		characters.get(0).setDownAnimated();
 		for (Character monster : ai)
 		    monster.setY(monster.getY()-2);
 		chanceOfSpawn();
 	    }
-	    if (keysPressed[VK_A] && (slime.getY() > 0)) {
-		//	slime.setX(slime.getX() - 1);
+	    if (keysPressed[VK_A]) {
 		mapX +=2;
-		slime.setLeft();
+		characters.get(0).setLeftAnimated();
 		for (Character monster : ai)
 		    monster.setX(monster.getX()+2);
 		chanceOfSpawn();
 	    }
-	    if (keysPressed[VK_D] && (slime.getY() < screenWidth)) {
-		//	slime.setX(slime.getX() + 1);
+	    if (keysPressed[VK_D]) {
 		mapX-=2;
-		slime.setRight();
+		characters.get(0).setRightAnimated();
 		for (Character monster : ai)
 		    monster.setX(monster.getX()-2);
 		chanceOfSpawn();
 	    }
+	    if(keysReleased[VK_W]){
+		characters.get(0).setUp();
+		keysReleased[VK_W] = false;
+	    }
+	    if(keysReleased[VK_S]){
+		characters.get(0).setDown();
+		keysReleased[VK_S] = false;
+	    }
+	    if(keysReleased[VK_A]){
+		characters.get(0).setLeft();
+		keysReleased[VK_A] = false;
+	    }
+	    if(keysReleased[VK_D]){
+		characters.get(0).setRight();
+		keysReleased[VK_D] = false;
+	    }
+	    //reset player to idle mode after done moving
 
 	    long pastTime = System.currentTimeMillis() - prevTick;
 

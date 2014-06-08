@@ -1,9 +1,10 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
+import java.awt.Image;
 
-public class Character {
-    private BufferedImage image;
+public class Character {  
+    protected Image image, down, up, left, right, downAnimated, upAnimated, leftAnimated, rightAnimated;
     private int x, y;
     private String imageLocation;
     protected int maxHP, HP;
@@ -41,17 +42,16 @@ public class Character {
 	gold = 0;
     }
     
-    public final BufferedImage getImage() {return image;}
+    public final Image getImage() {return image;}
     public final String getImageLocation() {return imageLocation;}
-    public final int getHeight() {return image.getHeight();}
-    public final int getWidth() {return image.getWidth();}
+    public final int getHeight() {return image.getHeight(null);}
+    public final int getWidth() {return image.getWidth(null);}
     public final int getX() {return x;}
     public final int getY() {return y;}
     public final void setImage(String imageLocation) {
 	try {image = ImageIO.read(new File(imageLocation));}
 	catch (Exception e) {Utilities.showErrorMessage(null, e);}
     }
-    public final void setImage(BufferedImage i) {image = i;}
 
     public final void setX(int x) {this.x = x;}
     public final void setY(int y) {this.y = y;}
@@ -90,12 +90,23 @@ public class Character {
     public final int getMana(){return mana;}
     public final int getGold(){return gold;}
 
+    public final void setImage(Image i) {image = i;}
+
+   //set current display image to sprite animations
+    public final void setDown() {if(image != down) setImage(down);}
+    public final void setUp(){if(image!= up) setImage (up);}
+    public final void setLeft() {if(image != left) setImage (left);}
+    public final void setRight() {if(image!= right) setImage( right);}
+    public final void setDownAnimated(){if(image != downAnimated) setImage(downAnimated);}
+    public final void setUpAnimated(){if(image != upAnimated) setImage(upAnimated);}
+    public final void setLeftAnimated(){if(image != leftAnimated) setImage(leftAnimated);}
+    public final void setRightAnimated(){if(image != rightAnimated) setImage(rightAnimated);}
     //for testing purposes
     public void attack(Character character){
-	if (Math.random() < luk)
+	if (Math.random() < luk){
 	    character.setHP(character.getHP() + character.getDEF() - (int)(1.5*ATK));
-	else
+	}else{
 	    character.setHP(character.getHP() + character.getDEF() - ATK);
+	}
     }
-
 }
