@@ -4,11 +4,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import static java.awt.event.KeyEvent.*;
 import java.awt.event.KeyEvent;
-import static java.awt.event.KeyEvent.VK_A;
-import static java.awt.event.KeyEvent.VK_D;
-import static java.awt.event.KeyEvent.VK_S;
-import static java.awt.event.KeyEvent.VK_W;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.awt.event.MouseEvent;
@@ -338,6 +335,7 @@ public class GamePanel extends JPanel {
 		    monster.setX(monster.getX()-2);
 		chanceOfSpawn();
 	    }
+	    //reset player to idle mode after done moving
 	    if(keysReleased[VK_W]){
 		characters.get(0).setUp();
 		keysReleased[VK_W] = false;
@@ -354,7 +352,7 @@ public class GamePanel extends JPanel {
 		characters.get(0).setRight();
 		keysReleased[VK_D] = false;
 	    }
-	    //reset player to idle mode after done moving
+
 
 	    long pastTime = System.currentTimeMillis() - prevTick;
 
