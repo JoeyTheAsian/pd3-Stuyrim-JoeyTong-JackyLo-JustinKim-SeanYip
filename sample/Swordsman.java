@@ -20,8 +20,8 @@ public class Swordsman extends Player{
 	right = ImageIO.read(new File("sprites/swordsman right.png"));
 	downAnimated = (new ImageIcon("sprites/swordsman down animated.gif").getImage());
 	upAnimated = (new ImageIcon("sprites/swordsman up animated.gif").getImage());
-	leftAnimated =(new ImageIcon("sprites/swordsman left.png").getImage());
-	rightAnimated =(new ImageIcon("sprites/swordsman right.png").getImage());
+	leftAnimated =(new ImageIcon("sprites/swordsman left animated.gif").getImage());
+	rightAnimated =(new ImageIcon("sprites/swordsman right animated.gif").getImage());
 	}catch(Exception e){
 	    Utilities.showErrorMessage(null,e);
 	}
