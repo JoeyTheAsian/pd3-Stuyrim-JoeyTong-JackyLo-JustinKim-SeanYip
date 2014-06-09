@@ -182,6 +182,8 @@ public class GamePanel extends JPanel {
 	private Player swordsman = new Player("sprites/swordsman down.png", 500, 250);
 	private Thread thread;
      
+	private int time; //global time
+
 	private ArrayList<Player> characters = new ArrayList<>();
 	private ArrayList<Character> ai = new ArrayList<>();
 
@@ -201,7 +203,12 @@ public class GamePanel extends JPanel {
 		    public void keyTyped(KeyEvent e) {}
 		});
 	    addMouseListener(new MouseListener() {
-		    public void mouseClicked(MouseEvent e) {}
+		    public void mouseClicked(MouseEvent e) {
+			for (Character character : ai){
+			    if (character.getDist(characters.get(0)) < characters.get(0).getRange())
+				characters.get(0).attack(character);
+			}
+		    }
 		    public void mouseEntered(MouseEvent e) {}
 		    public void mouseExited(MouseEvent e) {}
 		    public void mousePressed(MouseEvent e) {}
@@ -232,18 +239,6 @@ public class GamePanel extends JPanel {
 	    //draw fps
 	    g.setColor(Color.GREEN);
 	    g.drawString("FPS: " + averageFPS, 0, 20);
-
-	    //loops and draws all the entities players/monsters
-	    for (Character character : ai){
-		double changeX = characters.get(0).getX() - character.getX();
-		double changeY = characters.get(0).getY() - character.getY();
-		double distance = Math.sqrt( changeX*changeX + changeY*changeY );
-		if (distance < 250.0 || distance > 750){}
-		else{
-		    character.setX(character.getX() + (int)(2*changeX/distance));
-		    character.setY(character.getY() + (int)(2*changeY/distance));
-		}
-	    }
 	    for (Character character : ai) {
 		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
 	    }
@@ -272,12 +267,14 @@ public class GamePanel extends JPanel {
     
 	public void run() {
 	    while (running) {
+		time++;
 		tick();
 		render();
 	    }
 	}
 	
 	public synchronized void start() {
+	    time = 0;
 	    running = true;
 	    thread = new Thread(this);
 	    thread.start();
@@ -354,7 +351,27 @@ public class GamePanel extends JPanel {
 		characters.get(0).setRight();
 		keysReleased[VK_D] = false;
 	    }
+	    //loops and draws all the entities players/monsters
+	    for (Character character : ai){
+		if (character.getDist(characters.get(0)) < character.getRange()){
+		    if (time%character.getATKspeed() != 0){}
+		    else character.attack(characters.get(0));
+		}else{
+		    character.setX(character.getX() + (int)(2*character.getChangeX()/character.getDist(characters.get(0))));
+		    character.setY(character.getY() + (int)(2*character.getChangeY()/character.getDist(characters.get(0))));
+		}
+	    }
+	    for (int i = 0; i < ai.size(); i++){
+		if (ai.get(i).getHP() <= 0){
+		    ai.remove(i);
+		    i--;
+		}
+	    }
 
+	    for (int i = 0; i < characters.size(); i++){
+		if (characters.get(i).getHP() <= 0)
+		    System.exit(0); //closes when player dies
+	    }
 
 	    long pastTime = System.currentTimeMillis() - prevTick;
 
