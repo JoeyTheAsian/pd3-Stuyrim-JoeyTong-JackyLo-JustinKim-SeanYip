@@ -238,7 +238,7 @@ public class GamePanel extends JPanel {
 	    drawMap(g);
 	    //draw fps
 	    g.setColor(Color.GREEN);
-	    g.drawString("FPS: " + averageFPS, 0, 20);
+
 	    for (Character character : ai) {
 		g.drawString("HP: " + character.getHP(),character.getX(),character.getY()-30);
 		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
@@ -246,6 +246,7 @@ public class GamePanel extends JPanel {
 	    for (Character character : characters) {
 		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
 	    }
+	    g.drawString("FPS: " + averageFPS, 0, 20);
 	    g.dispose();
 	    bs.show();
 	}
@@ -262,7 +263,7 @@ public class GamePanel extends JPanel {
 
         private void drawTile(int x, int y, Tile tile, Graphics g) {
             Image texture = currentMap.getTexture(tile);
-	    if((x * TILE_SCALE + mapX + TILE_SCALE >-1)&&(y*TILE_SCALE + mapY +TILE_SCALE> -1)
+	    if((x * TILE_SCALE + mapX + TILE_SCALE >0)&&(y*TILE_SCALE + mapY +TILE_SCALE>0)
 	       &&(x * TILE_SCALE + mapX<windowWidth+1) && ( y * TILE_SCALE + mapY < windowHeight+1)){
             g.drawImage(texture, x * TILE_SCALE + mapX, y * TILE_SCALE + mapY,
                         TILE_SCALE, TILE_SCALE, null);
