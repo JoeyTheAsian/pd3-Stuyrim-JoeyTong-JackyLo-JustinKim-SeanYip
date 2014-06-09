@@ -19,7 +19,10 @@ public class Character {
     //protected int mapX, mapY;
     protected int gold;
     protected Inventory inv = new Inventory();
-    
+    protected double changeX;
+    protected double changeY;
+    protected double distance;
+
     public Character(){}
     public Character(String imageLocation, int x, int y) {
 	setImage(imageLocation);
@@ -89,6 +92,16 @@ public class Character {
     public final int getMaxMana(){return maxMana;}
     public final int getMana(){return mana;}
     public final int getGold(){return gold;}
+
+    public final double getChangeX(){return changeX;}
+    public final double getChangeY(){return changeY;}
+
+    public final double getDist(Character ch){
+	changeX = ch.getX() - getX();
+	changeY = ch.getY() - getY();
+	distance = Math.sqrt( changeX*changeX + changeY*changeY );
+	return distance;
+    }
 
     public final void setImage(Image i) {image = i;}
 
