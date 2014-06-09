@@ -1,12 +1,19 @@
+import java.awt.Image;
+import java.io.File;
+import java.util.HashMap;
+import javax.imageio.ImageIO;
+
 public class Map {
 
     public static final int NUM_ROWS = 20;
     public static final int NUM_COLS = 25;
 
     private Tile[][] tilemap;
+    private HashMap<Integer, Image> textures;
 
     public Map() {
         tilemap = new Tile[NUM_COLS][NUM_ROWS];
+        textures = new HashMap<Integer, Image>();
         setAll(Tile.GRASS);
     }
 
@@ -60,6 +67,22 @@ public class Map {
     public void setRow(int y, Tile tile) {
         for (int i = 0; i < tilemap.length; i++) {
             setTile(i, y, tile);
+        }
+    }
+
+    public Image getTexture(Tile tile) {
+        ensureTextureExistence(tile);
+        return textures.get(tile.id);
+    }
+
+    private void ensureTextureExistence(Tile tile) {
+        if (!textures.containsKey(tile.id)) {
+            try {
+                Image image = ImageIO.read(new File(tile.texture));
+                textures.put(tile.id, image);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         }
     }
 }

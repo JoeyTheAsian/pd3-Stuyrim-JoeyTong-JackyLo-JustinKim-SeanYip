@@ -265,13 +265,9 @@ public class GamePanel extends JPanel {
         }
 
         private void drawTile(int x, int y, Tile tile, Graphics g) {
-            try {
-                Image image = ImageIO.read(new File(tile.texture));
-                g.drawImage(image, x * TILE_SCALE + mapX, y * TILE_SCALE + mapY,
-                            TILE_SCALE, TILE_SCALE, null);
-            } catch (Exception e) {
-                Utilities.showErrorMessage(this, e);
-            }
+            Image texture = currentMap.getTexture(tile);
+            g.drawImage(texture, x * TILE_SCALE + mapX, y * TILE_SCALE + mapY,
+                        TILE_SCALE, TILE_SCALE, null);
         }
     
 	public void run() {

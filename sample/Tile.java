@@ -1,4 +1,3 @@
-
 public enum Tile {
     GRASS   (0, "sprites/grass.png");
 
