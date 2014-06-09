@@ -22,6 +22,7 @@ public class Character {
     protected double changeX;
     protected double changeY;
     protected double distance;
+    protected long timeStarted;
 
     public Character(){}
     public Character(String imageLocation, int x, int y) {
@@ -95,6 +96,9 @@ public class Character {
 
     public final double getChangeX(){return changeX;}
     public final double getChangeY(){return changeY;}
+    
+    public final void setTimeStarted(long tm){timeStarted = tm;}
+    public final long getTimeStarted(){return timeStarted;}
 
     public final double getDist(Character ch){
 	changeX = ch.getX() - getX();
