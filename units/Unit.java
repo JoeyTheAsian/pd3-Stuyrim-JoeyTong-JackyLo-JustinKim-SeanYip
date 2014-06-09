@@ -129,7 +129,7 @@ public abstract class Unit{
     public void setGold(int gd){ gold = gd; }
     public int getGold(){ return gold; }
 
-    public double getDist(Unit) {return Math.hypot(getMapX() - u.getMapX(), getMapY() - u.getMapY());}
+    public double getDist(Unit) {return Math.hypot(Math.abs(getMapX() - u.getMapX()), Math.abs(getMapY() - u.getMapY()));}
 
     public void charge(){
 	if (mana < maxMana)

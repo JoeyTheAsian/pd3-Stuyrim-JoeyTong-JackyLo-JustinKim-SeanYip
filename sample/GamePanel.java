@@ -240,7 +240,10 @@ public class GamePanel extends JPanel {
 	    g.setColor(Color.GREEN);
 
 	    for (Character character : ai) {
-		g.drawString("HP: " + character.getHP(),character.getX(),character.getY()-30);
+		g.setColor(Color.GREEN);
+		g.fillRect(character.getX(),character.getY(),character.getHP()/100,25);
+		g.setColor(Color.RED);
+		g.fillRect(character.getX()+character.getHP()/100,character.getY(),character.getMaxHP()-character.getHP()/100,25);
 		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
 	    }
 	    for (Character character : characters) {
