@@ -21,9 +21,23 @@ Project Description: 2.5D RPG game
   
   **6/8/14**
   
+  
+  
+  drawMap optimized, still laggy (Justin)
+  
+  Monster HP indicators implemented (Jacky) 
+  
+  Monster vs player combat implemented. Non-directional attacks, does damage in a 360 degree range. (Jacky) 
+  
+  Player mouse input for attack implemented (Jacky)
+  
+  Monster death and player death implemented Player Death temporarily removed for testing purposes (Jacky)
+  
   So much stuff added I can't even begin to describe it all, but I will (Joey)
   
-  Player movement animations fully implemented, only issue is minor frame skips upon first moving in the process of drawing all the animations (Joey)
+  Occlusion culling implemented in drawMap (Joey)
+  
+ Player movement animations fully implemented, only issue is minor frame skips upon first moving in the process of drawing all the animations (Joey)
   
   subsets of animation update:
     
@@ -35,6 +49,7 @@ Project Description: 2.5D RPG game
       
   -Optimized Animations by writing in conditional within setImage() methods to prevent excessive changes to the image variable (Joey) 
       
+  -added left and right movement animations (Joey)
         
   Fixed the non transparency issue with inventory panel (Joey)
   
