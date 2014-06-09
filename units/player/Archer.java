@@ -26,10 +26,10 @@ public class Archer extends Player{
 	maxATKspeed = 50;
 	ATKspeed = maxATKspeed;
 	range = 150;
-	setLeft("Archer_left.png");
-	setRight("Archer_right.png");
-	setUp("Archer_up.png");
-	setDown("Archer_down.png");
+	setLeft("archer left.png");
+	setRight("archer right.png");
+	setUp("archer up.png");
+	setDown("archer down.png");
     }
 
     public void setHaveBuff2(boolean bf2){ haveBuff2 = bf2; }

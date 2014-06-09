@@ -16,7 +16,10 @@ public class Bird extends Monster{
 	luk = 5;
 	speed = 10;
 	ATKspeed = 50;
-	image = new ImageIcon("Bird.png").getImage();
+	setLeft("bird left.png");
+	setRight("bird right.png");
+	setUp("bird up.png");
+	setDown("bird down.png");
     }
 
     public void setList(){

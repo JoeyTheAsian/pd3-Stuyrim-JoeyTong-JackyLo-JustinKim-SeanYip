@@ -14,6 +14,9 @@ public class Swordsman extends Player{
 	setDown("swordsman down.png");
     }
 
+    public void setShield(Item shld){shield = shld;}
+    public Item getShield(){return shield;}
+
     public void sAttack2(){}
 
     public void sAttack3(){}
