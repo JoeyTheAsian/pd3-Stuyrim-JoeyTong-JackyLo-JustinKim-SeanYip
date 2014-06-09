@@ -129,11 +129,7 @@ public abstract class Unit{
     public void setGold(int gd){ gold = gd; }
     public int getGold(){ return gold; }
 
-    public int getDist(Unit u){ //gets the distance from Unit u
-	return Math.sqrt( Math.abs( Math.pow((getMapX()-u.getMapX()),2) ) +
-			  Math.abs( Math.pow((getMapY()-u.getMapY()),2) ) );
-	//distance formula
-    }
+    public double getDist(Unit) {return Math.hypot(getMapX() - u.getMapX(), getMapY() - u.getMapY());}
 
     public void charge(){
 	if (mana < maxMana)
