@@ -100,7 +100,7 @@ public class Character {
     public final void setTimeStarted(long tm){timeStarted = tm;}
     public final long getTimeStarted(){return timeStarted;}
 
-    public final double getDist(Character ch) {return Math.hypot(getX() - ch.getX(), getY() - ch.getY());}
+    public final double getDist(Character ch) {return Math.hypot(Math.abs(getX() - ch.getX()), Math.abs(getY() - ch.getY()));}
 
     public final void setImage(Image i) {image = i;}
 
