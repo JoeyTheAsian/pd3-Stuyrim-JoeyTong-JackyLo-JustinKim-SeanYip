@@ -151,7 +151,7 @@ public class GamePanel extends JPanel {
 	super.paintComponent(g);
 	g.drawImage(bg,0,windowHeight/5*4,width,height,null);
 	for(int i = 0; i < screen.characters.size(); i++){
-	playerData.setText("Player " + i + ": " + "\nHP: " +  screen.characters.get(i).getHP()+"/"+screen.characters.get(i).getMaxHP()
+	    playerData.setText("Player " + (i +1) + ": " + "\nHP: " +  screen.characters.get(i).getHP()+"/"+screen.characters.get(i).getMaxHP()
 			   + "\nMana: " + screen.characters.get(i).getMana()+"/"+screen.characters.get(i).getMaxMana());
 	}
     }
@@ -369,8 +369,7 @@ public class GamePanel extends JPanel {
 	    }
 
 	    for (int i = 0; i < characters.size(); i++){
-		if (characters.get(i).getHP() <= 0)
-		    System.exit(0); //closes when player dies
+		//	if (characters.get(i).getHP() <= 0)
 	    }
 
 	    long pastTime = System.currentTimeMillis() - prevTick;
