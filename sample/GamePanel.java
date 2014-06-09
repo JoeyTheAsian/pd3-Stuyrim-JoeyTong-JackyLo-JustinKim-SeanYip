@@ -205,7 +205,7 @@ public class GamePanel extends JPanel {
 	    addMouseListener(new MouseListener() {
 		    public void mouseClicked(MouseEvent e) {
 			for (Character character : ai){
-			    if (character.getDist(characters.get(0)) < characters.get(0).getRange())
+			    if (character.getDist(characters.get(0)) <= characters.get(0).getRange())
 				characters.get(0).attack(character);
 			}
 		    }
@@ -240,6 +240,7 @@ public class GamePanel extends JPanel {
 	    g.setColor(Color.GREEN);
 	    g.drawString("FPS: " + averageFPS, 0, 20);
 	    for (Character character : ai) {
+		g.drawString("HP: " + character.getHP(),character.getX(),character.getY()-50);
 		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
 	    }
 	    for (Character character : characters) {
