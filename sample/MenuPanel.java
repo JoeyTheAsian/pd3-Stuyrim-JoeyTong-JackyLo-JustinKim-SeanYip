@@ -2,9 +2,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Frame;
 import java.awt.Toolkit;
-import java.awt.Component;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
@@ -12,8 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-
+	
 public class MenuPanel extends JPanel {
     //dimensions
     private int height =Toolkit.getDefaultToolkit().getScreenSize().height-37, width = Toolkit.getDefaultToolkit().getScreenSize().width;
@@ -46,7 +43,13 @@ public class MenuPanel extends JPanel {
 	optionsButton.setForeground(Color.white);
 
 	startButton.addActionListener(e -> {
-	        ((JFrame)this.getTopLevelAncestor()).startGame();
+		//create a new GamePanel, add it, start it, and get keyboard focus
+		GamePanel GamePanel = new GamePanel();
+		startButton.getParent().getParent().add(GamePanel);
+		GamePanel.screen.start();
+		GamePanel.screen.requestFocusInWindow();
+		startButton.getParent().getParent().repaint();
+		startButton.getParent().getParent().remove(this);
 	    });
 	startButton.setOpaque(false);
 	startButton.setBorderPainted(false);
@@ -58,7 +61,7 @@ public class MenuPanel extends JPanel {
 	startButton.setLocation((width/3*2)-(width/20), (height/7*6)-(height/40));
 	startButton.setIcon(new ImageIcon(img));
 	startButton.setForeground(Color.white);
-
+	
 	add(optionsButton);
 	add(startButton);
 	setVisible(true);

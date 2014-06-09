@@ -46,7 +46,7 @@ public class GamePanel extends JPanel {
 	setBounds(0, 0 , windowWidth, windowHeight);
 	try {bg = ImageIO.read(new File("GUI Images/trimmed paper background.png"));}
 	catch (Exception e) {Utilities.showErrorMessage(this, e);}
-	setVisible(false);
+	setVisible(true);
 
 	//add buttons
 	inventoryButton = new JButton("Inventory");
