@@ -182,7 +182,7 @@ public class GamePanel extends JPanel {
 	private Player swordsman = new Player("sprites/swordsman down.png", 500, 250);
 	private Thread thread;
      
-	private int time; //global time
+	private long time; //global time
 
 	private ArrayList<Player> characters = new ArrayList<>();
 	private ArrayList<Character> ai = new ArrayList<>();
@@ -300,12 +300,23 @@ public class GamePanel extends JPanel {
 	    int temp = (int)(Math.random()*4);
 	    if (chance > 0.003)
 		return;
-	    else if (chance > 0.002)
-		ai.add(new Player("sprites/swordsman down.png",side[temp][0],side[temp][1]));
-	    else if (chance > 0.001)
-		ai.add(new Player("sprites/Bird.png",side[temp][0],side[temp][1]));
-	    else
-		ai.add(new Player("sprites/Giant.png",side[temp][0],side[temp][1]));
+	    else{
+		Player plyr;
+		if (chance > 0.002){
+		    plyr = new Player("sprites/swordsman down.png",side[temp][0],side[temp][1]);
+		    ai.add(plyr);
+		    plyr.setTimeStarted(time);
+		}else if (chance > 0.001){
+		    plyr = new Player("sprites/Bird.png",side[temp][0],side[temp][1]);
+		    ai.add(plyr);
+		    plyr.setTimeStarted(time);
+		}else{
+		    
+		    plyr = new Player("sprites/Giant.png",side[temp][0],side[temp][1]);
+		    ai.add(plyr);
+		    plyr.setTimeStarted(time);
+		}
+	    }
 	}
 
 	//updates game screen data
@@ -358,7 +369,7 @@ public class GamePanel extends JPanel {
 	    //loops and draws all the entities players/monsters
 	    for (Character character : ai){
 		if (character.getDist(characters.get(0)) < character.getRange()){
-		    if (time%character.getATKspeed() != 0){}
+		    if ((character.getTimeStarted()-time)%character.getATKspeed() != 0){}
 		    else character.attack(characters.get(0));
 		}else{
 		    character.setX(character.getX() + (int)(2*character.getChangeX()/character.getDist(characters.get(0))));
