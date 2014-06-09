@@ -238,18 +238,17 @@ public class GamePanel extends JPanel {
 	    drawMap(g);
 	    //draw fps
 	    g.setColor(Color.GREEN);
-
+	    g.drawString("FPS: " + averageFPS, 0, 20);
 	    for (Character character : ai) {
 		g.setColor(Color.GREEN);
-		g.fillRect(character.getX(),character.getY(),character.getHP()/100,25);
+		g.fillRect(character.getX(),character.getY(),character.getHP()/10,5);
 		g.setColor(Color.RED);
-		g.fillRect(character.getX()+character.getHP()/100,character.getY(),character.getMaxHP()-character.getHP()/100,25);
+		g.fillRect(character.getX()+character.getHP()/10,character.getY(),(character.getMaxHP()-character.getHP())/10,5);
 		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
 	    }
 	    for (Character character : characters) {
 		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
 	    }
-	    g.drawString("FPS: " + averageFPS, 0, 20);
 	    g.dispose();
 	    bs.show();
 	}
