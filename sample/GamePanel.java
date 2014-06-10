@@ -203,15 +203,15 @@ public class GamePanel extends JPanel {
 		    public void keyTyped(KeyEvent e) {}
 		});
 	    addMouseListener(new MouseListener() {
-		    public void mouseClicked(MouseEvent e) {
+		    public void mouseClicked(MouseEvent e) {}
+		    public void mouseEntered(MouseEvent e) {}
+		    public void mouseExited(MouseEvent e) {}
+		    public void mousePressed(MouseEvent e) {
 			for (Character character : ai){
 			    if (character.getDist(characters.get(0)) <= characters.get(0).getRange())
 				characters.get(0).attack(character);
 			}
 		    }
-		    public void mouseEntered(MouseEvent e) {}
-		    public void mouseExited(MouseEvent e) {}
-		    public void mousePressed(MouseEvent e) {}
 		    public void mouseReleased(MouseEvent e) {}
 		});
 	    addMouseMotionListener(new MouseMotionListener() {
@@ -239,6 +239,7 @@ public class GamePanel extends JPanel {
 	    //draw fps
 	    g.setColor(Color.GREEN);
 	    g.drawString("FPS: " + averageFPS, 0, 20);
+	    g.drawString("Global Time: " + time, 0, 50);
 	    for (Character character : ai) {
 		g.setColor(Color.GREEN);
 		g.fillRect(character.getX(),character.getY(),character.getHP()/10,5);
