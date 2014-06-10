@@ -224,14 +224,19 @@ public class GamePanel extends JPanel {
 	    setVisible(true);
 	}
 	
-	protected boolean intersectLineSegmentEllipse(double x1, double y1, double x2, double y2, double h, double k, double a, double b) {//x1, y1, x2, and y2 are points that define the line segment to test. h and k are the x- and y-coordinates of the center of the ellipse. a and b are the 
-		double m = (y2 - y1)/(x2 - x1), c = y1 - m*x1, d = c + m*h, e = c - k; //m is the slope of the line segment defined by (x1, y1) and (x2, y2). c is the y-intercept of that line segment, if it were extended to intersect the y-axis. d and e are additional variables to make the calculation shorter. Note that all this will not work if x1 = x2 (divison by zero)
-		double discriminant = a*a*m*m + b*b - d*d - k*k + 2*d*k;
+	protected boolean intersectEllipseLineSegment(double x1, double y1, double x2, double y2, double h, double k, double a, double b) {//For the purposes of this game, a line segment that is in an ellipse but does not intersect it (completely contained in ellipse) counts as an intersection. x1, y1, x2, and y2 are points that define the **directed** ((x1, y1) to (x2, y2)) line segment to test. h and k are the x- and y-coordinates of the center of the ellipse, respectively. a and b are the same variables as they are in the equation of an ellipse
+		double m = (y2 - y1)/(x2 - x1), c = y1 - m*x1, d = c + m*h, e = c - k; //m is the slope of the **directed** line segment defined from (x1, y1) to (x2, y2). c is the y-intercept of that line segment, if it were extended to intersect the y-axis. d and e are additional variables to make the calculation shorter. Note that all this will not work if x1 = x2 (vertical line because of divison by zero) (will include a separate case for that).
+		double discriminant = a*a*m*m + b*b - d*d - k*k + 2*d*k, iX1, iY1, iX2, iY2; //Discriminant, like in the quadratic formula, is used to find the number of intersection points. iX1, iY1, iX2, iY2 represent the intersection points.
 		if (discriminant < 0) {return false;}
-		double intersectX1 = (h*b*b - m*a*a*e + a*b*Math.sqrt(discriminant))/(a*a*m*m + b*b);
-		double intersectX2 = (h*b*b - m*a*a*e - a*b*Math.sqrt(discriminant))/(a*a*m*m + b*b);
-		double intersectY1 = (b*b*d + k*a*a*m*m + a*b*m*Math.sqrt(discriminant))/(a*a*m*m + b*b);
-		double intersectY2 = (b*b*d + k*a*a*m*m - a*b*m*Math.sqrt(discriminant))/(a*a*m*m + b*b);
+		if (discriminant >= 0) {
+			iX1 = (h*b*b - m*a*a*e + a*b*Math.sqrt(discriminant))/(a*a*m*m + b*b);
+			iY1 = (b*b*d + k*a*a*m*m + a*b*m*Math.sqrt(discriminant))/(a*a*m*m + b*b);
+		}
+		if (discriminant > 0) { //Note that this case and the one above are not mutually 
+			iX2 = (h*b*b - m*a*a*e - a*b*Math.sqrt(discriminant))/(a*a*m*m + b*b);
+			iY2 = (b*b*d + k*a*a*m*m - a*b*m*Math.sqrt(discriminant))/(a*a*m*m + b*b);
+		}
+		
 		return false;
 	}
 	
