@@ -24,6 +24,9 @@ Project Description: 2.5D RPG game
   
   Implemented party players and party player AI. Somewhat buggy but smarter than monster AI, will upgrade in near future (Joey)
     
+  Planning to remove some levels if we don't get this done in time (Jacky)
+  
+  Drawing some monsters animations (Jacky)
   
   **6/9/14**
 
