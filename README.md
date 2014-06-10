@@ -18,9 +18,18 @@ Project Description: 2.5D RPG game
   Textures and images get dumped in images directory 
   
   Feature log: 
+  **6/10/14**
+  
+  Fixed party info box text printing, now prints data of all party members (Joey)
+  
+  Implemented party players and party player AI. Somewhat buggy but smarter than monster AI, will upgrade in near future (Joey)
+    
+  
+  **6/9/14**
+
+  Implemented 
   
   **6/8/14**
-  
   
   
   drawMap optimized, still laggy (Justin)
