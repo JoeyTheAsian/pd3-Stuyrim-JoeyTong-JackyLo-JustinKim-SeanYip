@@ -1,4 +1,8 @@
 import java.awt.image.BufferedImage;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
+import java.io.File;
 
 public class Player extends Character {
     private Item weapon, shield, head, torso, back, hands, legs, feet, accessory, consumable, misc;

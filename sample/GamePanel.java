@@ -311,7 +311,8 @@ public class GamePanel extends JPanel {
 		sum += frame;
 	    }
 	    long averageFrame = sum / FPS_SAMPLE_SIZE;
-	    averageFPS1 = (int)(1000 / averageFrame);
+	    if (averageFrame == 0) averageFrame = 1;  //IF STATEMENT
+	    averageFPS1 = (int)(1000 / averageFrame); //NOTE: THERE'S AN ARITHMETIC ERROR. AND I THINK THIS LINE IS CRASHING THE GAME. MAKING IF STATEMENT
 	    prevTick1 = System.currentTimeMillis();
 	    // Only if the time passed since the previous tick is less than one
 	    // second divided by the number of maximum FPS allowed do we delay
@@ -381,11 +382,10 @@ public class GamePanel extends JPanel {
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
 		}else if (chance > 0.001){
-		    plyr = new Player("sprites/Bird.png",side[temp][0],side[temp][1]);
+		    plyr = new Player("sprites/bird down.png",side[temp][0],side[temp][1]);
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
 		}else{
-		    
 		    plyr = new Player("sprites/Giant.png",side[temp][0],side[temp][1]);
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
@@ -463,25 +463,95 @@ public class GamePanel extends JPanel {
 		    if(characters.get(j).getDist(characters.get(0)) > 50){
 			characters.get(j).setX(characters.get(j).getX() + (int)(4*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(0))));
 			characters.get(j).setY(characters.get(j).getY() + (int)(4*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(0))));
+			//when the characters are moving
+			if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
+			    if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
+				characters.get(j).setRightAnimated();
+			    else if (characters.get(j).getChangeX() < characters.get(j).getChangeY())
+				characters.get(j).setLeftAnimated();
+			}else{
+			    if (characters.get(j).getChangeY() > characters.get(j).getChangeX())
+				characters.get(j).setDownAnimated();
+			    else if (characters.get(j).getChangeY() < characters.get(j).getChangeX())
+				characters.get(j).setUpAnimated();
+			}
+			//when the characters are idle
+		    }else{
+			if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
+			    if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
+				characters.get(j).setRight();
+			    else if (characters.get(j).getChangeX() < characters.get(j).getChangeY())
+				characters.get(j).setLeft();
+			}else{
+			    if (characters.get(j).getChangeY() > characters.get(j).getChangeX())
+				characters.get(j).setDown();
+			    else if (characters.get(j).getChangeY() < characters.get(j).getChangeX())
+				characters.get(j).setUp();
+			}
 		    }
 		}else{
 		    for(int i = 1; i < characters.size(); i++){
 			try{
 			    if (characters.get(i).getDist(ai.get(i-1)) < characters.get(i).getRange()){
+				if (Math.abs(characters.get(i).getChangeX()) > Math.abs(characters.get(i).getChangeY())){
+				    if (characters.get(i).getChangeX() > characters.get(i).getChangeY())
+					characters.get(i).setRight();
+				    else if (characters.get(j).getChangeX() < characters.get(i).getChangeY())
+					characters.get(i).setLeft();
+				}else{
+				    if (characters.get(i).getChangeY() > characters.get(i).getChangeX())
+					characters.get(i).setDown();
+				    else if (characters.get(j).getChangeY() < characters.get(i).getChangeX())
+					characters.get(i).setUp();
+				}
 				if ((characters.get(i).getTimeStarted()-time)%characters.get(i).getATKspeed() != 0){}
 				else characters.get(i).attack(ai.get(i-1));
 			    }else{
 				characters.get(i).setX(characters.get(i).getX() + (int)(2*characters.get(i).getChangeX()/characters.get(i).getDist(ai.get(i-1))));
 				characters.get(i).setY(characters.get(i).getY() + (int)(2*characters.get(i).getChangeY()/characters.get(i).getDist(ai.get(i-1))));
+				if (Math.abs(characters.get(i).getChangeX()) > Math.abs(characters.get(i).getChangeY())){
+				    if (characters.get(i).getChangeX() > characters.get(i).getChangeY())
+					characters.get(i).setRightAnimated();
+				    else if (characters.get(i).getChangeX() < characters.get(i).getChangeY())
+					characters.get(i).setLeftAnimated();
+				}else{
+				    if (characters.get(i).getChangeY() > characters.get(i).getChangeX())
+					characters.get(i).setDownAnimated();
+				    else if (characters.get(i).getChangeY() < characters.get(i).getChangeX())
+					characters.get(i).setUpAnimated();
+				}
 			    }
 			}catch(IndexOutOfBoundsException e){
 			    if (characters.get(i).getDist(characters.get(0)) > 50){
 				characters.get(i).setX(characters.get(i).getX() + (int)(2*characters.get(i).getChangeX()/characters.get(i).getDist(characters.get(0))));
 				characters.get(i).setY(characters.get(i).getY() + (int)(2*characters.get(i).getChangeY()/characters.get(i).getDist(characters.get(0))));
+				if (Math.abs(characters.get(i).getChangeX()) > Math.abs(characters.get(i).getChangeY())){
+				    if (characters.get(i).getChangeX() > characters.get(j).getChangeY())
+					characters.get(i).setRightAnimated();
+				    else if (characters.get(i).getChangeX() < characters.get(i).getChangeY())
+					characters.get(i).setLeftAnimated();
+				}else{
+				    if (characters.get(i).getChangeY() > characters.get(i).getChangeX())
+					characters.get(i).setDownAnimated();
+				    else if (characters.get(i).getChangeY() < characters.get(i).getChangeX())
+					characters.get(i).setUpAnimated();
+				}
+			    }else{
+				if (Math.abs(characters.get(i).getChangeX()) > Math.abs(characters.get(i).getChangeY())){
+				    if (characters.get(i).getChangeX() > characters.get(i).getChangeY())
+					characters.get(i).setRight();
+				    else if (characters.get(i).getChangeX() < characters.get(i).getChangeY())
+					characters.get(i).setLeft();
+				}else{
+				    if (characters.get(i).getChangeY() > characters.get(i).getChangeX())
+					characters.get(i).setDown();
+				    else if (characters.get(i).getChangeY() < characters.get(i).getChangeX())
+					characters.get(i).setUp();
+				}	
 			    }
 			}
 		    }
-		}	
+		}
 	    }
 	    //kill characters and players with <= 0 hp
 	    for (int i = 0; i < ai.size(); i++){
