@@ -493,9 +493,7 @@ public class GamePanel extends JPanel {
 		characters.get(0).setRight();
 		keysReleased[VK_D] = false;
 	    }
-		System.out.println("In tick");
 		while (!(attacks.isEmpty())) {
-			System.out.print("Attack");
 			AttackEvent attack = attacks.pop();
 			for (Character character : ai) {
 				System.out.println(character + " @ (" + character.getX() + ", " + character.getY() + ") " + intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), character.getX(), character.getY(), character.getWidth(), character.getHeight()));
