@@ -18,6 +18,7 @@ Project Description: 2.5D RPG game
   Textures and images get dumped in images directory 
   
   Feature log: 
+  
   **6/10/14**
   
   Fixed party info box text printing, now prints data of all party members (Joey)
@@ -28,9 +29,9 @@ Project Description: 2.5D RPG game
   
   Drawing some monsters animations (Jacky)
   
+  We will likely only have the first level in time for the due date. Let's just try to get that as functional as possible, continuing content creation after the due date is still a possibility. 
+  
   **6/9/14**
-
-  Implemented 
   
   **6/8/14**
   
