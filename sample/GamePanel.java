@@ -414,7 +414,6 @@ public class GamePanel extends JPanel {
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
 		}else{
-		    
 		    plyr = new Slime("sprites/slime down.png",side[temp][0],side[temp][1]);
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
@@ -477,22 +476,44 @@ public class GamePanel extends JPanel {
 		characters.get(0).setRight();
 		keysReleased[VK_D] = false;
 	    }
-		while (!(attacks.isEmpty())) {
-			AttackEvent attack = attacks.pop();
+	    while (!(attacks.isEmpty())) {
+		AttackEvent attack = attacks.pop();
 			//System.out.println("Start: (" + attack.getStartX() + ", " + attack.getStartY() + "); End: (" + attack.getEndX() + ", " + attack.getEndY() + ")");
-			for (Character character : ai) {
+		for (Character character : ai) {
 				//System.out.println(character + " @ (" + character.getX() + ", " + character.getY() + ") " + intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), character.getX(), character.getY(), character.getWidth(), character.getHeight()));
-				if (intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), character.getX(), character.getY(), character.getWidth(), character.getHeight())) {characters.get(0).attack(character);}
-			}
+		    if (intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), character.getX(), character.getY(), character.getWidth(), character.getHeight())) {characters.get(0).attack(character);}
 		}
+	    }
 	    //AI code
-	  for (Character character : ai){
+	    for (Character character : ai){
 		if (character.getDist(characters.get(0)) < character.getRange()){
+		    if (Math.abs(character.getChangeX()) > Math.abs(character.getChangeY())){
+			if (character.getChangeX() > character.getChangeY())
+			    character.setRight();
+			else if (character.getChangeX() < character.getChangeY())
+			    character.setLeft();
+		    }else{
+			if (character.getChangeY() > character.getChangeX())
+			    character.setDown();
+			else if (character.getChangeY() < character.getChangeX())
+			    character.setUp();
+		    }
 		    if ((character.getTimeStarted()-time)%character.getATKspeed() != 0){}
 		    else character.attack(characters.get(0));
 		}else{
 		    character.setX(character.getX() + (int)(2*character.getChangeX()/character.getDist(characters.get(0))));
 		    character.setY(character.getY() + (int)(2*character.getChangeY()/character.getDist(characters.get(0))));
+		    if (Math.abs(character.getChangeX()) > Math.abs(character.getChangeY())){
+			if (character.getChangeX() > character.getChangeY())
+			    character.setRightAnimated();
+			else if (character.getChangeX() < character.getChangeY())
+			    character.setLeftAnimated();
+		    }else{
+			if (character.getChangeY() > character.getChangeX())
+			    character.setDownAnimated();
+			else if (character.getChangeY() < character.getChangeX())
+			    character.setUpAnimated();
+		    }
 		}
 	    }
 	    for (int j = 1; j < characters.size(); j++){
