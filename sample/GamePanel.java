@@ -23,7 +23,6 @@ import javax.swing.JTextArea;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.imageio.ImageIO;
-import java.lang.IndexOutOfBoundsException;
 
 public class GamePanel extends JPanel {
     private boolean[] keysPressed = new boolean[256];
@@ -214,9 +213,19 @@ public class GamePanel extends JPanel {
 		    public void mouseEntered(MouseEvent e) {}
 		    public void mouseExited(MouseEvent e) {}
 		    public void mousePressed(MouseEvent e) {
+				Character player = characters.get(0);
+				double distance = Math.hypot(e.getX() - player.getX(), e.getY() - player.getY()), scaleFactor = player.getRange()/distance; //scaleFactor in the case that the distance between the character and the clicked location exceeds the character's range.
+				double endX = e.getX(), endY = e.getY();
+				if (distance > player.getRange()) {
+					endX = player.getX() + scaleFactor*(e.getX() - player.getX());
+					endY = player.getY() + scaleFactor*(e.getY() - player.getY());
+				}
+				System.out.println("Player: (" + player.getX() + ", " + player.getY() + "); Mouse: (" + e.getX() + ", " + e.getY() + "); End: (" + endX + ", " + endY + ")");
 			for (Character character : ai){
-			    if (character.getDist(characters.get(0)) <= characters.get(0).getRange())
-				characters.get(0).attack(character);
+			    /*if (character.getDist(characters.get(0)) <= characters.get(0).getRange())
+				characters.get(0).attack(character);*/
+				System.out.println(character + " @ (" + character.getX() + ", " + character.getY() + ") " + intersectEllipseLineSegment(player.getX(), player.getY(), endX, endY, character.getX(), character.getY(), character.getWidth(), character.getHeight()));
+				if (intersectEllipseLineSegment(player.getX(), player.getY(), endX, endY, character.getX(), character.getY(), character.getWidth(), character.getHeight())) {player.attack(character);}
 			}
 		    }
 		    public void mouseReleased(MouseEvent e) {}
@@ -233,18 +242,19 @@ public class GamePanel extends JPanel {
 	
 	protected boolean intersectEllipseLineSegment(double x1, double y1, double x2, double y2, double h, double k, double a, double b) {//For the purposes of this game, a line segment that is in an ellipse but does not intersect it (completely contained in ellipse) counts as an intersection. x1, y1, x2, and y2 are points that define the **directed** ((x1, y1) to (x2, y2)) line segment to test. h and k are the x- and y-coordinates of the center of the ellipse, respectively. a and b are the same variables as they are in the equation of an ellipse
 	    double m = (y2 - y1)/(x2 - x1), c = y1 - m*x1, d = c + m*h, e = c - k; //m is the slope of the **directed** line segment defined from (x1, y1) to (x2, y2). c is the y-intercept of that line segment, if it were extended to intersect the y-axis. d and e are additional variables to make the calculation shorter. Note that all this will not work if x1 = x2 (vertical line because of divison by zero) (will include a separate case for that).
-	    double discriminant = a*a*m*m + b*b - d*d - k*k + 2*d*k, iX1, iY1, iX2, iY2; //Discriminant, like in the quadratic formula, is used to find the number of intersection points. iX1, iY1, iX2, iY2 represent the intersection points.
+	    double discriminant = a*a*m*m + b*b - d*d - k*k + 2*d*k, iX1 = 0, iY1 = 0, iX2 = 0, iY2 = 0; //Discriminant, like in the quadratic formula, is used to find the number of intersection points. iX1, iY1, iX2, iY2 represent the intersection points.
 	    if (discriminant < 0) {return false;}
 	    if (discriminant >= 0) {
 		iX1 = (h*b*b - m*a*a*e + a*b*Math.sqrt(discriminant))/(a*a*m*m + b*b);
 		iY1 = (b*b*d + k*a*a*m*m + a*b*m*Math.sqrt(discriminant))/(a*a*m*m + b*b);
 	    }
-	    if (discriminant > 0) { //Note that this case and the one above are not mutually 
+	    if (discriminant > 0) { //Note that this case and the one above are not mutually exclusive
 		iX2 = (h*b*b - m*a*a*e - a*b*Math.sqrt(discriminant))/(a*a*m*m + b*b);
 		iY2 = (b*b*d + k*a*a*m*m - a*b*m*Math.sqrt(discriminant))/(a*a*m*m + b*b);
 	    }
-		
-	    return false;
+		double lineSegmentDirection = Math.atan2(y2 - y1, x2 - x1);
+		double lineSegmentLength = Math.hypot(x2 - x1, y2 - y1);
+	    return (((Math.hypot(iX1 - x1, iY1 - y1) <= lineSegmentLength) && (Math.atan2(iY1 - y1, iX1 - x1) == lineSegmentDirection)) || ((Math.hypot(iX2 - x1, iY2 - y1) <= lineSegmentLength) && (Math.atan2(iY2 - y1, iX2 - x1) == lineSegmentDirection)));
 	}
 	
 	//renders the screen
@@ -275,7 +285,13 @@ public class GamePanel extends JPanel {
 		    g.drawImage(character.getImage(), character.getX(), character.getY(), null);
 		}
 	    }
-	    for (Character character : characters) {
+		/*g.setColor(Color.RED);
+		g.fillRect(screenWidth/2, screenHeight/2-10, 80, 7);
+		g.setColor(Color.GREEN);
+		g.fillRect(screenWidth/2, screenHeight/2-10, (int)(80.0*((double)characters.get(0).getHP()/(double)characters.get(0).getMaxHP())),7);
+		g.drawImage(characters.get(0).getImage(), screenWidth/2, screenHeight/2, null);*/
+	    for (int i = 0; i < characters.size(); i++) {
+			Character character = characters.get(i);
 		g.setColor(Color.RED);
 		g.fillRect(character.getX(),character.getY()-10,80,7);
 		g.setColor(Color.GREEN);
@@ -311,8 +327,8 @@ public class GamePanel extends JPanel {
 		sum += frame;
 	    }
 	    long averageFrame = sum / FPS_SAMPLE_SIZE;
-	    if (averageFrame == 0) averageFrame = 1;  //IF STATEMENT
-	    averageFPS1 = (int)(1000 / averageFrame); //NOTE: THERE'S AN ARITHMETIC ERROR. AND I THINK THIS LINE IS CRASHING THE GAME. MAKING IF STATEMENT
+		if (averageFrame == 0) {averageFrame = 1;}
+	    averageFPS1 = (int)(1000 / averageFrame);
 	    prevTick1 = System.currentTimeMillis();
 	    // Only if the time passed since the previous tick is less than one
 	    // second divided by the number of maximum FPS allowed do we delay
@@ -382,10 +398,11 @@ public class GamePanel extends JPanel {
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
 		}else if (chance > 0.001){
-		    plyr = new Player("sprites/bird down.png",side[temp][0],side[temp][1]);
+		    plyr = new Player("sprites/Bird.png",side[temp][0],side[temp][1]);
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
 		}else{
+		    
 		    plyr = new Player("sprites/Giant.png",side[temp][0],side[temp][1]);
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
@@ -397,6 +414,7 @@ public class GamePanel extends JPanel {
 	public void tick() {
 	    if (keysPressed[VK_W]) {
 		mapY+=2;
+		//characters.get(0).setY(characters.get(0).getY() - 2);
 		characters.get(0).setUpAnimated();
 		for (Character monster : ai)
 		    monster.setY(monster.getY()+2);
@@ -406,6 +424,7 @@ public class GamePanel extends JPanel {
 	    }
 	    if (keysPressed[VK_S]) {
 		mapY-=2;
+		//characters.get(0).setY(characters.get(0).getY() + 2);
 		characters.get(0).setDownAnimated();
 		for (Character monster : ai)
 		    monster.setY(monster.getY()-2);
@@ -415,6 +434,7 @@ public class GamePanel extends JPanel {
 	    }
 	    if (keysPressed[VK_A]) {
 		mapX +=2;
+		//characters.get(0).setX(characters.get(0).getX() - 2);
 	       	characters.get(0).setLeftAnimated();
 		for (Character monster : ai)
 		    monster.setX(monster.getX()+2);
@@ -424,6 +444,7 @@ public class GamePanel extends JPanel {
 	    }
 	    if (keysPressed[VK_D]) {
 		mapX-=2;
+		//characters.get(0).setX(characters.get(0).getX() + 2);
 		characters.get(0).setRightAnimated();
 		for (Character monster : ai)
 		    monster.setX(monster.getX()-2);
@@ -463,95 +484,25 @@ public class GamePanel extends JPanel {
 		    if(characters.get(j).getDist(characters.get(0)) > 50){
 			characters.get(j).setX(characters.get(j).getX() + (int)(4*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(0))));
 			characters.get(j).setY(characters.get(j).getY() + (int)(4*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(0))));
-			//when the characters are moving
-			if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
-			    if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
-				characters.get(j).setRightAnimated();
-			    else if (characters.get(j).getChangeX() < characters.get(j).getChangeY())
-				characters.get(j).setLeftAnimated();
-			}else{
-			    if (characters.get(j).getChangeY() > characters.get(j).getChangeX())
-				characters.get(j).setDownAnimated();
-			    else if (characters.get(j).getChangeY() < characters.get(j).getChangeX())
-				characters.get(j).setUpAnimated();
-			}
-			//when the characters are idle
-		    }else{
-			if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
-			    if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
-				characters.get(j).setRight();
-			    else if (characters.get(j).getChangeX() < characters.get(j).getChangeY())
-				characters.get(j).setLeft();
-			}else{
-			    if (characters.get(j).getChangeY() > characters.get(j).getChangeX())
-				characters.get(j).setDown();
-			    else if (characters.get(j).getChangeY() < characters.get(j).getChangeX())
-				characters.get(j).setUp();
-			}
 		    }
 		}else{
 		    for(int i = 1; i < characters.size(); i++){
 			try{
 			    if (characters.get(i).getDist(ai.get(i-1)) < characters.get(i).getRange()){
-				if (Math.abs(characters.get(i).getChangeX()) > Math.abs(characters.get(i).getChangeY())){
-				    if (characters.get(i).getChangeX() > characters.get(i).getChangeY())
-					characters.get(i).setRight();
-				    else if (characters.get(j).getChangeX() < characters.get(i).getChangeY())
-					characters.get(i).setLeft();
-				}else{
-				    if (characters.get(i).getChangeY() > characters.get(i).getChangeX())
-					characters.get(i).setDown();
-				    else if (characters.get(j).getChangeY() < characters.get(i).getChangeX())
-					characters.get(i).setUp();
-				}
 				if ((characters.get(i).getTimeStarted()-time)%characters.get(i).getATKspeed() != 0){}
 				else characters.get(i).attack(ai.get(i-1));
 			    }else{
 				characters.get(i).setX(characters.get(i).getX() + (int)(2*characters.get(i).getChangeX()/characters.get(i).getDist(ai.get(i-1))));
 				characters.get(i).setY(characters.get(i).getY() + (int)(2*characters.get(i).getChangeY()/characters.get(i).getDist(ai.get(i-1))));
-				if (Math.abs(characters.get(i).getChangeX()) > Math.abs(characters.get(i).getChangeY())){
-				    if (characters.get(i).getChangeX() > characters.get(i).getChangeY())
-					characters.get(i).setRightAnimated();
-				    else if (characters.get(i).getChangeX() < characters.get(i).getChangeY())
-					characters.get(i).setLeftAnimated();
-				}else{
-				    if (characters.get(i).getChangeY() > characters.get(i).getChangeX())
-					characters.get(i).setDownAnimated();
-				    else if (characters.get(i).getChangeY() < characters.get(i).getChangeX())
-					characters.get(i).setUpAnimated();
-				}
 			    }
 			}catch(IndexOutOfBoundsException e){
 			    if (characters.get(i).getDist(characters.get(0)) > 50){
 				characters.get(i).setX(characters.get(i).getX() + (int)(2*characters.get(i).getChangeX()/characters.get(i).getDist(characters.get(0))));
 				characters.get(i).setY(characters.get(i).getY() + (int)(2*characters.get(i).getChangeY()/characters.get(i).getDist(characters.get(0))));
-				if (Math.abs(characters.get(i).getChangeX()) > Math.abs(characters.get(i).getChangeY())){
-				    if (characters.get(i).getChangeX() > characters.get(j).getChangeY())
-					characters.get(i).setRightAnimated();
-				    else if (characters.get(i).getChangeX() < characters.get(i).getChangeY())
-					characters.get(i).setLeftAnimated();
-				}else{
-				    if (characters.get(i).getChangeY() > characters.get(i).getChangeX())
-					characters.get(i).setDownAnimated();
-				    else if (characters.get(i).getChangeY() < characters.get(i).getChangeX())
-					characters.get(i).setUpAnimated();
-				}
-			    }else{
-				if (Math.abs(characters.get(i).getChangeX()) > Math.abs(characters.get(i).getChangeY())){
-				    if (characters.get(i).getChangeX() > characters.get(i).getChangeY())
-					characters.get(i).setRight();
-				    else if (characters.get(i).getChangeX() < characters.get(i).getChangeY())
-					characters.get(i).setLeft();
-				}else{
-				    if (characters.get(i).getChangeY() > characters.get(i).getChangeX())
-					characters.get(i).setDown();
-				    else if (characters.get(i).getChangeY() < characters.get(i).getChangeX())
-					characters.get(i).setUp();
-				}	
 			    }
 			}
 		    }
-		}
+		}	
 	    }
 	    //kill characters and players with <= 0 hp
 	    for (int i = 0; i < ai.size(); i++){
