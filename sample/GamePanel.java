@@ -1,28 +1,29 @@
-import java.awt.Color;
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
-import static java.awt.event.KeyEvent.*;
 import java.awt.event.KeyEvent;
+import static java.awt.event.KeyEvent.*;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelListener;
 import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JTextArea;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-import javax.imageio.ImageIO;
 
 public class GamePanel extends JPanel {
     private boolean[] keysPressed = new boolean[256];
@@ -165,7 +166,9 @@ public class GamePanel extends JPanel {
 	// The width and height of each tile in pixels
 	private static final int TILE_SCALE = 60;
 	//arraylists containing all entities on screen, painted by while loop in screen
-
+	private ArrayDeque<AttackEvent> attacks = new ArrayDeque<>(); //Used as a stack
+	private ArrayList<Player> characters = new ArrayList<>();
+	private ArrayList<Character> ai = new ArrayList<>();
 	private boolean running;
 	private int averageFPS;
 	private int averageFPS1;
@@ -176,6 +179,7 @@ public class GamePanel extends JPanel {
 	private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
 	private LinkedList<Long> frames = new LinkedList<>();
 	private LinkedList<Long> frames1 = new LinkedList<>();
+	private long time; //global time
 	private long prevTick = -1;
 	private long prevTick1 = -1;
 	private Map currentMap;
@@ -184,11 +188,6 @@ public class GamePanel extends JPanel {
 	private Swordsman player2 = new Swordsman("sprites/swordsman down.png", screenWidth/2, screenHeight/2);
 	private Swordsman player3 = new Swordsman("sprites/swordsman down.png", screenWidth/2, screenHeight/2);
 	private Thread thread;
-     
-	private long time; //global time
-
-	private ArrayList<Player> characters = new ArrayList<>();
-	private ArrayList<Character> ai = new ArrayList<>();
 
 	public Screen() {
 	    setSize(screenWidth, screenHeight);
@@ -214,7 +213,7 @@ public class GamePanel extends JPanel {
 		    public void mouseExited(MouseEvent e) {}
 		    public void mousePressed(MouseEvent e) {
 				Character player = characters.get(0);
-				double distance = Math.hypot(e.getX() - player.getX(), e.getY() - player.getY()), scaleFactor = player.getRange()/distance; //scaleFactor in the case that the distance between the character and the clicked location exceeds the character's range.
+				/*double distance = Math.hypot(e.getX() - player.getX(), e.getY() - player.getY()), scaleFactor = player.getRange()/distance; //scaleFactor in the case that the distance between the character and the clicked location exceeds the character's range.
 				double endX = e.getX(), endY = e.getY();
 				if (distance > player.getRange()) {
 					endX = player.getX() + scaleFactor*(e.getX() - player.getX());
@@ -223,10 +222,13 @@ public class GamePanel extends JPanel {
 				System.out.println("Player: (" + player.getX() + ", " + player.getY() + "); Mouse: (" + e.getX() + ", " + e.getY() + "); End: (" + endX + ", " + endY + ")");
 			for (Character character : ai){
 			    /*if (character.getDist(characters.get(0)) <= characters.get(0).getRange())
-				characters.get(0).attack(character);*/
+				characters.get(0).attack(character);*//*
 				System.out.println(character + " @ (" + character.getX() + ", " + character.getY() + ") " + intersectEllipseLineSegment(player.getX(), player.getY(), endX, endY, character.getX(), character.getY(), character.getWidth(), character.getHeight()));
 				if (intersectEllipseLineSegment(player.getX(), player.getY(), endX, endY, character.getX(), character.getY(), character.getWidth(), character.getHeight())) {player.attack(character);}
-			}
+			}*/
+				e.translatePoint(-mapX, -mapY);
+				System.out.println("Player: (" + player.getX() + ", " + player.getY() + "); Mouse: (" + e.getX() + ", " + e.getY() + ")");
+				attacks.push(new AttackEvent(characters.get(0).getX(), characters.get(0).getY(), e.getX(), e.getY(), characters.get(0).getRange()));
 		    }
 		    public void mouseReleased(MouseEvent e) {}
 		});
@@ -238,6 +240,28 @@ public class GamePanel extends JPanel {
 		    public void mouseWheelMoved(MouseWheelEvent e) {}
 		});
 	    setVisible(true);
+	}
+	
+	private class AttackEvent {
+		private double startX, startY, endX, endY, range;
+		
+		public AttackEvent(double startX, double startY, double endX, double endY, double range) {
+			this.startX = startX;
+			this.startY = startY;
+			double distance = Math.hypot(endX - startX, endY - startY), scaleFactor = range/distance;
+			this.endX = endX;
+			this.endY = endY;
+			if (distance > range) {
+				endX = startX + scaleFactor*(endX - startX);
+				endY = startY + scaleFactor*(endY - startY);
+			}
+		}
+		
+		public double getEndX() {return endX;}
+		public double getEndY() {return endY;}
+		public double getrange() {return range;}
+		public double getStartX() {return startX;}
+		public double getStartY() {return startY;}
 	}
 	
 	protected boolean intersectEllipseLineSegment(double x1, double y1, double x2, double y2, double h, double k, double a, double b) {//For the purposes of this game, a line segment that is in an ellipse but does not intersect it (completely contained in ellipse) counts as an intersection. x1, y1, x2, and y2 are points that define the **directed** ((x1, y1) to (x2, y2)) line segment to test. h and k are the x- and y-coordinates of the center of the ellipse, respectively. a and b are the same variables as they are in the equation of an ellipse
@@ -469,6 +493,15 @@ public class GamePanel extends JPanel {
 		characters.get(0).setRight();
 		keysReleased[VK_D] = false;
 	    }
+		System.out.println("In tick");
+		while (!(attacks.isEmpty())) {
+			System.out.print("Attack");
+			AttackEvent attack = attacks.pop();
+			for (Character character : ai) {
+				System.out.println(character + " @ (" + character.getX() + ", " + character.getY() + ") " + intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), character.getX(), character.getY(), character.getWidth(), character.getHeight()));
+				if (intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), character.getX(), character.getY(), character.getWidth(), character.getHeight())) {characters.get(0).attack(character);}
+			}
+		}
 	    //AI code
 	    for (Character character : ai){
 		if (character.getDist(characters.get(0)) < character.getRange()){
