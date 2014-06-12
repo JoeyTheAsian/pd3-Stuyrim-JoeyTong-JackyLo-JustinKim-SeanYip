@@ -3,7 +3,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.Image;
 
-public class Character {  
+public class Character implements Drawable{  
     protected Image image, down, up, left, right, downAnimated, upAnimated, leftAnimated, rightAnimated;
     private int x, y;
     private String imageLocation;
