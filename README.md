@@ -19,6 +19,16 @@ Project Description: 2.5D RPG game
   
   Feature log: 
   
+  **6/12/14**
+  
+  **6/11/14**
+  
+  Made monsters attack the characters closest to them (Jacky)
+  
+  Drew bird, and slime animations (Jacky)
+    
+  Made characters turn (Jacky)
+  
   **6/10/14**
   
   Fixed party info box text printing, now prints data of all party members (Joey)
