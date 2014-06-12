@@ -1,10 +1,12 @@
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.HashMap;
 import javax.imageio.ImageIO;
-import java.awt.Image;
 
 public class Character implements Drawable{  
     protected Image image, down, up, left, right, downAnimated, upAnimated, leftAnimated, rightAnimated;
+    protected HashMap<String, Double> drops = new HashMap<>(); //The drop table (RuneScape PvM style). Maps the item name to the item's chance of dropping. Why is the key of type String? That avoids mutable keys and having instances of items in every Character. To get the actual item, have another HashMap<String, Item> that maps the name of the item to the actual item, probably in GamePanel. For maximum performance, use constructor HashMap(int initalCapacity, float loadFactor) to overwrite this instance of drops here, where initalCapacity equals to the number of entries in the collection and loadFactor equals 1, if the capacity of the HashMap is known, which it is because the HashMap will be initalized in the constructors of Character's subclasses: Bird, Swordsman, etc.
     private int x, y;
     private String imageLocation;
     protected int maxHP, HP;
@@ -46,6 +48,7 @@ public class Character implements Drawable{
 	mana = 500;
 	gold = 0;
 	inventory.add(new Item("Cake","it's a lie",9001,9001,9001));
+	drops.put(null, 1); //Always drops nothing. A new instance of HashMap (with the optimization explained in the comment above) should be created to overwrite this one if the Character should drop something (to avoid cluttering inventory with nulls).
     }
     
     public final Image getImage() {return image;}

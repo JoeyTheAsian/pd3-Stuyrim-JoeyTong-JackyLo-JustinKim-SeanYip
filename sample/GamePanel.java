@@ -18,6 +18,7 @@ import java.io.File;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,6 +30,7 @@ public class GamePanel extends JPanel {
     private boolean[] keysPressed = new boolean[256];
     private boolean[] keysReleased = new boolean[256];
     private BufferedImage bg; //background
+    private HashMap<String, Item> items = new HashMap<>(); //If the maximum number of items is known, use the optimization described in Character.
     private int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height-37;
     private int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
     //dimensions of the bottom portion of the screen with all the buttons
@@ -48,7 +50,9 @@ public class GamePanel extends JPanel {
 	try {bg = ImageIO.read(new File("GUI Images/trimmed paper background.png"));}
 	catch (Exception e) {Utilities.showErrorMessage(this, e);}
 	setVisible(true);
-
+    //Initalize HashMap of items
+    items.put("Cake", new Item("Cake", "It's a lie.", 9001, 9001, 9001));
+    
 	//add buttons
 	inventoryButton = new JButton("Inventory");
 	inventoryButton.setOpaque(false);
