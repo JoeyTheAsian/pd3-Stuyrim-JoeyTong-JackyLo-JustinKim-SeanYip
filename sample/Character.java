@@ -1,5 +1,4 @@
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
@@ -48,7 +47,7 @@ public class Character implements Drawable{
 	mana = 500;
 	gold = 0;
 	inventory.add(new Item("Cake","it's a lie",9001,9001,9001));
-	drops.put(null, 1); //Always drops nothing. A new instance of HashMap (with the optimization explained in the comment above) should be created to overwrite this one if the Character should drop something (to avoid cluttering inventory with nulls).
+	drops.put(null, 1.0); //Always drops nothing. A new instance of HashMap (with the optimization explained in the comment above) should be created to overwrite this one if the Character should drop something (to avoid cluttering inventory with nulls).
     }
     
     public final Image getImage() {return image;}

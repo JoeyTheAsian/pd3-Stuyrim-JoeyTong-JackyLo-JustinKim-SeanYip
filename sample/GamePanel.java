@@ -255,7 +255,7 @@ public class GamePanel extends JPanel {
 	}
 	
 	protected boolean intersectEllipseLineSegment(double x1, double y1, double x2, double y2, double h, double k, double a, double b) {//For the purposes of this game, a line segment that is in an ellipse but does not intersect it (completely contained in ellipse) counts as an intersection. x1, y1, x2, and y2 are points that define the **directed** ((x1, y1) to (x2, y2)) line segment to test. h and k are the x- and y-coordinates of the center of the ellipse, respectively. a and b are the same variables as they are in the equation of an ellipse
-		if (((Math.pow(x1 - h, 2)/(a*a)) + (Math.pow(y1 - k, 2)/(b*b))) <= 1) {return true;}
+		if ((((Math.pow(x1 - h, 2)/(a*a)) + (Math.pow(y1 - k, 2)/(b*b))) <= 1) && (((Math.pow(x2 - h, 2)/(a*a)) + (Math.pow(y2 - k, 2)/(b*b))) <= 1)) {return true;}
 	    double m = (y2 - y1)/(x2 - x1), c = y1 - m*x1, d = c + m*h, e = c - k; //m is the slope of the **directed** line segment defined from (x1, y1) to (x2, y2). c is the y-intercept of that line segment, if it were extended to intersect the y-axis. d and e are additional variables to make the calculation shorter. Note that all this will not work if x1 = x2 (vertical line because of divison by zero) (will include a separate case for that).
 	    double discriminant = a*a*m*m + b*b - d*d - k*k + 2*d*k, iX1 = 0, iY1 = 0, iX2 = 0, iY2 = 0; //Discriminant, like in the quadratic formula, is used to find the number of intersection points. iX1, iY1, iX2, iY2 represent the intersection points.
 	    if (discriminant < 0) {return false;}
@@ -479,9 +479,9 @@ public class GamePanel extends JPanel {
 	    }
 	    while (!(attacks.isEmpty())) {
 		AttackEvent attack = attacks.pop();
-			System.out.println("\nStart: (" + attack.getStartX() + ", " + attack.getStartY() + "); End: (" + attack.getEndX() + ", " + attack.getEndY() + ")");
+			//System.out.println("\nStart: (" + attack.getStartX() + ", " + attack.getStartY() + "); End: (" + attack.getEndX() + ", " + attack.getEndY() + ")");
 		for (Character character : ai) {
-				System.out.println(character + " @ (" + (character.getX() + character.getWidth()/2 - mapX) + ", " + (character.getY() + character.getHeight()/2 - mapY) + "); Width: " + character.getWidth() + "; Height: " + character.getHeight() + " " + intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), (character.getX() + character.getWidth()/2 - mapX), (character.getY() + character.getHeight()/2 - mapY), character.getWidth(), character.getHeight()));
+				//System.out.println(character + " @ (" + (character.getX() + character.getWidth()/2 - mapX) + ", " + (character.getY() + character.getHeight()/2 - mapY) + "); Width: " + character.getWidth() + "; Height: " + character.getHeight() + " " + intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), (character.getX() + character.getWidth()/2 - mapX), (character.getY() + character.getHeight()/2 - mapY), character.getWidth(), character.getHeight()));
 		    if (intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), (character.getX() + character.getWidth()/2 - mapX), (character.getY() + character.getHeight()/2 - mapY), character.getWidth(), character.getHeight())) {characters.get(0).attack(character);}
 		}
 	    }
