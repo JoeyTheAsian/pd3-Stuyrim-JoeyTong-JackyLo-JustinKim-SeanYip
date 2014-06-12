@@ -490,9 +490,9 @@ public class GamePanel extends JPanel {
 
 	    //AI code
 	    for (Character character : ai){
-		if (character.getDist(characters.get(2)) < character.getDist(characters.get(1)) && character.getDist(characters.get(2)) < character.getDist(characters.get(0)))
+		if (character.getDist(characters.get(2)) <= character.getDist(characters.get(1)) && character.getDist(characters.get(2)) <= character.getDist(characters.get(0)))
 		    character.setTarget(characters.get(2));
-		else if (character.getDist(characters.get(1)) < character.getDist(characters.get(2)) && character.getDist(characters.get(1)) < character.getDist(characters.get(0)))
+		else if (character.getDist(characters.get(1)) <= character.getDist(characters.get(2)) && character.getDist(characters.get(1)) <= character.getDist(characters.get(0)))
 		    character.setTarget(characters.get(1));
 		else
 		    character.setTarget(characters.get(0));
@@ -595,8 +595,8 @@ public class GamePanel extends JPanel {
 			}
 		    }catch(/*IndexOutOfBounds*/Exception e){
 			if (characters.get(j).getDist(characters.get(0)) > 50){
-			    characters.get(j).setX(characters.get(j).getX() + (int)(2*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(0))));
-			    characters.get(j).setY(characters.get(j).getY() + (int)(2*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(0))));
+			    characters.get(j).setX(characters.get(j).getX() + (int)(3*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(0))));
+			    characters.get(j).setY(characters.get(j).getY() + (int)(3*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(0))));
 			    if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
 				if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
 				    characters.get(j).setRightAnimated();
