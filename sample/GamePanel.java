@@ -214,7 +214,7 @@ public class GamePanel extends JPanel {
 		    public void mousePressed(MouseEvent e) {
 				Character player = characters.get(0);
 				e.translatePoint(-mapX, -mapY);
-				attacks.push(new AttackEvent(player.getX() - player.getWidth()/2 - mapX, player.getY() - player.getWidth() / 2 - mapY, e.getX(), e.getY(), characters.get(0).getRange()));
+				attacks.push(new AttackEvent(player.getX() + player.getWidth()/2 - mapX, player.getY() + player.getWidth() / 2 - mapY, e.getX(), e.getY(), characters.get(0).getRange()));
 		    }
 		    public void mouseReleased(MouseEvent e) {}
 		});
@@ -477,8 +477,8 @@ public class GamePanel extends JPanel {
 		AttackEvent attack = attacks.pop();
 			System.out.println("\nStart: (" + attack.getStartX() + ", " + attack.getStartY() + "); End: (" + attack.getEndX() + ", " + attack.getEndY() + ")");
 		for (Character character : ai) {
-				System.out.println(character + " @ (" + (character.getX() - mapX) + ", " + (character.getY() - mapY) + "); Width: " + character.getWidth() + "; Height: " + character.getHeight() + " " + intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), (character.getX() - mapX), (character.getY() - mapY), character.getWidth(), character.getHeight()));
-		    if (intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), character.getX() - mapX, character.getY() - mapY, character.getWidth()/2, character.getHeight()/2)) {characters.get(0).attack(character);}
+				System.out.println(character + " @ (" + (character.getX() + character.getWidth()/2 - mapX) + ", " + (character.getY() + character.getHeight()/2 - mapY) + "); Width: " + character.getWidth() + "; Height: " + character.getHeight() + " " + intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), (character.getX() + character.getWidth()/2 - mapX), (character.getY() + character.getHeight()/2 - mapY), character.getWidth(), character.getHeight()));
+		    if (intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), (character.getX() + character.getWidth()/2 - mapX), (character.getY() + character.getHeight()/2 - mapY), character.getWidth(), character.getHeight())) {characters.get(0).attack(character);}
 		}
 	    }
 
