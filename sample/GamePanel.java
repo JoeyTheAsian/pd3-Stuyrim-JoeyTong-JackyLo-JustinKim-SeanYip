@@ -298,7 +298,7 @@ public class GamePanel extends JPanel {
 		    g.drawImage(character.getImage(), character.getX(), character.getY(), null);
 		}
 	    }
-	    for (int i = 0; i < characters.size(); i++) {
+	    for (int i = characters.size()-1; i >= 0;  i--) {
 			Character character = characters.get(i);
 		g.setColor(Color.RED);
 		g.fillRect(character.getX(),character.getY()-10,80,7);
@@ -431,7 +431,6 @@ public class GamePanel extends JPanel {
 		    monster.setY(monster.getY()+2);
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setY(characters.get(i).getY()+2);
-		chanceOfSpawn();
 	    }
 	    if (keysPressed[VK_S]) {
 		mapY-=2;
@@ -440,7 +439,6 @@ public class GamePanel extends JPanel {
 		    monster.setY(monster.getY()-2);
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setY(characters.get(i).getY()-2);
-		chanceOfSpawn();
 	    }
 	    if (keysPressed[VK_A]) {
 		mapX +=2;
@@ -449,7 +447,6 @@ public class GamePanel extends JPanel {
 		    monster.setX(monster.getX()+2);
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setX(characters.get(i).getX()+2);
-		chanceOfSpawn();
 	    }
 	    if (keysPressed[VK_D]) {
 		mapX-=2;
@@ -458,7 +455,6 @@ public class GamePanel extends JPanel {
 		    monster.setX(monster.getX()-2);
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setX(characters.get(i).getX()-2);
-		chanceOfSpawn();
 	    }
 	    //reset player to idle mode after done moving
 	    if(keysReleased[VK_W]){
@@ -485,9 +481,18 @@ public class GamePanel extends JPanel {
 		    if (intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), character.getX() - mapX, character.getY() - mapY, character.getWidth()/2, character.getHeight()/2)) {characters.get(0).attack(character);}
 		}
 	    }
+
+	    chanceOfSpawn(); //chance of spawn
+
 	    //AI code
 	    for (Character character : ai){
-		if (character.getDist(characters.get(0)) < character.getRange()){
+		if (character.getDist(characters.get(2)) < character.getDist(characters.get(1)) && character.getDist(characters.get(2)) < character.getDist(characters.get(0)))
+		    character.setTarget(characters.get(2));
+		else if (character.getDist(characters.get(1)) < character.getDist(characters.get(2)) && character.getDist(characters.get(1)) < character.getDist(characters.get(0)))
+		    character.setTarget(characters.get(1));
+		else
+		    character.setTarget(characters.get(0));
+		if (character.getDist(character.getTarget()) < character.getRange()){
 		    if (Math.abs(character.getChangeX()) > Math.abs(character.getChangeY())){
 			if (character.getChangeX() > character.getChangeY())
 			    character.setRight();
@@ -500,10 +505,10 @@ public class GamePanel extends JPanel {
 			    character.setUp();
 		    }
 		    if ((character.getTimeStarted()-time)%character.getATKspeed() != 0){}
-		    else character.attack(characters.get(0));
+		    else character.attack(character.getTarget());
 		}else{
-		    character.setX(character.getX() + (int)(2*character.getChangeX()/character.getDist(characters.get(0))));
-		    character.setY(character.getY() + (int)(2*character.getChangeY()/character.getDist(characters.get(0))));
+		    character.setX(character.getX() + (int)(2*character.getChangeX()/character.getDist(character.getTarget())));
+		    character.setY(character.getY() + (int)(2*character.getChangeY()/character.getDist(character.getTarget())));
 		    if (Math.abs(character.getChangeX()) > Math.abs(character.getChangeY())){
 			if (character.getChangeX() > character.getChangeY())
 			    character.setRightAnimated();

@@ -7,6 +7,13 @@ public class Item implements Comparable<Item> {
 	protected int level;
 	protected int value;
 	protected int rarity;
+	public Item(String name, String description, int level, int value, int rarity){
+	    this.name = name;
+	    this.description = description;
+	    this.level = level;
+	    this.rarity = rarity;
+	}
+
 	public int getValue(){
 	return value;
 	}

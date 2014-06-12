@@ -18,11 +18,12 @@ public class Character implements Drawable{
     //protected double screenX, screenY;
     //protected int mapX, mapY;
     protected int gold;
-    protected Inventory inv = new Inventory();
+    protected Inventory inventory = new Inventory();
     protected double changeX;
     protected double changeY;
     protected double distance;
     protected long timeStarted;
+    protected Character target = null;
 
     public Character(){}
     public Character(String imageLocation, int x, int y) {
@@ -44,6 +45,7 @@ public class Character implements Drawable{
 	maxMana = 500;
 	mana = 500;
 	gold = 0;
+	inventory.add(new Item("Cake","it's a lie",9001,9001,9001));
     }
     
     public final Image getImage() {return image;}
@@ -76,6 +78,7 @@ public class Character implements Drawable{
     public final void setMaxMana(int maxMana){this.maxMana = maxMana;}
     public final void setMana(int mana){this.mana = mana;}
     public final void setGold(int gold){this.gold = gold;}
+    public final void setTarget(Character tgt){target = tgt;}
 
     public final int getMaxHP(){return maxHP;}
     public final int getHP(){return HP;}
@@ -93,6 +96,9 @@ public class Character implements Drawable{
     public final int getMaxMana(){return maxMana;}
     public final int getMana(){return mana;}
     public final int getGold(){return gold;}
+    public final Character getTarget(){return target;}
+
+    public final Inventory getInventory(){return inventory;}
 
     public final double getChangeX(){return changeX;}
     public final double getChangeY(){return changeY;}
