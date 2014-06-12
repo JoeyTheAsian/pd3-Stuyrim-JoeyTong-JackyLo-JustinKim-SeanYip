@@ -213,7 +213,7 @@ public class GamePanel extends JPanel {
 		    public void mousePressed(MouseEvent e) {
 				Character player = characters.get(0);
 				e.translatePoint(-mapX, -mapY);
-				attacks.push(new AttackEvent(characters.get(0).getX() - mapX, characters.get(0).getY() - mapY, e.getX(), e.getY(), characters.get(0).getRange()));
+				attacks.push(new AttackEvent(player.getX() - player.getWidth()/2 - mapX, player.getY() - player.getWidth() / 2 - mapY, e.getX(), e.getY(), characters.get(0).getRange()));
 		    }
 		    public void mouseReleased(MouseEvent e) {}
 		});
@@ -237,8 +237,8 @@ public class GamePanel extends JPanel {
 			this.endX = endX;
 			this.endY = endY;
 			if (distance > range) {
-				endX = startX + scaleFactor*(endX - startX);
-				endY = startY + scaleFactor*(endY - startY);
+				this.endX = startX + scaleFactor*(endX - startX);
+				this.endY = startY + scaleFactor*(endY - startY);
 			}
 		}
 		
@@ -476,10 +476,10 @@ public class GamePanel extends JPanel {
 	    }
 	    while (!(attacks.isEmpty())) {
 		AttackEvent attack = attacks.pop();
-			//System.out.println("Start: (" + attack.getStartX() + ", " + attack.getStartY() + "); End: (" + attack.getEndX() + ", " + attack.getEndY() + ")");
+			System.out.println("\nStart: (" + attack.getStartX() + ", " + attack.getStartY() + "); End: (" + attack.getEndX() + ", " + attack.getEndY() + ")");
 		for (Character character : ai) {
-				//System.out.println(character + " @ (" + character.getX() + ", " + character.getY() + ") " + intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), character.getX(), character.getY(), character.getWidth(), character.getHeight()));
-		    if (intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), character.getX(), character.getY(), character.getWidth(), character.getHeight())) {characters.get(0).attack(character);}
+				System.out.println(character + " @ (" + (character.getX() - mapX) + ", " + (character.getY() - mapY) + "); Width: " + character.getWidth() + "; Height: " + character.getHeight() + " " + intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), (character.getX() - mapX), (character.getY() - mapY), character.getWidth(), character.getHeight()));
+		    if (intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), character.getX() - mapX, character.getY() - mapY, character.getWidth()/2, character.getHeight()/2)) {characters.get(0).attack(character);}
 		}
 	    }
 	    //AI code
