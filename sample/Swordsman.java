@@ -25,5 +25,4 @@ public class Swordsman extends Player{
 	    Utilities.showErrorMessage(null,e);
 	}
     }
-
 }

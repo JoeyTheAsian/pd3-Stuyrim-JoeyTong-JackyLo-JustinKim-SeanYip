@@ -29,6 +29,9 @@ public class Player extends Character {
     public final void setConsumable(Item consumable) {this.consumable = consumable;}
     public final void setMisc(Item misc) {this.misc = misc;}
 
- 
-    
+    public void heal(){
+	HP++;
+	if (HP > maxHP)
+	    HP = maxHP;
+    }    
 }

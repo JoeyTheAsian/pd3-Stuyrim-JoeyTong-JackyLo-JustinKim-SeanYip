@@ -196,7 +196,6 @@ public class GamePanel extends JPanel {
 	    characters.add(player);
 	    characters.add(player2);
 	    characters.add(player3);
-	    
 
             currentMap = new Map();
 	    addKeyListener(new KeyListener() {
@@ -282,10 +281,7 @@ public class GamePanel extends JPanel {
 	    //draw fps
 	    g.setColor(Color.GREEN);
 
-	    
 	    //draws HP bars and then draws character
-
-
 	    for (Character character : ai) {
 		if(character.getY()<=screenHeight/2){
 		    g.setColor(Color.RED);
@@ -376,6 +372,8 @@ public class GamePanel extends JPanel {
 	public void run() {
 	    while (running) {
 		time++;
+		for (Player p : characters)
+		    p.heal();
 		tick();
 		render();
 	    }
