@@ -155,7 +155,7 @@ public class GamePanel extends JPanel {
 	String text = "";
 	for(int i = 0; i < screen.characters.size(); i++){
 	    if (i!= 0){text += "\n";}	
-	    text += "Player " + (i +1) + ": " + "\nHP: " +  screen.characters.get(i).getHP()+"/"+screen.characters.get(i).getMaxHP()
+	    text += "Player " + (i +1) + " " + "(" + "LVL: " + screen.characters.get(i).getLVL() + "): " + "\nHP: " +  screen.characters.get(i).getHP()+"/"+screen.characters.get(i).getMaxHP()
 		+ "\nMana: " + screen.characters.get(i).getMana()+"/"+screen.characters.get(i).getMaxMana();
 	}
 	playerData.setText(text);
@@ -430,36 +430,36 @@ public class GamePanel extends JPanel {
 	//updates game screen data
 	public void tick() {
 	    if (keysPressed[VK_W] && ableToMove("up")) {
-		mapY+=2;
+		mapY+=characters.get(0).getSpeed();
 		characters.get(0).setUpAnimated();
 		for (Character monster : ai)
-		    monster.setY(monster.getY()+2);
+		    monster.setY(monster.getY()+characters.get(0).getSpeed());
 		for (int i = 1; i< characters.size(); i++)
-		    characters.get(i).setY(characters.get(i).getY()+2);
+		    characters.get(i).setY(characters.get(i).getY()+characters.get(0).getSpeed());
 	    }
 	    if (keysPressed[VK_S] && ableToMove("down")) {
-		mapY-=2;
+		mapY-=characters.get(0).getSpeed();
 		characters.get(0).setDownAnimated();
 		for (Character monster : ai)
-		    monster.setY(monster.getY()-2);
+		    monster.setY(monster.getY()-characters.get(0).getSpeed());
 		for (int i = 1; i< characters.size(); i++)
-		    characters.get(i).setY(characters.get(i).getY()-2);
+		    characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed());
 	    }
 	    if (keysPressed[VK_A] && ableToMove("left")) {
-		mapX +=2;
+		mapX +=characters.get(0).getSpeed();
 	       	characters.get(0).setLeftAnimated();
 		for (Character monster : ai)
-		    monster.setX(monster.getX()+2);
+		    monster.setX(monster.getX()+characters.get(0).getSpeed());
 		for (int i = 1; i< characters.size(); i++)
-		    characters.get(i).setX(characters.get(i).getX()+2);
+		    characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed());
 	    }
 	    if (keysPressed[VK_D] && ableToMove("right")) {
-		mapX-=2;
+		mapX-=characters.get(0).getSpeed();
 		characters.get(0).setRightAnimated();
 		for (Character monster : ai)
-		    monster.setX(monster.getX()-2);
+		    monster.setX(monster.getX()-characters.get(0).getSpeed());
 		for (int i = 1; i< characters.size(); i++)
-		    characters.get(i).setX(characters.get(i).getX()-2);
+		    characters.get(i).setX(characters.get(i).getX()-characters.get(0).getSpeed());
 	    }
 	    //reset player to idle mode after done moving
 	    if(keysReleased[VK_W]){
@@ -512,8 +512,8 @@ public class GamePanel extends JPanel {
 		    if ((character.getTimeStarted()-time)%character.getATKspeed() != 0){}
 		    else character.attack(character.getTarget());
 		}else{
-		    character.setX(character.getX() + (int)(2*character.getChangeX()/character.getDist(character.getTarget())));
-		    character.setY(character.getY() + (int)(2*character.getChangeY()/character.getDist(character.getTarget())));
+		    character.setX(character.getX() + (int)(character.getSpeed()*character.getChangeX()/character.getDist(character.getTarget())));
+		    character.setY(character.getY() + (int)(character.getSpeed()*character.getChangeY()/character.getDist(character.getTarget())));
 		    if (Math.abs(character.getChangeX()) > Math.abs(character.getChangeY())){
 			if (character.getChangeX() > character.getChangeY())
 			    character.setRightAnimated();
@@ -530,8 +530,8 @@ public class GamePanel extends JPanel {
 	    for (int j = 1; j < characters.size(); j++){
 		if (ai.size() <= 0){
 		    if(characters.get(j).getDist(characters.get(0)) > (50*j)){
-			characters.get(j).setX(characters.get(j).getX() + (int)(4*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(0))));
-			characters.get(j).setY(characters.get(j).getY() + (int)(4*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(0))));
+			characters.get(j).setX(characters.get(j).getX() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(0))));
+			characters.get(j).setY(characters.get(j).getY() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(0))));
 			//when the characters are moving
 			if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
 			    if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
@@ -579,9 +579,13 @@ public class GamePanel extends JPanel {
 			    }
 			    if ((characters.get(j).getTimeStarted()-time)%characters.get(j).getATKspeed() != 0){}
 			    else characters.get(j).attack(characters.get(j).getTarget());
+			    if (characters.get(j).getTarget().getHP() <= 0)
+				characters.get(j).setEXP(characters.get(j).getEXP()+characters.get(j).getTarget().getEXP());
+			    if (characters.get(j).getEXP() >= characters.get(j).getLVLreq())
+				characters.get(j).LVLup();
 			}else{
-			    characters.get(j).setX(characters.get(j).getX() + (int)(3*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(j).getTarget())));
-			    characters.get(j).setY(characters.get(j).getY() + (int)(3*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(j).getTarget())));
+			    characters.get(j).setX(characters.get(j).getX() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(j).getTarget())));
+			    characters.get(j).setY(characters.get(j).getY() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(j).getTarget())));
 			    if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
 				if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
 				    characters.get(j).setRightAnimated();
@@ -596,8 +600,8 @@ public class GamePanel extends JPanel {
 			}
 		    }catch(/*IndexOutOfBounds*/Exception e){
 			if (characters.get(j).getDist(characters.get(0)) > 50){
-			    characters.get(j).setX(characters.get(j).getX() + (int)(3*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(0))));
-			    characters.get(j).setY(characters.get(j).getY() + (int)(3*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(0))));
+			    characters.get(j).setX(characters.get(j).getX() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(0))));
+			    characters.get(j).setY(characters.get(j).getY() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(0))));
 			    if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
 				if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
 				    characters.get(j).setRightAnimated();
@@ -629,6 +633,9 @@ public class GamePanel extends JPanel {
 	    //kill characters and players with <= 0 hp
 	    for (int i = 0; i < ai.size(); i++){
 		if (ai.get(i).getHP() <= 0){
+		    characters.get(0).setEXP(characters.get(0).getEXP()+ai.get(i).getEXP());
+		    if (characters.get(0).getEXP() >= characters.get(0).getLVLreq())
+			characters.get(0).LVLup();
 		    ai.remove(i);
 		    i--;
 		}

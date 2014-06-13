@@ -13,11 +13,14 @@ public class Character implements Drawable{
     protected int maxDEF, DEF;
     protected double maxLuk, luk;
     protected int range = 100; //for testing purposes
-    protected double maxSpeed, speed; //10 is super fast
+    protected int maxSpeed, speed; //10 is super fast
     protected int maxATKspeed, ATKspeed; //hit per x CENTIseconds
     protected int maxMana, mana;
     //protected double screenX, screenY;
     //protected int mapX, mapY;
+    protected int EXP;
+    protected int LVL = 1;
+    protected int LVLreq = 50;
     protected int gold;
     protected Inventory inventory = new Inventory();
     protected double changeX;
@@ -39,7 +42,8 @@ public class Character implements Drawable{
 	DEF = maxDEF;
 	maxLuk = 0.05;
 	luk = maxLuk;
-	maxSpeed = 1.0;
+	EXP = 0;
+	maxSpeed = 1;
 	speed = maxSpeed;
 	maxATKspeed = 100;
 	ATKspeed = maxATKspeed;
@@ -72,9 +76,11 @@ public class Character implements Drawable{
     public final void setDEF(int DEF){this.DEF = DEF;}
     public final void setMaxLuk(double maxLuk){this.maxLuk = maxLuk;}
     public final void setLuk(double luk){this.luk = luk;}
+    public final void setEXP(int xp){EXP = xp;}
+    public final void setLVL(int lvl){LVL = lvl;}
     public final void setRange(int range){this.range = range;}
-    public final void setMaxSpeed(double maxSpeed){this.maxSpeed = maxSpeed;}
-    public final void setSpeed(double speed){this.speed = speed;}
+    public final void setMaxSpeed(int maxSpeed){this.maxSpeed = maxSpeed;}
+    public final void setSpeed(int speed){this.speed = speed;}
     public final void setMaxATKspeed(int maxATKspeed){this.maxATKspeed = maxATKspeed;}
     public final void setATKspeed(int ATKspeed){this.ATKspeed = ATKspeed;}
     public final void setMaxMana(int maxMana){this.maxMana = maxMana;}
@@ -90,9 +96,12 @@ public class Character implements Drawable{
     public final int getDEF(){return DEF;}
     public final double getMaxLuk(){return maxLuk;}
     public final double getLuk(){return luk;}
+    public final int getEXP(){return EXP;}
+    public final int getLVL(){return LVL;}
+    public final int getLVLreq(){return LVLreq;}
     public final int getRange(){return range;}
-    public final double getMaxSpeed(){return maxSpeed;}
-    public final double getSpeed(){return speed;}
+    public final int getMaxSpeed(){return maxSpeed;}
+    public final int getSpeed(){return speed;}
     public final int getMaxATKspeed(){return maxATKspeed;}
     public final int getATKspeed(){return ATKspeed;}
     public final int getMaxMana(){return maxMana;}
@@ -128,10 +137,22 @@ public class Character implements Drawable{
     public final void setRightAnimated(){if(image != rightAnimated) setImage(rightAnimated);}
     //for testing purposes
     public void attack(Character character){
+	if (character.getDEF() > ATK){
+	    character.setHP(character.getHP() - (int)(0.5*ATK));
+	    return;
+	}
 	if (Math.random() < luk){
 	    character.setHP(character.getHP() + character.getDEF() - (int)(1.5*ATK));
 	}else{
 	    character.setHP(character.getHP() + character.getDEF() - ATK);
+	}
+    }
+
+    public void LVLup(){
+	while (EXP >= LVLreq){
+	    EXP = EXP-LVLreq;
+	    LVL++;
+	    LVLreq = LVL*LVL+50;
 	}
     }
 }

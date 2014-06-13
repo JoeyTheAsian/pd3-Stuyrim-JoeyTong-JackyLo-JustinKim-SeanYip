@@ -24,5 +24,18 @@ public class Bird extends Player{
 	}catch(Exception e){
 	    Utilities.showErrorMessage(null,e);
 	}
+	maxHP = 500;
+	HP = maxHP;
+	maxATK = 35;
+	ATK = maxATK;
+	maxDEF = 5;
+	DEF = 5;
+	EXP = 25;
+	maxLuk = 0.05;
+	luk = maxLuk;
+	maxSpeed = 3;
+	speed = maxSpeed;
+	maxATKspeed = 33;
+	ATKspeed = maxATKspeed;
     }
 }

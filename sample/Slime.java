@@ -24,6 +24,21 @@ public class Slime extends Player{
 	}catch(Exception e){
 	    Utilities.showErrorMessage(null,e);
 	}
+	maxHP = 500;
+	HP = maxHP;
+	maxMana = 500;
+	mana = maxMana;
+	maxATK = 50;
+	ATK = maxATK;
+	maxDEF = 5;
+	DEF = maxDEF;
+	EXP = 10;
+	maxLuk = 0.01;
+	luk = maxLuk;
+	maxSpeed = 2;
+	speed = maxSpeed;
+	maxATKspeed = 50;
+	ATKspeed = maxATKspeed;
     }
 
 }

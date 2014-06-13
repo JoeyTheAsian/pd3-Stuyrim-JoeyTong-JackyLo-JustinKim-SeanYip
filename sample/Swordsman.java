@@ -24,5 +24,13 @@ public class Swordsman extends Player{
 	}catch(Exception e){
 	    Utilities.showErrorMessage(null,e);
 	}
+	maxDEF = 25;
+	DEF = maxDEF;
+	maxLuk = 0.1;
+	luk = maxLuk;
+	maxSpeed = 2;
+	speed = maxSpeed;
+	maxATKspeed = 50;
+	ATKspeed = maxATKspeed;
     }
 }
