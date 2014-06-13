@@ -21,6 +21,10 @@ Project Description: 2.5D RPG game
   
   **6/12/14**
   
+  Implemented EXP (Jacky)
+  
+  Made party members attack random monsters and lock in (Jacky)
+  
   **6/11/14**
   
   Made monsters attack the characters closest to them (Jacky)
