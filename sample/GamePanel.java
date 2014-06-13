@@ -31,6 +31,7 @@ public class GamePanel extends JPanel {
     private boolean[] keysReleased = new boolean[256];
     private BufferedImage bg; //background
     private HashMap<String, Item> items = new HashMap<>(); //If the maximum number of items is known, use the optimization described in Character.
+    private HashMap<Item, Point> droppedItems = new HashMap<>(); //Maps dropped items (after death of monsters) to its location in game.
     private int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height-37;
     private int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
     //dimensions of the bottom portion of the screen with all the buttons
@@ -636,6 +637,8 @@ public class GamePanel extends JPanel {
 		    characters.get(0).setEXP(characters.get(0).getEXP()+ai.get(i).getEXP());
 		    if (characters.get(0).getEXP() >= characters.get(0).getLVLreq())
 			characters.get(0).LVLup();
+		    double dropChance = Math.random();
+		    //Go through droppedItems and drop if the chance is appropriate
 		    ai.remove(i);
 		    i--;
 		}
