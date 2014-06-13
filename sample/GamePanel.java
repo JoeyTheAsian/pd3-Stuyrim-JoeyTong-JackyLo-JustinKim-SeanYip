@@ -646,7 +646,8 @@ public class GamePanel extends JPanel {
 		    if (characters.get(0).getEXP() >= characters.get(0).getLVLreq())
 			characters.get(0).LVLup();
 		    double dropChance = Math.random();
-		    //Go through droppedItems and drop if the chance is appropriate
+		    //HashMap<String, Double> drops = ai.get(i).getDrops();
+		    //drops.forEach((Item item, Double chance) -> {if (chance <= drops.get(item)) {droppedItems.put(items.get(item), new Point((int) character.getX(), (int) character.getY()));}});
 		    ai.remove(i);
 		    i--;
 		}
