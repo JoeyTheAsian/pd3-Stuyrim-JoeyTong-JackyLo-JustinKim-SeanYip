@@ -29,7 +29,7 @@ public class Bird extends Player{
 	maxATK = 35;
 	ATK = maxATK;
 	maxDEF = 5;
-	DEF = 5;
+	DEF = maxDEF;
 	EXP = 25;
 	maxLuk = 0.05;
 	luk = maxLuk;
