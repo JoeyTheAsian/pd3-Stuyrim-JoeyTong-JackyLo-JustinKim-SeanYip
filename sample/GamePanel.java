@@ -271,7 +271,7 @@ public class GamePanel extends JPanel {
 		double lineSegmentLength = Math.hypot(x2 - x1, y2 - y1);
 	    return (((Math.hypot(iX1 - x1, iY1 - y1) <= lineSegmentLength) && (Math.atan2(iY1 - y1, iX1 - x1) == lineSegmentDirection)) || ((Math.hypot(iX2 - x1, iY2 - y1) <= lineSegmentLength) && (Math.atan2(iY2 - y1, iX2 - x1) == lineSegmentDirection)));
 	}
-	
+
 	//renders the screen
 	public void render(){
 	    BufferStrategy bs = getBufferStrategy();
@@ -289,8 +289,7 @@ public class GamePanel extends JPanel {
 
 	    
 	    //draws HP bars and then draws character
-
-
+	    
 	    for (Character character : ai) {
 		if(character.getY()<=screenHeight/2){
 		    g.setColor(Color.RED);
@@ -303,7 +302,7 @@ public class GamePanel extends JPanel {
 		}
 	    }
 	    for (int i = characters.size()-1; i >= 0;  i--) {
-			Character character = characters.get(i);
+		Character character = characters.get(i);
 		g.setColor(Color.RED);
 		g.fillRect(character.getX(),character.getY()-10,80,7);
 		g.setColor(Color.GREEN);
@@ -323,6 +322,8 @@ public class GamePanel extends JPanel {
 		    g.drawImage(character.getImage(), character.getX(), character.getY(), null);
 		}
 	    }
+	    
+
 	    g.drawString("TPS: " + averageFPS, 0, 20);
 	    g.drawString("FPS: " + averageFPS1,0, 31);
 	    g.drawString("Global Time: " + time, 0, 50);
