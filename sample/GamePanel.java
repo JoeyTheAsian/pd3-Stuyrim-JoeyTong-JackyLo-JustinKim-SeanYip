@@ -31,7 +31,7 @@ public class GamePanel extends JPanel {
     private int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height-37;
     private int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
     //dimensions of the bottom portion of the screen with all the buttons
-    private int height = windowHeight /5;
+    private int height = windowHeight/5;
     private int width = windowWidth;
     //player inventory will probably be removed in the future after testing
     private Inventory inventory = new Inventory();
@@ -40,7 +40,7 @@ public class GamePanel extends JPanel {
     Screen screen = new Screen();
     private JTextArea playerData;
     private JButton inventoryButton, menuButton, partyButton;
- 
+
     public GamePanel() {
 	setLayout(null);
 	setBounds(0, 0 , windowWidth, windowHeight);
@@ -63,12 +63,12 @@ public class GamePanel extends JPanel {
 	inventoryButton.setIcon(new ImageIcon(i1));
 	inventoryButton.setForeground(Color.white);
 	inventoryButton.addActionListener(e -> {
-		    for(int i = 0; i < 256; i++){
-			if(keysPressed[i]){
-			    keysReleased[i] = true;
-			    keysPressed[i] = false;
-			}
+		for(int i = 0; i < 256; i++){
+		    if(keysPressed[i]){
+			keysReleased[i] = true;
+			keysPressed[i] = false;
 		    }
+		}
 		//if it's there, take it out and give focus to screen, if it isn't put it in ,update items and take focus
 		if (invent.isVisible()) {
 		    invent.setVisible(false);
@@ -100,7 +100,7 @@ public class GamePanel extends JPanel {
 		}else if(!party.isVisible()){
 		    party.setVisible(true);
 		    party.requestFocusInWindow();
-		    partyButton.setIcon(new ImageIcon(i2));		       	            
+		    partyButton.setIcon(new ImageIcon(i2));		       	
 		}
 	    });
 	menuButton = new JButton("Menu");
@@ -121,23 +121,20 @@ public class GamePanel extends JPanel {
 	playerData = new JTextArea();
 	playerData.setSelectedTextColor(Color.WHITE);
 	playerData.setSize(width/6,height);
-	playerData.setLocation(0+(width/50),(windowHeight/5*4)+(height/30));
+	playerData.setLocation(0+(width/50),(windowHeight/5*4)+(height/20));
 	playerData.setOpaque(false);
 	playerData.setVisible(true);
 	playerData.setEditable(false);
 	playerData.setHighlighter(null);
 	playerData.setDragEnabled(false);
-	playerData.setForeground(Color.WHITE);
+	playerData.setForeground(Color.BLACK);
 	playerData.setFont(new Font("TimesRoman", Font.PLAIN, height/15));
-	//PUT THE PLAYERDATA IN HERE
 
 	//creates inventory panel
 	invent.setSize(windowWidth/2, windowHeight/2);
 	invent.setLocation(windowWidth/4, windowHeight/4);
-	
 	screen = new Screen();
-
-	add(party);
+    	add(party);
 	add(invent);
 	add(playerData);
 	add(menuButton);
@@ -152,7 +149,8 @@ public class GamePanel extends JPanel {
 	g.drawImage(bg,0,windowHeight/5*4,width,height,null);
 	for(int i = 0; i < screen.characters.size(); i++){
 	    playerData.setText("Player " + (i +1) + ": " + "\nHP: " +  screen.characters.get(i).getHP()+"/"+screen.characters.get(i).getMaxHP()
-			   + "\nMana: " + screen.characters.get(i).getMana()+"/"+screen.characters.get(i).getMaxMana());
+			       + "\nMana: " + screen.characters.get(i).getMana()+"/"+screen.characters.get(i).getMaxMana());
+	    
 	}
     }
 
@@ -160,6 +158,7 @@ public class GamePanel extends JPanel {
 	private BufferedImage flickerStop;
 	//FPS counter variables
 	private static final int MAX_FPS = 60;
+	private static final int MAX_FPS_1 = 60;
 	private static final int FPS_SAMPLE_SIZE = 6;
 	// The width and height of each tile in pixels
 	private static final int TILE_SCALE = 60;
@@ -167,13 +166,16 @@ public class GamePanel extends JPanel {
 
 	private boolean running;
 	private int averageFPS;
+	private int averageFPS1;
 	private int mapX = 0;
 	private int mapY = 0;
 	//SCREEN dimensions
 	private int screenHeight = ((Toolkit.getDefaultToolkit().getScreenSize().height-37)/5*4);
 	private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
 	private LinkedList<Long> frames = new LinkedList<>();
+	private LinkedList<Long> frames1 = new LinkedList<>();
 	private long prevTick = -1;
+	private long prevTick1 = -1;
 	private Map currentMap;
 	//for testing putposes
 	private Swordsman player = new Swordsman("sprites/swordsman down.png", screenWidth/2, screenHeight/2);
@@ -238,17 +240,63 @@ public class GamePanel extends JPanel {
 	    drawMap(g);
 	    //draw fps
 	    g.setColor(Color.GREEN);
-
+	    
+	    //draws HP bars and then draws character
 	    for (Character character : ai) {
-		g.drawString("HP: " + character.getHP(),character.getX(),character.getY()-30);
-		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
+		if(character.getY()<=screenHeight/2){
+		    g.setColor(Color.RED);
+		    g.fillRect(character.getX(),character.getY()-10,80,7);
+		    g.setColor(Color.GREEN);
+		    g.fillRect(character.getX(),character.getY()-10,(int)(80.0*((double)character.getHP()/(double)character.getMaxHP())),7);
+		    g.drawImage(character.getImage(), character.getX(), character.getY(), null);
+		}
 	    }
 	    for (Character character : characters) {
+		g.setColor(Color.RED);
+		g.fillRect(character.getX(),character.getY()-10,80,7);
+		g.setColor(Color.GREEN);
+		g.fillRect(character.getX(),character.getY()-10,(int)(80.0*((double)character.getHP()/(double)character.getMaxHP())),7);
 		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
 	    }
-	    g.drawString("FPS: " + averageFPS, 0, 20);
+	    for (Character character : ai) {
+		if(character.getY()>screenHeight/2){
+		    g.setColor(Color.RED);
+		    g.fillRect(character.getX(),character.getY()-10,80,7);
+		    g.setColor(Color.GREEN);
+		    g.fillRect(character.getX(),character.getY()-10,(int)(80.0*((double)character.getHP()/(double)character.getMaxHP())),7);
+		    g.drawImage(character.getImage(), character.getX(), character.getY(), null);
+		}
+	    }
+	    g.drawString("TPS: " + averageFPS, 0, 20);
+	    g.drawString("FPS: " + averageFPS1,0, 31);
 	    g.dispose();
 	    bs.show();
+
+	    //actual FPS limiter, greatly improves performance by not letting system max out processor with useless still frames
+	    long pastTime = System.currentTimeMillis() - prevTick;
+
+	    if (frames1.size() == FPS_SAMPLE_SIZE) {
+		frames1.remove();
+	    }
+	    frames1.add(pastTime);
+	    // Calculate average FPS
+	    long sum = 0;
+	    for (long frame : frames1){
+		sum += frame;
+	    }
+	    long averageFrame = sum / FPS_SAMPLE_SIZE;
+	    averageFPS1 = (int)(1000 / averageFrame);
+	    prevTick1 = System.currentTimeMillis();
+	    // Only if the time passed since the previous tick is less than one
+	    // second divided by the number of maximum FPS allowed do we delay
+	    // ourselves to give Time time to catch up to our rendering.
+	    if (pastTime < 1000.0 / MAX_FPS_1) {
+		try {
+		    Thread.sleep((long)(1000.0 / MAX_FPS_1)-pastTime);
+		} catch (InterruptedException e) {
+		    Utilities.showErrorMessage(this, e);
+		}
+	    }
 	}
 
         // Renders the tilemap of the current map to the screen
@@ -266,8 +314,8 @@ public class GamePanel extends JPanel {
 	       &&(x * TILE_SCALE + mapX<windowWidth+1) && ( y * TILE_SCALE + mapY < windowHeight+1)){
 		Image texture = currentMap.getTexture(tile);
 		g.drawImage(texture, x * TILE_SCALE + mapX, y * TILE_SCALE + mapY,
-                        TILE_SCALE, TILE_SCALE, null);
-	       }
+			    TILE_SCALE, TILE_SCALE, null);
+	    }
         }
     
 	public void run() {
@@ -376,13 +424,13 @@ public class GamePanel extends JPanel {
 		    character.setY(character.getY() + (int)(2*character.getChangeY()/character.getDist(characters.get(0))));
 		}
 	    }
+	    //kill characters and players with <= 0 hp
 	    for (int i = 0; i < ai.size(); i++){
 		if (ai.get(i).getHP() <= 0){
 		    ai.remove(i);
 		    i--;
 		}
 	    }
-
 	    for (int i = 0; i < characters.size(); i++){
 		if (characters.get(i).getHP() <= 0){}
 	    }

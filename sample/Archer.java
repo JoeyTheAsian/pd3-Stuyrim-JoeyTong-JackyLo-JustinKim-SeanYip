@@ -4,10 +4,10 @@ import javax.swing.ImageIcon;
 import javax.imageio.ImageIO;
 import java.io.File;
 
-public class Swordsman extends Player{
+public class Archer extends Player{
     protected Item shield = null;
-    public Swordsman(){super();}
-    public Swordsman(String imageLocation, int x, int y){
+    public Archer(){super();}
+    public Archer(String imageLocation, int x, int y){
 	super(imageLocation,x,y);
 	try{
 	 //get all the swordsman graphics

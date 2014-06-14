@@ -12,12 +12,13 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
 import javax.imageio.ImageIO;
+import java.util.ArrayList;
 
 public class PartyPanel extends JPanel{
     private int height = (Toolkit.getDefaultToolkit().getScreenSize().height-45)/5*3;
     private int width = Toolkit.getDefaultToolkit().getScreenSize().width/4;
     private BufferedImage image;
-    private JTextArea partyInfo;
+    private JTextArea partyInfo = new JTextArea();
     public PartyPanel(){
 	try{image = ImageIO.read(new File("GUI Images/trimmed wood background.png"));
 	}catch(Exception e){
@@ -26,24 +27,26 @@ public class PartyPanel extends JPanel{
 	
 	setLayout(null);
 	setSize(width,height);
-	setLocation(width*3,height/5/2);
+	setLocation(width*3,0);
 	addFocusListener(new FocusListener() {
-			public void focusGained(FocusEvent e) {}
-			public void focusLost(FocusEvent e) {requestFocusInWindow();}	
-	});
-	setSize(width,height/2);
+		public void focusGained(FocusEvent e) {}
+		public void focusLost(FocusEvent e) {requestFocusInWindow();}	
+	    });
+	partyInfo.setSize(width-(width/20),height-(height/20));
 	partyInfo.setOpaque(false);
 	partyInfo.setVisible(true);
 	partyInfo.setEditable(false);
 	partyInfo.setHighlighter(null);
-        partyInfo.setDragEnabled(False);
+        partyInfo.setDragEnabled(false);
 	partyInfo.setForeground(Color.BLACK);
 	partyInfo.setFont(new Font("TimesRoman", Font.PLAIN, height/2/30));
+	add(partyInfo);
 	setVisible(false);
     }
     public void updatePartyInfo(ArrayList <Player> players){
-	for(int i = 0; i < players.Size(); i++){
+	for(int i = 0; i < players.size(); i++){
 	    players.get(i);
+	}
     }
     public void paintComponent(Graphics g){
 	super.paintComponent(g);

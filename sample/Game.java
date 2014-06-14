@@ -16,7 +16,6 @@ public class Game extends JFrame {
 	MenuPanel MenuPanel = new MenuPanel();
 	add(MenuPanel);
 	setResizable(false);
-
 	setSize(width, height);
 	setVisible(true);
     }
