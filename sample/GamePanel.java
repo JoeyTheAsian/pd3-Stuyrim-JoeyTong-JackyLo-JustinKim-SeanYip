@@ -338,7 +338,8 @@ public class GamePanel extends JPanel {
 		    }
 		}
 		if(entity.getX() < windowWidth+(windowWidth/4) && entity.getY()<windowHeight+(windowHeight/4)){
-		    g.drawImage(entity.getImage(),entity.getX(),entity.getY(),null);
+			if (entity instanceof Item) {g.drawImage(entity.getImage(), entity.getX() + mapX, entity.getY() + mapY, null);}
+			else {g.drawImage(entity.getImage(),entity.getX(),entity.getY(),null);}
 		}
 	    }
 	    screenEntities.clear();
@@ -471,8 +472,7 @@ public class GamePanel extends JPanel {
 		}
 		for (Character monster : ai)
 		    monster.setY(monster.getY()+characters.get(0).getSpeed());
-		droppedItems.forEach(item -> item.setY(item.getY() + characters.get(0).getSpeed()));
-	            mapObjects.forEach(mapObject -> mapObject.setY(mapObject.getY() + characters.get(0).getSpeed()));
+	    mapObjects.forEach(mapObject -> mapObject.setY(mapObject.getY() + characters.get(0).getSpeed()));
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setY(characters.get(i).getY()+characters.get(0).getSpeed());
 	    }
@@ -486,8 +486,7 @@ public class GamePanel extends JPanel {
 		}
 		for (Character monster : ai)
 		    monster.setY(monster.getY()-characters.get(0).getSpeed());
-		droppedItems.forEach(item -> {item.setY(item.getY() - characters.get(0).getSpeed());});
-	            mapObjects.forEach(mapObject -> mapObject.setY(mapObject.getY() - characters.get(0).getSpeed()));
+	    mapObjects.forEach(mapObject -> mapObject.setY(mapObject.getY() - characters.get(0).getSpeed()));
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed());
 	    }
@@ -501,8 +500,7 @@ public class GamePanel extends JPanel {
 		}
 		for (Character monster : ai)
 		    monster.setX(monster.getX()+characters.get(0).getSpeed());
-		droppedItems.forEach(item -> item.setX(item.getX() + characters.get(0).getSpeed()));
-	            mapObjects.forEach(mapObject -> mapObject.setX(mapObject.getX() + characters.get(0).getSpeed()));
+	    mapObjects.forEach(mapObject -> mapObject.setX(mapObject.getX() + characters.get(0).getSpeed()));
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed());
 	    }
@@ -516,8 +514,7 @@ public class GamePanel extends JPanel {
 		}
 		for (Character monster : ai)
 		    monster.setX(monster.getX()-characters.get(0).getSpeed());
-		droppedItems.forEach(item -> item.setX(item.getX() - characters.get(0).getSpeed()));
-	            mapObjects.forEach(mapObject -> mapObject.setX(mapObject.getX() - characters.get(0).getSpeed()));
+	    mapObjects.forEach(mapObject -> mapObject.setX(mapObject.getX() - characters.get(0).getSpeed()));
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setX(characters.get(i).getX()-characters.get(0).getSpeed());
 	    }
@@ -719,8 +716,8 @@ public class GamePanel extends JPanel {
 		    ai.get(i).getDrops().forEach((itemName, chance) -> {
 			    if (dropChance <= chance) {
 				Item droppedItem = ItemFactory.get(itemName);
-				droppedItem.setX(deadCharacter.getX());
-				droppedItem.setY(deadCharacter.getY());
+				droppedItem.setX(deadCharacter.getX() - mapX);
+				droppedItem.setY(deadCharacter.getY() - mapY);
 				droppedItems.add(droppedItem);
 			    }
 			});
