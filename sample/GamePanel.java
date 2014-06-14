@@ -767,10 +767,10 @@ public class GamePanel extends JPanel {
 
             for (MapObject object : objects) {
                 double dx = object.getX() - player.getX();
-                double dy = object.getY() - player.getY();
+                double dy = object.getY() - TILE_SCALE / 2 - player.getY();
                 double dist = Math.sqrt(dx * dx + dy * dy);
                 double theta = Math.atan2(dy, dx);
-                double softness = 0.8;
+                double softness = 1.5;
                 if (dist < TILE_SCALE / 2) {
                     player.setX((int)(player.getX() - Math.cos(theta) * softness));
                     player.setY((int)(player.getY() - Math.sin(theta) * softness));
