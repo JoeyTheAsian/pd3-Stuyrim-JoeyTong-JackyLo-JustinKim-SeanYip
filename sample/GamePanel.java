@@ -438,7 +438,7 @@ public class GamePanel extends JPanel {
 	    else{
 		Player plyr;
 		if (chance > 0.002){
-		    plyr = new Swordsman("sprites/swordsman down.png",side[temp][0],side[temp][1]);
+		    plyr = new Bug("sprites/bug down.png",side[temp][0],side[temp][1]);
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
 		}else if (chance > 0.001){
