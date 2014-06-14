@@ -23,6 +23,7 @@ import javax.swing.JTextArea;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.imageio.ImageIO;
+import java.lang.IndexOutOfBoundsException;
 
 public class GamePanel extends JPanel {
     private boolean[] keysPressed = new boolean[256];
@@ -147,11 +148,13 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	g.drawImage(bg,0,windowHeight/5*4,width,height,null);
+	String text = "";
 	for(int i = 0; i < screen.characters.size(); i++){
-	    playerData.setText("Player " + (i +1) + ": " + "\nHP: " +  screen.characters.get(i).getHP()+"/"+screen.characters.get(i).getMaxHP()
-			       + "\nMana: " + screen.characters.get(i).getMana()+"/"+screen.characters.get(i).getMaxMana());
-	    
+	    if (i!= 0){text += "\n";}	
+	    text += "Player " + (i +1) + ": " + "\nHP: " +  screen.characters.get(i).getHP()+"/"+screen.characters.get(i).getMaxHP()
+		+ "\nMana: " + screen.characters.get(i).getMana()+"/"+screen.characters.get(i).getMaxMana();
 	}
+	playerData.setText(text);
     }
 
     public class Screen extends Canvas implements Runnable{
@@ -179,9 +182,8 @@ public class GamePanel extends JPanel {
 	private Map currentMap;
 	//for testing putposes
 	private Swordsman player = new Swordsman("sprites/swordsman down.png", screenWidth/2, screenHeight/2);
-	private Player bird = new Player("sprites/Bird.png", 250, 250);
-	private Player giant = new Player("sprites/Giant.png", 250, 500);
-	private Player swordsman = new Player("sprites/swordsman down.png", 500, 250);
+	private Swordsman player2 = new Swordsman("sprites/swordsman down.png", screenWidth/2, screenHeight/2);
+	private Swordsman player3 = new Swordsman("sprites/swordsman down.png", screenWidth/2, screenHeight/2);
 	private Thread thread;
      
 	private long time; //global time
@@ -194,6 +196,9 @@ public class GamePanel extends JPanel {
 	    try{flickerStop =ImageIO.read(new File("GUI Images/flickerStop.png"));
 	    }catch(Exception e){Utilities.showErrorMessage(this,e);}
 	    characters.add(player);
+	    characters.add(player2);
+	    characters.add(player3);
+	    
 
             currentMap = new Map();
 	    addKeyListener(new KeyListener() {
@@ -227,19 +232,19 @@ public class GamePanel extends JPanel {
 	}
 	
 	protected boolean intersectEllipseLineSegment(double x1, double y1, double x2, double y2, double h, double k, double a, double b) {//For the purposes of this game, a line segment that is in an ellipse but does not intersect it (completely contained in ellipse) counts as an intersection. x1, y1, x2, and y2 are points that define the **directed** ((x1, y1) to (x2, y2)) line segment to test. h and k are the x- and y-coordinates of the center of the ellipse, respectively. a and b are the same variables as they are in the equation of an ellipse
-		double m = (y2 - y1)/(x2 - x1), c = y1 - m*x1, d = c + m*h, e = c - k; //m is the slope of the **directed** line segment defined from (x1, y1) to (x2, y2). c is the y-intercept of that line segment, if it were extended to intersect the y-axis. d and e are additional variables to make the calculation shorter. Note that all this will not work if x1 = x2 (vertical line because of divison by zero) (will include a separate case for that).
-		double discriminant = a*a*m*m + b*b - d*d - k*k + 2*d*k, iX1, iY1, iX2, iY2; //Discriminant, like in the quadratic formula, is used to find the number of intersection points. iX1, iY1, iX2, iY2 represent the intersection points.
-		if (discriminant < 0) {return false;}
-		if (discriminant >= 0) {
-			iX1 = (h*b*b - m*a*a*e + a*b*Math.sqrt(discriminant))/(a*a*m*m + b*b);
-			iY1 = (b*b*d + k*a*a*m*m + a*b*m*Math.sqrt(discriminant))/(a*a*m*m + b*b);
-		}
-		if (discriminant > 0) { //Note that this case and the one above are not mutually 
-			iX2 = (h*b*b - m*a*a*e - a*b*Math.sqrt(discriminant))/(a*a*m*m + b*b);
-			iY2 = (b*b*d + k*a*a*m*m - a*b*m*Math.sqrt(discriminant))/(a*a*m*m + b*b);
-		}
+	    double m = (y2 - y1)/(x2 - x1), c = y1 - m*x1, d = c + m*h, e = c - k; //m is the slope of the **directed** line segment defined from (x1, y1) to (x2, y2). c is the y-intercept of that line segment, if it were extended to intersect the y-axis. d and e are additional variables to make the calculation shorter. Note that all this will not work if x1 = x2 (vertical line because of divison by zero) (will include a separate case for that).
+	    double discriminant = a*a*m*m + b*b - d*d - k*k + 2*d*k, iX1, iY1, iX2, iY2; //Discriminant, like in the quadratic formula, is used to find the number of intersection points. iX1, iY1, iX2, iY2 represent the intersection points.
+	    if (discriminant < 0) {return false;}
+	    if (discriminant >= 0) {
+		iX1 = (h*b*b - m*a*a*e + a*b*Math.sqrt(discriminant))/(a*a*m*m + b*b);
+		iY1 = (b*b*d + k*a*a*m*m + a*b*m*Math.sqrt(discriminant))/(a*a*m*m + b*b);
+	    }
+	    if (discriminant > 0) { //Note that this case and the one above are not mutually 
+		iX2 = (h*b*b - m*a*a*e - a*b*Math.sqrt(discriminant))/(a*a*m*m + b*b);
+		iY2 = (b*b*d + k*a*a*m*m - a*b*m*Math.sqrt(discriminant))/(a*a*m*m + b*b);
+	    }
 		
-		return false;
+	    return false;
 	}
 	
 	//renders the screen
@@ -262,7 +267,6 @@ public class GamePanel extends JPanel {
 
 
 	    for (Character character : ai) {
-
 		if(character.getY()<=screenHeight/2){
 		    g.setColor(Color.RED);
 		    g.fillRect(character.getX(),character.getY()-10,80,7);
@@ -396,6 +400,8 @@ public class GamePanel extends JPanel {
 		characters.get(0).setUpAnimated();
 		for (Character monster : ai)
 		    monster.setY(monster.getY()+2);
+		for (int i = 1; i< characters.size(); i++)
+		    characters.get(i).setY(characters.get(i).getY()+2);
 		chanceOfSpawn();
 	    }
 	    if (keysPressed[VK_S]) {
@@ -403,6 +409,8 @@ public class GamePanel extends JPanel {
 		characters.get(0).setDownAnimated();
 		for (Character monster : ai)
 		    monster.setY(monster.getY()-2);
+		for (int i = 1; i< characters.size(); i++)
+		    characters.get(i).setY(characters.get(i).getY()-2);
 		chanceOfSpawn();
 	    }
 	    if (keysPressed[VK_A]) {
@@ -410,6 +418,8 @@ public class GamePanel extends JPanel {
 	       	characters.get(0).setLeftAnimated();
 		for (Character monster : ai)
 		    monster.setX(monster.getX()+2);
+		for (int i = 1; i< characters.size(); i++)
+		    characters.get(i).setX(characters.get(i).getX()+2);
 		chanceOfSpawn();
 	    }
 	    if (keysPressed[VK_D]) {
@@ -417,6 +427,8 @@ public class GamePanel extends JPanel {
 		characters.get(0).setRightAnimated();
 		for (Character monster : ai)
 		    monster.setX(monster.getX()-2);
+		for (int i = 1; i< characters.size(); i++)
+		    characters.get(i).setX(characters.get(i).getX()-2);
 		chanceOfSpawn();
 	    }
 	    //reset player to idle mode after done moving
@@ -436,7 +448,7 @@ public class GamePanel extends JPanel {
 		characters.get(0).setRight();
 		keysReleased[VK_D] = false;
 	    }
-	    //loops and draws all the entities players/monsters
+	    //AI code
 	    for (Character character : ai){
 		if (character.getDist(characters.get(0)) < character.getRange()){
 		    if ((character.getTimeStarted()-time)%character.getATKspeed() != 0){}
@@ -445,6 +457,31 @@ public class GamePanel extends JPanel {
 		    character.setX(character.getX() + (int)(2*character.getChangeX()/character.getDist(characters.get(0))));
 		    character.setY(character.getY() + (int)(2*character.getChangeY()/character.getDist(characters.get(0))));
 		}
+	    }
+	    for (int j = 1; j < characters.size(); j++){
+		if (ai.size() <= 0){
+		    if(characters.get(j).getDist(characters.get(0)) > 50){
+			characters.get(j).setX(characters.get(j).getX() + (int)(4*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(0))));
+			characters.get(j).setY(characters.get(j).getY() + (int)(4*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(0))));
+		    }
+		}else{
+		    for(int i = 1; i < characters.size(); i++){
+			try{
+			    if (characters.get(i).getDist(ai.get(i-1)) < characters.get(i).getRange()){
+				if ((characters.get(i).getTimeStarted()-time)%characters.get(i).getATKspeed() != 0){}
+				else characters.get(i).attack(ai.get(i-1));
+			    }else{
+				characters.get(i).setX(characters.get(i).getX() + (int)(2*characters.get(i).getChangeX()/characters.get(i).getDist(ai.get(i-1))));
+				characters.get(i).setY(characters.get(i).getY() + (int)(2*characters.get(i).getChangeY()/characters.get(i).getDist(ai.get(i-1))));
+			    }
+			}catch(IndexOutOfBoundsException e){
+			    if (characters.get(i).getDist(characters.get(0)) > 50){
+				characters.get(i).setX(characters.get(i).getX() + (int)(2*characters.get(i).getChangeX()/characters.get(i).getDist(characters.get(0))));
+				characters.get(i).setY(characters.get(i).getY() + (int)(2*characters.get(i).getChangeY()/characters.get(i).getDist(characters.get(0))));
+			    }
+			}
+		    }
+		}	
 	    }
 	    //kill characters and players with <= 0 hp
 	    for (int i = 0; i < ai.size(); i++){
@@ -485,3 +522,4 @@ public class GamePanel extends JPanel {
 	}
     }
 }
+
