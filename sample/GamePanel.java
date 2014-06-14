@@ -417,6 +417,12 @@ public class GamePanel extends JPanel {
 	public void run() {
 	    while (running) {
 		time++;
+		if (time%100==0){
+		    for (Character c : characters)
+			c.slowStatRestore(); //return to normal stats
+		    for (Character c : ai)
+			c.slowStatRestore();
+		}
 		tick();
 		render();
 	    }
@@ -468,62 +474,89 @@ public class GamePanel extends JPanel {
 		shielded = true;
 	    }
 	    if (keysPressed[VK_W] && ableToMove("up")) {
-		if(!shielded){
+		if (!shielded){
 		    mapY+=characters.get(0).getSpeed();
 		    characters.get(0).setUpAnimated();
+		    for (Character monster : ai)
+			monster.setY(monster.getY()+characters.get(0).getSpeed());
+		    mapObjects.forEach(obj -> obj.setY(obj.getY() + characters.get(0).getSpeed()));
+		    for (int i = 1; i< characters.size(); i++)
+			characters.get(i).setY(characters.get(i).getY()+characters.get(0).getSpeed());
 		}else{
-		    mapY+= characters.get(0).getSpeed()/2;
+		    mapY+=characters.get(0).getSpeed()/2;
 		    characters.get(0).setUpShieldAnimated();
+		    for (Character monster : ai)
+			monster.setY(monster.getY()+characters.get(0).getSpeed()/2);
+		    mapObjects.forEach(obj -> obj.setY(obj.getY() + characters.get(0).getSpeed()/2));
+		    for (int i = 1; i< characters.size(); i++)
+			characters.get(i).setY(characters.get(i).getY()+characters.get(0).getSpeed()/2);
 		}
-		for (Character monster : ai)
-		    monster.setY(monster.getY()+characters.get(0).getSpeed());
-		mapObjects.forEach(obj -> obj.setY(obj.getY() + characters.get(0).getSpeed()));
-		for (int i = 1; i< characters.size(); i++)
-		    characters.get(i).setY(characters.get(i).getY()+characters.get(0).getSpeed());
 	    }
 	    if (keysPressed[VK_S] && ableToMove("down")) {
-		if(!shielded){
+		if (!shielded){
 		    mapY-=characters.get(0).getSpeed();
 		    characters.get(0).setDownAnimated();
+		    for (Character monster : ai)
+			monster.setY(monster.getY()-characters.get(0).getSpeed());
+		    mapObjects.forEach(obj -> obj.setY(obj.getY() - characters.get(0).getSpeed()));
+		    for (int i = 1; i< characters.size(); i++)
+			characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed());
 		}else{
-		    mapY-= characters.get(0).getSpeed()/2;
+		    mapY-=characters.get(0).getSpeed()/2;
 		    characters.get(0).setDownShieldAnimated();
+		    for (Character monster : ai)
+			monster.setY(monster.getY()-characters.get(0).getSpeed()/2);
+		    mapObjects.forEach(obj -> obj.setY(obj.getY() - characters.get(0).getSpeed()/2));
+		    for (int i = 1; i< characters.size(); i++)
+			characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed()/2);
 		}
-		for (Character monster : ai)
-		    monster.setY(monster.getY()-characters.get(0).getSpeed());
-		mapObjects.forEach(obj -> obj.setY(obj.getY() - characters.get(0).getSpeed()));
-		for (int i = 1; i< characters.size(); i++)
-		    characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed());
 	    }
 	    if (keysPressed[VK_A] && ableToMove("left")) {
-		if(!shielded){
+		if (!shielded){
 		    mapX+=characters.get(0).getSpeed();
 		    characters.get(0).setLeftAnimated();
+		    for (Character monster : ai)
+			monster.setX(monster.getX()+characters.get(0).getSpeed());
+		    mapObjects.forEach(obj -> obj.setX(obj.getX() + characters.get(0).getSpeed()));
+		    for (int i = 1; i< characters.size(); i++)
+			characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed());
 		}else{
-		    mapX+= characters.get(0).getSpeed()/2;
+		    mapX+=characters.get(0).getSpeed()/2;
 		    characters.get(0).setLeftShieldAnimated();
+		    for (Character monster : ai)
+			monster.setX(monster.getX()+characters.get(0).getSpeed()/2);
+		    mapObjects.forEach(obj -> obj.setX(obj.getX() + characters.get(0).getSpeed()/2));
+		    for (int i = 1; i< characters.size(); i++)
+			characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed()/2);
 		}
-		for (Character monster : ai)
-		    monster.setX(monster.getX()+characters.get(0).getSpeed());
-		mapObjects.forEach(obj -> obj.setX(obj.getX() + characters.get(0).getSpeed()));
-		for (int i = 1; i< characters.size(); i++)
-		    characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed());
 	    }
 	    if (keysPressed[VK_D] && ableToMove("right")) {
-		if(!shielded){
+		if (!shielded){
 		    mapX-=characters.get(0).getSpeed();
 		    characters.get(0).setRightAnimated();
+		    for (Character monster : ai)
+			monster.setX(monster.getX()-characters.get(0).getSpeed());
+		    mapObjects.forEach(obj -> obj.setX(obj.getX() - characters.get(0).getSpeed()));
+		    for (int i = 1; i< characters.size(); i++)
+			characters.get(i).setX(characters.get(i).getX()-characters.get(0).getSpeed());
 		}else{
-		    mapX-= characters.get(0).getSpeed()/2;
+		    mapX-=characters.get(0).getSpeed()/2;
 		    characters.get(0).setRightShieldAnimated();
+		    for (Character monster : ai)
+			monster.setX(monster.getX()-characters.get(0).getSpeed()/2);
+		    mapObjects.forEach(obj -> obj.setX(obj.getX() - characters.get(0).getSpeed()/2));
+		    for (int i = 1; i< characters.size(); i++)
+			characters.get(i).setX(characters.get(i).getX()+-characters.get(0).getSpeed()/2);
 		}
-		for (Character monster : ai)
-		    monster.setX(monster.getX()-characters.get(0).getSpeed());
-		mapObjects.forEach(obj -> obj.setX(obj.getX() - characters.get(0).getSpeed()));
-		for (int i = 1; i< characters.size(); i++)
-		    characters.get(i).setX(characters.get(i).getX()-characters.get(0).getSpeed());
 	    }
-
+	    //special attack
+	    if (keysPressed[VK_SPACE]/* && characters.get(0).getMana() >= 300*/){
+		for (Character c : ai)
+		    if (c.getDist(characters.get(0)) < 200)
+			characters.get(0).sAttack(c);
+		keysPressed[VK_SPACE] = false;
+		//characters.get(0).setMana(characters.get(0).getMana()-300);
+	    }
 	    //reset player to idle mode after done moving
 	    if(keysReleased[VK_SHIFT]){
 		shielded = false;

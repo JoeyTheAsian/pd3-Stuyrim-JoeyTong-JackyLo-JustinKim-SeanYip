@@ -45,4 +45,20 @@ public class Swordsman extends Player{
 	ATKspeed = maxATKspeed;
     }
 
+    public void sAttack(Character c){
+	int i = (int)c.getChangeX();
+	int j = (int)c.getChangeY();
+	if (i == 0) i = 1;
+	if (j == 0) j = 1;
+	attack(c);
+	c.setX(c.getX()-1000/i);
+	c.setY(c.getY()-1000/j);
+	c.setSpeed(1);
+	c.setDEF(c.getDEF()-LVL);
+	if (c.getDEF() < 10) c.setDEF(10);
+	c.setATK(c.getATK()-2*LVL);
+	if (c.getATK() < 10) c.setATK(10);
+	ATK = ATK + 5*LVL;
+	DEF = DEF + LVL;
+    }
 }
