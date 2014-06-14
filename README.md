@@ -73,9 +73,9 @@ Project Description: 2.5D RPG game
   
   **6/9/14**
   
-    More animations (Jacky)
+  More animations (Jacky)
       
-    Work on directional hit detection (Sean)
+  Work on directional hit detection (Sean)
   
   **6/8/14**
   
