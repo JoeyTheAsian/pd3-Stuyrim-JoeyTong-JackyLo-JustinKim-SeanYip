@@ -477,7 +477,7 @@ public class GamePanel extends JPanel {
 		}
 		for (Character monster : ai)
 		    monster.setY(monster.getY()+characters.get(0).getSpeed());
-	    mapObjects.forEach(mapObject -> mapObject.setY(mapObject.getY() + characters.get(0).getSpeed()));
+		mapObjects.forEach(obj -> obj.setY(obj.getY() + characters.get(0).getSpeed()));
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setY(characters.get(i).getY()+characters.get(0).getSpeed());
 	    }
@@ -491,7 +491,7 @@ public class GamePanel extends JPanel {
 		}
 		for (Character monster : ai)
 		    monster.setY(monster.getY()-characters.get(0).getSpeed());
-	    mapObjects.forEach(mapObject -> mapObject.setY(mapObject.getY() - characters.get(0).getSpeed()));
+		mapObjects.forEach(obj -> obj.setY(obj.getY() - characters.get(0).getSpeed()));
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed());
 	    }
@@ -505,7 +505,7 @@ public class GamePanel extends JPanel {
 		}
 		for (Character monster : ai)
 		    monster.setX(monster.getX()+characters.get(0).getSpeed());
-	    mapObjects.forEach(mapObject -> mapObject.setX(mapObject.getX() + characters.get(0).getSpeed()));
+		mapObjects.forEach(obj -> obj.setX(obj.getX() + characters.get(0).getSpeed()));
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed());
 	    }
@@ -519,7 +519,7 @@ public class GamePanel extends JPanel {
 		}
 		for (Character monster : ai)
 		    monster.setX(monster.getX()-characters.get(0).getSpeed());
-	    mapObjects.forEach(mapObject -> mapObject.setX(mapObject.getX() - characters.get(0).getSpeed()));
+		mapObjects.forEach(obj -> obj.setX(obj.getX() - characters.get(0).getSpeed()));
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setX(characters.get(i).getX()-characters.get(0).getSpeed());
 	    }
@@ -760,9 +760,25 @@ public class GamePanel extends JPanel {
 		}
 	    }
 	}
-    }
-    
-    private boolean ableToMove(String direction) {
-        return true;
+
+        private boolean ableToMove(String direction) {
+            Character player = characters.get(0);
+            ArrayList<MapObject> objects = mapObjects;
+
+            for (MapObject object : objects) {
+                double dx = object.getX() - player.getX();
+                double dy = object.getY() - player.getY();
+                double dist = Math.sqrt(dx * dx + dy * dy);
+                double theta = Math.atan2(dy, dx);
+                double softness = 0.8;
+                if (dist < TILE_SCALE / 2) {
+                    player.setX((int)(player.getX() - Math.cos(theta) * softness));
+                    player.setY((int)(player.getY() - Math.sin(theta) * softness));
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }
