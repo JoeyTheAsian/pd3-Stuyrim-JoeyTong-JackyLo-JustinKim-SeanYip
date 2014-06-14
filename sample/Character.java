@@ -4,7 +4,9 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 public class Character implements Drawable{  
-    protected Image image, down, up, left, right, downAnimated, upAnimated, leftAnimated, rightAnimated;
+    protected Image image, down, up, left, right, downAnimated, upAnimated, leftAnimated, rightAnimated
+	,downShield = null, upShield = null,leftShield = null ,rightShield = null,
+	downShieldAnimated = null ,upShieldAnimated = null,leftShieldAnimated = null,rightShieldAnimated = null;
     protected HashMap<String, Double> drops = new HashMap<>(); //The drop table (RuneScape PvM style). Maps the item name to the item's chance of dropping. Why is the key of type String? That avoids mutable keys and having instances of items in every Character. To get the actual item, have another HashMap<String, Item> that maps the name of the item to the actual item, probably in GamePanel. For maximum performance, use constructor HashMap(int initalCapacity, float loadFactor) to overwrite this instance of drops here, where initalCapacity equals to the number of entries in the collection and loadFactor equals 1, if the capacity of the HashMap is known, which it is because the HashMap will be initalized in the constructors of Character's subclasses: Bird, Swordsman, etc.
     private int x, y;
     private String imageLocation;
@@ -135,6 +137,14 @@ public class Character implements Drawable{
     public final void setUpAnimated(){if(image != upAnimated) setImage(upAnimated);}
     public final void setLeftAnimated(){if(image != leftAnimated) setImage(leftAnimated);}
     public final void setRightAnimated(){if(image != rightAnimated) setImage(rightAnimated);}
+    public final void setUpShield(){image = upShield;}
+    public final void setDownShield(){image = downShield;}
+    public final void setLeftShield(){image =leftShield;}
+    public final void setRightShield(){image = rightShield;}
+    public final void setUpShieldAnimated(){image = upShieldAnimated;}
+    public final void setDownShieldAnimated(){image = downShieldAnimated;}
+    public final void setLeftShieldAnimated(){image = leftShieldAnimated;}
+    public final void setRightShieldAnimated(){image = rightShieldAnimated;}
     //for testing purposes
     public void attack(Character character){
 	if (character.getDEF() > ATK){
