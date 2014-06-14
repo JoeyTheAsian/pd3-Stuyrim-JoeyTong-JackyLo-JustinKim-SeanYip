@@ -194,6 +194,7 @@ public class GamePanel extends JPanel {
 	private ArrayDeque<AttackEvent> attacks = new ArrayDeque<>(); //Used as a stack
 	private ArrayList<Player> characters = new ArrayList<>();
 	private ArrayList<Character> ai = new ArrayList<>();
+	private ArrayList<Drawable> screenEntities = new ArrayList<>();
 	private boolean running;
 	private int averageFPS;
 	private int averageFPS1;
@@ -310,45 +311,36 @@ public class GamePanel extends JPanel {
 	    //draw fps
 	    g.setColor(Color.GREEN);
 
-	    
-	    //draws HP bars and then draws character
-	    
-	    for (Character character : ai) {
-		if(character.getY()<=screenHeight/2){
-		    g.setColor(Color.RED);
-		    g.fillRect(character.getX(),character.getY()-10,80,7);
-		    g.setColor(Color.GREEN);
-		    if(character.getHP() > 0){
-			g.fillRect(character.getX(),character.getY()-10,(int)(80.0*((double)character.getHP()/(double)character.getMaxHP())),7);
-		    }
-		    g.drawImage(character.getImage(), character.getX(), character.getY(), null);
-		}
-	    }
-	    for (int i = characters.size()-1; i >= 0;  i--) {
-		Character character = characters.get(i);
-		g.setColor(Color.RED);
-		g.fillRect(character.getX(),character.getY()-10,80,7);
-		g.setColor(Color.GREEN);
-		if(character.getHP()>0){
-		    g.fillRect(character.getX(),character.getY()-10,(int)(80.0*((double)character.getHP()/(double)character.getMaxHP())),7);
-		}
-		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
-	    }
-	    for (Character character : ai) {
-		if(character.getY()>screenHeight/2){
-		    g.setColor(Color.RED);
-		    g.fillRect(character.getX(),character.getY()-10,80,7);
-		    g.setColor(Color.GREEN);
-		    if(character.getHP()>0){
-			g.fillRect(character.getX(),character.getY()-10,(int)(80.0*((double)character.getHP()/(double)character.getMaxHP())),7);
-		    }
-		    g.drawImage(character.getImage(), character.getX(), character.getY(), null);
-		}
-	    }
 	    droppedItems.forEach((itemName, locations) -> {
 			Item item = items.get(itemName);
 			locations.forEach(location -> {g.drawImage(item.getImage(), (int) location.getX(), (int) location.getY(), null);});
 		});
+
+	    for(Character character : ai){
+		screenEntities.add(character);
+	    }
+	    for(Character character : characters){
+		screenEntities.add(character);
+	    }
+	   screenEntities.sort((Drawable e1, Drawable e2) -> (new Integer(e1.getY())).compareTo(e2.getY()));
+	    //draws everything
+	    for(Drawable entity : screenEntities){
+		if(entity instanceof Character){
+		    try{
+			g.setColor(Color.RED);
+			g.fillRect(entity.getX(),entity.getY()-10,80,7);
+			g.setColor(Color.GREEN);
+			if(((Character)entity).getHP()>0){
+			    g.fillRect(entity.getX(),entity.getY()-10,
+				       (int)(80.0*((double)((Character)entity).getHP()/(double)((Character)entity).getMaxHP())),7);
+			}
+		    }catch(Exception e){
+			e.printStackTrace();
+		    }
+		}
+		g.drawImage(entity.getImage(),entity.getX(),entity.getY(),null);
+	    }
+	    screenEntities.clear();
 
 	    g.drawString("TPS: " + averageFPS, 0, 20);
 	    g.drawString("FPS: " + averageFPS1,0, 31);
@@ -468,6 +460,12 @@ public class GamePanel extends JPanel {
 		}
 		for (Character monster : ai)
 		    monster.setY(monster.getY()+characters.get(0).getSpeed());
+		droppedItems.forEach((itemName, locations) -> {
+			Item item = items.get(itemName);
+			locations.forEach(location -> {
+				location.y=((int)location.getY()+characters.get(0).getSpeed());
+			    });
+		});
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setY(characters.get(i).getY()+characters.get(0).getSpeed());
 	    }
@@ -481,6 +479,12 @@ public class GamePanel extends JPanel {
 		}
 		for (Character monster : ai)
 		    monster.setY(monster.getY()-characters.get(0).getSpeed());
+		droppedItems.forEach((itemName, locations) -> {
+			Item item = items.get(itemName);
+			locations.forEach(location -> {
+				location.y=((int)location.getY()-characters.get(0).getSpeed());
+			    });
+		});
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed());
 	    }
@@ -494,6 +498,12 @@ public class GamePanel extends JPanel {
 		}
 		for (Character monster : ai)
 		    monster.setX(monster.getX()+characters.get(0).getSpeed());
+		droppedItems.forEach((itemName, locations) -> {
+			Item item = items.get(itemName);
+			locations.forEach(location -> {
+				location.x=((int)location.getX()+characters.get(0).getSpeed());
+			    });
+		});
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed());
 	    }
@@ -507,6 +517,12 @@ public class GamePanel extends JPanel {
 		}
 		for (Character monster : ai)
 		    monster.setX(monster.getX()-characters.get(0).getSpeed());
+		droppedItems.forEach((itemName, locations) -> {
+			Item item = items.get(itemName);
+			locations.forEach(location -> {
+				location.x=((int)location.getX()-characters.get(0).getSpeed());
+			    });
+		});
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setX(characters.get(i).getX()-characters.get(0).getSpeed());
 	    }
