@@ -21,7 +21,7 @@ public class PartyPanel extends JPanel{
 	}catch(Exception e){
 	    Utilities.showErrorMessage(this,e);
 	}			 
-	
+
 	setLayout(null);
 	setSize(width,height);
 	setLocation(width*3,height/5/2);

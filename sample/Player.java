@@ -34,4 +34,12 @@ public class Player extends Character {
 	if (HP > maxHP)
 	    HP = maxHP;
     }    
+
+    public void charge(){
+	mana++;
+	if (mana > maxMana)
+	    mana = maxMana;
+    }
+
+    public void sAttack(Character c){}
 }

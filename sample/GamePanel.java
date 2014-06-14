@@ -151,11 +151,11 @@ public class GamePanel extends JPanel {
 	playerData.setDragEnabled(false);
 	playerData.setForeground(Color.BLACK);
 	playerData.setFont(new Font("TimesRoman", Font.PLAIN, height/15));
-	
+
 	environmentInfo = new JTextArea();
 	environmentInfo.setSelectedTextColor(Color.WHITE);
-	
-	
+
+
 	//creates inventory panel
 	invent.setSize(windowWidth/2, windowHeight/2);
 	invent.setLocation(windowWidth/4, windowHeight/4);
@@ -169,7 +169,7 @@ public class GamePanel extends JPanel {
 	add(screen);
 	revalidate();
     }
-	
+
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	g.drawImage(bg,0,windowHeight/5*4,width,height,null);
@@ -224,7 +224,7 @@ public class GamePanel extends JPanel {
 	    characters.add(player);
 	    characters.add(player2);
 	    characters.add(player3);
-	    
+
 
             currentMap = new Map();
 	    addKeyListener(new KeyListener() {
@@ -255,10 +255,10 @@ public class GamePanel extends JPanel {
 		});
 	    setVisible(true);
 	}
-	
+
 	private class AttackEvent {
 	    private double startX, startY, endX, endY, range;
-		
+
 	    public AttackEvent(double startX, double startY, double endX, double endY, double range) {
 		this.startX = startX;
 		this.startY = startY;
@@ -270,14 +270,14 @@ public class GamePanel extends JPanel {
 		    this.endY = startY + scaleFactor*(endY - startY);
 		}
 	    }
-		
+
 	    public double getEndX() {return endX;}
 	    public double getEndY() {return endY;}
 	    public double getrange() {return range;}
 	    public double getStartX() {return startX;}
 	    public double getStartY() {return startY;}
 	}
-	
+
 	protected boolean intersectEllipseLineSegment(double x1, double y1, double x2, double y2, double h, double k, double a, double b) {//For the purposes of this game, a line segment that is in an ellipse but does not intersect it (completely contained in ellipse) counts as an intersection. x1, y1, x2, and y2 are points that define the **directed** ((x1, y1) to (x2, y2)) line segment to test. h and k are the x- and y-coordinates of the center of the ellipse, respectively. a and b are the same variables as they are in the equation of an ellipse
 	    if ((((Math.pow(x1 - h, 2)/(a*a)) + (Math.pow(y1 - k, 2)/(b*b))) <= 1) && (((Math.pow(x2 - h, 2)/(a*a)) + (Math.pow(y2 - k, 2)/(b*b))) <= 1)) {return true;}
 	    double m = (y2 - y1)/(x2 - x1), c = y1 - m*x1, d = c + m*h, e = c - k; //m is the slope of the **directed** line segment defined from (x1, y1) to (x2, y2). c is the y-intercept of that line segment, if it were extended to intersect the y-axis. d and e are additional variables to make the calculation shorter. Note that all this will not work if x1 = x2 (vertical line because of divison by zero) (will include a separate case for that).
@@ -404,14 +404,14 @@ public class GamePanel extends JPanel {
 		render();
 	    }
 	}
-	
+
 	public synchronized void start() {
 	    time = 0;
 	    running = true;
 	    thread = new Thread(this);
 	    thread.start();
 	}
-	
+
 	public synchronized void stop() {
 	    try {thread.join();}
 	    catch (InterruptedException e) {Utilities.showErrorMessage(this, e);}
@@ -430,7 +430,7 @@ public class GamePanel extends JPanel {
 	    else{
 		Player plyr;
 		if (chance > 0.002){
-		    plyr = new Swordsman("sprites/swordsman down.png",side[temp][0],side[temp][1]);
+		    plyr = new Bug("sprites/bug down.png",side[temp][0],side[temp][1]);
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
 		}else if (chance > 0.001){
@@ -526,7 +526,7 @@ public class GamePanel extends JPanel {
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setX(characters.get(i).getX()-characters.get(0).getSpeed());
 	    }
-	
+
 	    //reset player to idle mode after done moving
 	    if(keysReleased[VK_SHIFT]){
 		shielded = false;
@@ -769,4 +769,3 @@ public class GamePanel extends JPanel {
         return true;
     }
 }
-
