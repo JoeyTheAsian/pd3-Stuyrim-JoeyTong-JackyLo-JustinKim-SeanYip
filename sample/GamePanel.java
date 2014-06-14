@@ -262,10 +262,10 @@ public class GamePanel extends JPanel {
         }
 
         private void drawTile(int x, int y, Tile tile, Graphics g) {
-            Image texture = currentMap.getTexture(tile);
 	    if((x * TILE_SCALE + mapX + TILE_SCALE >0)&&(y*TILE_SCALE + mapY +TILE_SCALE>0)
 	       &&(x * TILE_SCALE + mapX<windowWidth+1) && ( y * TILE_SCALE + mapY < windowHeight+1)){
-            g.drawImage(texture, x * TILE_SCALE + mapX, y * TILE_SCALE + mapY,
+		Image texture = currentMap.getTexture(tile);
+		g.drawImage(texture, x * TILE_SCALE + mapX, y * TILE_SCALE + mapY,
                         TILE_SCALE, TILE_SCALE, null);
 	       }
         }
