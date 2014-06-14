@@ -471,57 +471,81 @@ public class GamePanel extends JPanel {
 		if(!shielded){
 		    mapY+=characters.get(0).getSpeed();
 		    characters.get(0).setUpAnimated();
+		    for (Character monster : ai)
+			monster.setY(monster.getY()+characters.get(0).getSpeed());
+		    mapObjects.forEach(obj -> obj.setY(obj.getY() + characters.get(0).getSpeed()));
+		    for (int i = 1; i< characters.size(); i++)
+			characters.get(i).setY(characters.get(i).getY()+characters.get(0).getSpeed());
 		}else{
 		    mapY+= characters.get(0).getSpeed()/2;
-		    characters.get(0).setUpShieldAnimated();
+		    characters.get(0).setUpShieldAnimated();	
+		    for (Character monster : ai)
+			monster.setY(monster.getY()+characters.get(0).getSpeed());
+		    mapObjects.forEach(obj -> obj.setY(obj.getY() + characters.get(0).getSpeed()/2));
+		    for (int i = 1; i< characters.size(); i++)
+			characters.get(i).setY(characters.get(i).getY()+characters.get(0).getSpeed()/2);
 		}
-		for (Character monster : ai)
-		    monster.setY(monster.getY()+characters.get(0).getSpeed());
-		mapObjects.forEach(obj -> obj.setY(obj.getY() + characters.get(0).getSpeed()));
-		for (int i = 1; i< characters.size(); i++)
-		    characters.get(i).setY(characters.get(i).getY()+characters.get(0).getSpeed());
+
 	    }
 	    if (keysPressed[VK_S] && ableToMove("down")) {
 		if(!shielded){
 		    mapY-=characters.get(0).getSpeed();
 		    characters.get(0).setDownAnimated();
-		}else{
-		    mapY-= characters.get(0).getSpeed()/2;
-		    characters.get(0).setDownShieldAnimated();
-		}
 		for (Character monster : ai)
 		    monster.setY(monster.getY()-characters.get(0).getSpeed());
 		mapObjects.forEach(obj -> obj.setY(obj.getY() - characters.get(0).getSpeed()));
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed());
+		}else{
+		    mapY-= characters.get(0).getSpeed()/2;
+		    characters.get(0).setDownShieldAnimated();
+		for (Character monster : ai)
+		    monster.setY(monster.getY()-characters.get(0).getSpeed());
+		mapObjects.forEach(obj -> obj.setY(obj.getY() - characters.get(0).getSpeed()/2));
+		for (int i = 1; i< characters.size(); i++)
+		    characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed()/2);
+		}
+
 	    }
 	    if (keysPressed[VK_A] && ableToMove("left")) {
 		if(!shielded){
 		    mapX+=characters.get(0).getSpeed();
 		    characters.get(0).setLeftAnimated();
+		    for (Character monster : ai)
+			monster.setX(monster.getX()+characters.get(0).getSpeed());
+		    mapObjects.forEach(obj -> obj.setX(obj.getX() + characters.get(0).getSpeed()));
+		    for (int i = 1; i< characters.size(); i++)
+			characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed());
 		}else{
 		    mapX+= characters.get(0).getSpeed()/2;
 		    characters.get(0).setLeftShieldAnimated();
-		}
 		for (Character monster : ai)
 		    monster.setX(monster.getX()+characters.get(0).getSpeed());
-		mapObjects.forEach(obj -> obj.setX(obj.getX() + characters.get(0).getSpeed()));
+		mapObjects.forEach(obj -> obj.setX(obj.getX() + characters.get(0).getSpeed()/2));
 		for (int i = 1; i< characters.size(); i++)
-		    characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed());
+		    characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed()/2);
+		}
+
 	    }
 	    if (keysPressed[VK_D] && ableToMove("right")) {
 		if(!shielded){
 		    mapX-=characters.get(0).getSpeed();
 		    characters.get(0).setRightAnimated();
+		    for (Character monster : ai)
+			monster.setX(monster.getX()-characters.get(0).getSpeed());
+		    mapObjects.forEach(obj -> obj.setX(obj.getX() - characters.get(0).getSpeed()));
+		    for (int i = 1; i< characters.size(); i++)
+			characters.get(i).setX(characters.get(i).getX()-characters.get(0).getSpeed());
 		}else{
 		    mapX-= characters.get(0).getSpeed()/2;
 		    characters.get(0).setRightShieldAnimated();
+		    for (Character monster : ai)
+			monster.setX(monster.getX()-characters.get(0).getSpeed());
+		    mapObjects.forEach(obj -> obj.setX(obj.getX() - characters.get(0).getSpeed()/2));
+		    for (int i = 1; i< characters.size(); i++)
+			characters.get(i).setX(characters.get(i).getX()-characters.get(0).getSpeed()/2);
 		}
-		for (Character monster : ai)
-		    monster.setX(monster.getX()-characters.get(0).getSpeed());
-		mapObjects.forEach(obj -> obj.setX(obj.getX() - characters.get(0).getSpeed()));
-		for (int i = 1; i< characters.size(); i++)
-		    characters.get(i).setX(characters.get(i).getX()-characters.get(0).getSpeed());
+
 	    }
 
 	    //reset player to idle mode after done moving
