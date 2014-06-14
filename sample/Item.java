@@ -1,16 +1,13 @@
-import java.awt.Image;
 import java.util.Arrays;
 import java.util.List;
 
 public class Item implements Comparable<Item> {
 	protected String name;
 	protected String description;
-	protected Image image;
 	protected int level;
 	protected int value;
 	protected int rarity;
-	public Item(Image image, String name, String description, int level, int value, int rarity){
-		this.image = image;
+	public Item(String name, String description, int level, int value, int rarity){
 	    this.name = name;
 	    this.description = description;
 	    this.level = level;
@@ -32,7 +29,6 @@ public class Item implements Comparable<Item> {
 	public int getRarity(){
 	return rarity;
 	}
-	public Image getImage() {return image;}
 
 	/* Items are sorted based on a hierarchy of qualities:
 	 *	Item type > Rarity > Level > Name
