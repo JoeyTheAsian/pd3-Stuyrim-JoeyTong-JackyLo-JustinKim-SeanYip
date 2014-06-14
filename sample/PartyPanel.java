@@ -15,38 +15,52 @@ import javax.imageio.ImageIO;
 import java.util.ArrayList;
 
 public class PartyPanel extends JPanel{
-    private int height = (Toolkit.getDefaultToolkit().getScreenSize().height-45)/5*3;
+    private int height = (Toolkit.getDefaultToolkit().getScreenSize().height)/5*3;
     private int width = Toolkit.getDefaultToolkit().getScreenSize().width/4;
     private BufferedImage image;
     private JTextArea partyInfo = new JTextArea();
     public PartyPanel(){
-	try{image = ImageIO.read(new File("GUI Images/trimmed wood background.png"));
+	try{image = ImageIO.read(new File("GUI Images/trimmed paper background long.png"));
 	}catch(Exception e){
 	    Utilities.showErrorMessage(this,e);
 	}			 
 	
 	setLayout(null);
 	setSize(width,height);
-	setLocation(width*3,0);
+	setLocation(width*3,height/5/2);
 	addFocusListener(new FocusListener() {
 		public void focusGained(FocusEvent e) {}
 		public void focusLost(FocusEvent e) {requestFocusInWindow();}	
 	    });
-	partyInfo.setSize(width-(width/20),height-(height/20));
+	partyInfo.setSize(width-(width/15),height-(height/20));
+	partyInfo.setLocation(width/30,height/40);
 	partyInfo.setOpaque(false);
 	partyInfo.setVisible(true);
 	partyInfo.setEditable(false);
 	partyInfo.setHighlighter(null);
         partyInfo.setDragEnabled(false);
-	partyInfo.setForeground(Color.BLACK);
-	partyInfo.setFont(new Font("TimesRoman", Font.PLAIN, height/2/30));
+	partyInfo.setForeground(Color.RED);
+	partyInfo.setFont(new Font("TimesRoman", Font.PLAIN, height/35));
 	add(partyInfo);
 	setVisible(false);
     }
-    public void updatePartyInfo(ArrayList <Player> players){
+    public void updatePartyData(ArrayList <Player> players){
+	String text = "";
 	for(int i = 0; i < players.size(); i++){
-	    players.get(i);
+	    Player player = players.get(i);
+	    if(i == 0){
+		text += "Player " + (i+1);
+	    }else{
+		text+= "\n\nPlayer " + (i+1);
+	    }
+	    text += "\nLevel: " + player.getLVL() +
+		"\nMaxHP: " + player.getMaxHP() + 
+		"\nMaxMana: " + player.getMaxMana() + 
+		"\nATK: " + player.getMaxATK() + 
+		"\nDEF: " + player.getMaxDEF() + 
+		"\nSPD: " + player.getMaxSpeed();
 	}
+	partyInfo.setText(text);
     }
     public void paintComponent(Graphics g){
 	super.paintComponent(g);

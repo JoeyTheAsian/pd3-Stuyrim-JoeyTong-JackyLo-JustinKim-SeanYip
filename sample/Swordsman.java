@@ -28,7 +28,7 @@ public class Swordsman extends Player{
 	DEF = maxDEF;
 	maxLuk = 0.1;
 	luk = maxLuk;
-	maxSpeed = 2;
+	maxSpeed = 3;
 	speed = maxSpeed;
 	maxATKspeed = 50;
 	ATKspeed = maxATKspeed;

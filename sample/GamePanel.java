@@ -31,7 +31,8 @@ public class GamePanel extends JPanel {
     private boolean[] keysReleased = new boolean[256];
     private BufferedImage bg; //background
     private HashMap<String, Item> items = new HashMap<>(); //If the maximum number of items is known, use the optimization described in Character.
-    private HashMap<Item, Point> droppedItems = new HashMap<>(); //Maps dropped items (after death of monsters) to its location in game.
+    // private HashMap<Item, Point> droppedItems = new HashMap<>();
+    //Maps dropped items (after death of monsters) to its location in game.
     private int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height-37;
     private int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
     //dimensions of the bottom portion of the screen with all the buttons
@@ -104,9 +105,16 @@ public class GamePanel extends JPanel {
 		    screen.requestFocusInWindow();
 		    partyButton.setIcon(new ImageIcon(i1));
 		}else if(!party.isVisible()){
+		    for(int i = 0; i < 256; i++){
+			if(keysPressed[i]){
+			    keysReleased[i] = true;
+			    keysPressed[i] = false;
+			}
+		    }
 		    party.setVisible(true);
 		    party.requestFocusInWindow();
-		    partyButton.setIcon(new ImageIcon(i2));		       	
+		    partyButton.setIcon(new ImageIcon(i2));
+		    party.updatePartyData(screen.characters);		       	
 		}
 	    });
 	menuButton = new JButton("Menu");
