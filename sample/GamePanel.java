@@ -158,17 +158,17 @@ public class GamePanel extends JPanel {
 	revalidate();
     }
 
-	public static class ItemFactory {
-		public static Item get(String name) {
-			try {
-				switch (name) {
-					case "Cake": return new Item(ImageIO.read(new File("items/Cake.png")), "Cake", "It's a lie.", 9001, 9001, 9001);
-				}
-			}
-			catch (Exception e) {Utilities.showErrorMessage(null, e);}
-			return null;
+    public static class ItemFactory {
+	public static Item get(String name) {
+	    try {
+		switch (name) {
+		case "Cake": return new Item(ImageIO.read(new File("items/Cake.png")), "Cake", "It's a lie.", 9001, 9001, 9001);
 		}
+	    }
+	    catch (Exception e) {Utilities.showErrorMessage(null, e);}
+	    return null;
 	}
+    }
 	
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
@@ -279,7 +279,8 @@ public class GamePanel extends JPanel {
 	    public double getStartY() {return startY;}
 	}
 
-	protected boolean intersectEllipseLineSegment(double x1, double y1, double x2, double y2, double h, double k, double a, double b) {//For the purposes of this game, a line segment that is in an ellipse but does not intersect it (completely contained in ellipse) counts as an intersection. x1, y1, x2, and y2 are points that define the **directed** ((x1, y1) to (x2, y2)) line segment to test. h and k are the x- and y-coordinates of the center of the ellipse, respectively. a and b are the same variables as they are in the equation of an ellipse
+	protected boolean intersectEllipseLineSegment(double x1, double y1, double x2, double y2, double h, double k, double a, double b) {
+	    //For the purposes of this game, a line segment that is in an ellipse but does not intersect it (completely contained in ellipse) counts as an intersection. x1, y1, x2, and y2 are points that define the **directed** ((x1, y1) to (x2, y2)) line segment to test. h and k are the x- and y-coordinates of the center of the ellipse, respectively. a and b are the same variables as they are in the equation of an ellipse
 	    if ((((Math.pow(x1 - h, 2)/(a*a)) + (Math.pow(y1 - k, 2)/(b*b))) <= 1) && (((Math.pow(x2 - h, 2)/(a*a)) + (Math.pow(y2 - k, 2)/(b*b))) <= 1)) {return true;}
 	    double m = (y2 - y1)/(x2 - x1), c = y1 - m*x1, d = c + m*h, e = c - k; //m is the slope of the **directed** line segment defined from (x1, y1) to (x2, y2). c is the y-intercept of that line segment, if it were extended to intersect the y-axis. d and e are additional variables to make the calculation shorter. Note that all this will not work if x1 = x2 (vertical line because of divison by zero) (will include a separate case for that).
 	    double discriminant = a*a*m*m + b*b - d*d - k*k + 2*d*k, iX1 = 0, iY1 = 0, iX2 = 0, iY2 = 0; //Discriminant, like in the quadratic formula, is used to find the number of intersection points. iX1, iY1, iX2, iY2 represent the intersection points.
@@ -313,8 +314,8 @@ public class GamePanel extends JPanel {
 	    g.setColor(Color.GREEN);
 
 	    screenEntities.addAll(characters);
-		screenEntities.addAll(ai);
-		screenEntities.addAll(droppedItems);
+	    screenEntities.addAll(ai);
+	    screenEntities.addAll(droppedItems);
 	    screenEntities.sort((Drawable e1, Drawable e2) -> (new Integer(e1.getY())).compareTo(e2.getY()));
 	    //draws everything
 	    for(Drawable entity : screenEntities){
@@ -331,7 +332,9 @@ public class GamePanel extends JPanel {
 			e.printStackTrace();
 		    }
 		}
-		g.drawImage(entity.getImage(),entity.getX(),entity.getY(),null);
+		if(entity.getX() < windowWidth+(windowWidth/4) && entity.getY()<windowHeight+(windowHeight/4)){
+		    g.drawImage(entity.getImage(),entity.getX(),entity.getY(),null);
+		}
 	    }
 	    screenEntities.clear();
 
@@ -685,22 +688,22 @@ public class GamePanel extends JPanel {
 		    }
 		}
 	    }
-
+	    
 	    //kill characters and players with <= 0 hp
 	    for (int i = 0; i < ai.size(); i++){
 		if (ai.get(i).getHP() <= 0){
 		    characters.get(0).setEXP(characters.get(0).getEXP()+ai.get(i).getEXP());
 		    if (characters.get(0).getEXP() >= characters.get(0).getLVLreq())
 			characters.get(0).LVLup();
-			Character deadCharacter = ai.get(i);
-			double dropChance = Math.random();
+		    Character deadCharacter = ai.get(i);
+		    double dropChance = Math.random();
 		    ai.get(i).getDrops().forEach((itemName, chance) -> {
-				if (dropChance <= chance) {
-					Item droppedItem = ItemFactory.get(itemName);
-					droppedItem.setX(deadCharacter.getX());
-					droppedItem.setY(deadCharacter.getY());
-					droppedItems.add(droppedItem);
-				}
+			    if (dropChance <= chance) {
+				Item droppedItem = ItemFactory.get(itemName);
+				droppedItem.setX(deadCharacter.getX());
+				droppedItem.setY(deadCharacter.getY());
+				droppedItems.add(droppedItem);
+			    }
 			});
 		    ai.remove(i);
 		    i--;
@@ -737,7 +740,7 @@ public class GamePanel extends JPanel {
 	    }
 	}
     }
-
+    
     private boolean ableToMove(String direction) {
         return true;
     }

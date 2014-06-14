@@ -24,6 +24,19 @@ public class Archer extends Player{
 	}catch(Exception e){
 	    Utilities.showErrorMessage(null,e);
 	}
+	maxHP = 500;
+	HP = maxHP;
+	maxDEF = 10;
+	DEF = maxDEF;
+	maxLuk = 0.1;
+	luk = maxLuk;
+	EXP = 0;
+	maxSpeed = 3;
+	speed = maxSpeed;
+	maxATKspeed = 20;
+	ATKspeed = maxATKspeed;
+	maxMana = 1000;
+	mana = maxMana;
     }
 
 }
