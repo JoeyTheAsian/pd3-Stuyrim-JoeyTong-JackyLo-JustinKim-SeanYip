@@ -160,9 +160,36 @@ public class Character implements Drawable{
 	}
     }
 
+    public void slowStatRestore(){
+	if (HP < maxHP) HP++;
+	if (HP > maxHP) HP--;
+	if (mana < maxMana) mana+=5;
+	if (mana > maxMana) mana-=5;
+	if (ATK < maxATK) ATK++;
+	if (ATK > maxATK) ATK--;
+	if (DEF < maxDEF) DEF++;
+	if (DEF > maxDEF) DEF--;
+	if (luk < maxLuk) luk++;
+	if (luk > maxLuk) luk--;
+	if (ATKspeed > maxATKspeed) ATKspeed--;
+	if (ATKspeed < maxATKspeed) ATKspeed++;
+	if (speed < maxSpeed) speed++;
+	if (speed > maxSpeed) speed--;
+    }
+
+    public void LVLupStat(){
+	maxHP+=25;
+	maxMana+=50;
+	maxATK+=5;
+	maxDEF+=2;
+	maxLuk+=0.01;
+	maxATKspeed-=0.01;
+    }
+	
     public void LVLup(){
 	while (EXP >= LVLreq){
 	    EXP = EXP-LVLreq;
+	    LVLupStat();
 	    LVL++;
 	    LVLreq = LVL*LVL+50;
 	}

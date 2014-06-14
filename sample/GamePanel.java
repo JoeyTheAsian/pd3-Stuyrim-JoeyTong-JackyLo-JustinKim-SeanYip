@@ -195,7 +195,7 @@ public class GamePanel extends JPanel {
 	private ArrayList<Player> characters = new ArrayList<>();
 	private ArrayList<Character> ai = new ArrayList<>();
 	private ArrayList<Item> droppedItems = new ArrayList<>();
-    private ArrayList<MapObject> mapObjects = new ArrayList<>();
+	private ArrayList<MapObject> mapObjects = new ArrayList<>();
 	private ArrayList<Drawable> screenEntities = new ArrayList<>();
 	private boolean running;
 	private int averageFPS;
@@ -227,8 +227,8 @@ public class GamePanel extends JPanel {
 	    characters.add(player2);
 	    characters.add(player3);
 
-        Rock rock = new Rock(200, 600);
-        mapObjects.add(rock);
+	    Rock rock = new Rock(200, 600);
+	    mapObjects.add(rock);
 
             currentMap = new Map();
 	    addKeyListener(new KeyListener() {
@@ -316,18 +316,18 @@ public class GamePanel extends JPanel {
 	    //draw fps
 	    g.setColor(Color.GREEN);
 
-		characters.forEach(c -> c.setY(c.getY() + c.getHeight() - mapY));
+	    characters.forEach(c -> c.setY(c.getY() + c.getHeight() - mapY));
 	    screenEntities.addAll(characters);
-		screenEntities.addAll(ai);
-		screenEntities.addAll(droppedItems);
-		screenEntities.addAll(mapObjects);
+	    screenEntities.addAll(ai);
+	    screenEntities.addAll(droppedItems);
+	    screenEntities.addAll(mapObjects);
 
 	    screenEntities.sort((Drawable e1, Drawable e2) -> (new Integer(e1.getY())).compareTo(e2.getY()));
 	    //draws everything
 	    for(Drawable entity : screenEntities){
-			if (entity.equals(characters.get(0))) {System.out.print("Player: ");}
-			System.out.print(entity + "@(" + entity.getX() + "," + entity.getY() + "); ");
-			if (characters.contains(entity)) {entity.setY(entity.getY() - entity.getImage().getHeight(null) + mapY);}
+		if (entity.equals(characters.get(0))) {System.out.print("Player: ");}
+		System.out.print(entity + "@(" + entity.getX() + "," + entity.getY() + "); ");
+		if (characters.contains(entity)) {entity.setY(entity.getY() - entity.getImage().getHeight(null) + mapY);}
 		if(entity instanceof Character){
 		    try{
 			g.setColor(Color.RED);
@@ -342,12 +342,12 @@ public class GamePanel extends JPanel {
 		    }
 		}
 		if(entity.getX() < windowWidth+(windowWidth/4) && entity.getY()<windowHeight+(windowHeight/4)){
-			if (entity instanceof Item) {g.drawImage(entity.getImage(), entity.getX() + mapX, entity.getY() + mapY, null);}
-			else {g.drawImage(entity.getImage(),entity.getX(),entity.getY(),null);}
+		    if (entity instanceof Item) {g.drawImage(entity.getImage(), entity.getX() + mapX, entity.getY() + mapY, null);}
+		    else {g.drawImage(entity.getImage(),entity.getX(),entity.getY(),null);}
 		}
 	    }
 	    screenEntities.clear();
-		System.out.println();
+	    System.out.println();
 
 	    g.drawString("TPS: " + averageFPS, 0, 20);
 	    g.drawString("FPS: " + averageFPS1,0, 31);
@@ -409,14 +409,20 @@ public class GamePanel extends JPanel {
             for (MapObject mo : mapObjects) {
                 Image texture = mo.getImage();
                 g.drawImage(texture, mo.getX() * TILE_SCALE + mapX,
-                                     mo.getY() * TILE_SCALE + mapY,
-                                     TILE_SCALE, TILE_SCALE, null);
+			    mo.getY() * TILE_SCALE + mapY,
+			    TILE_SCALE, TILE_SCALE, null);
             }
         }
     
 	public void run() {
 	    while (running) {
 		time++;
+		if (time%100==0){
+		    for (Character c : characters)
+			c.slowStatRestore(); //return to normal stats
+		    for (Character c : ai)
+			c.slowStatRestore();
+		}
 		tick();
 		render();
 	    }
@@ -442,16 +448,20 @@ public class GamePanel extends JPanel {
 			   {(int)(Math.random()*screenWidth),screenHeight}};
 	    double chance = Math.random();
 	    int temp = (int)(Math.random()*4);
-	    if (chance > 0.003)
+	    if (chance > 0.004)
 		return;
 	    else{
 		Player plyr;
-		if (chance > 0.002){
+		if (chance > 0.003){
 		    plyr = new Bug("sprites/bug down.png",side[temp][0],side[temp][1]);
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
-		}else if (chance > 0.001){
+		}else if (chance > 0.002){
 		    plyr = new Bird("sprites/bird down.png",side[temp][0],side[temp][1]);
+		    ai.add(plyr);
+		    plyr.setTimeStarted(time);
+		}else if (chance > 0.001){
+		    plyr = new Goblin("sprites/goblin down.png",side[temp][0],side[temp][1]);
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
 		}else{
@@ -468,7 +478,7 @@ public class GamePanel extends JPanel {
 		shielded = true;
 	    }
 	    if (keysPressed[VK_W] && ableToMove("up")) {
-		if(!shielded){
+		if (!shielded){
 		    mapY+=characters.get(0).getSpeed();
 		    characters.get(0).setUpAnimated();
 		    for (Character monster : ai)
@@ -477,38 +487,37 @@ public class GamePanel extends JPanel {
 		    for (int i = 1; i< characters.size(); i++)
 			characters.get(i).setY(characters.get(i).getY()+characters.get(0).getSpeed());
 		}else{
-		    mapY+= characters.get(0).getSpeed()/2;
-		    characters.get(0).setUpShieldAnimated();	
+		    mapY+=characters.get(0).getSpeed()/2;
+		    characters.get(0).setUpShieldAnimated();
 		    for (Character monster : ai)
-			monster.setY(monster.getY()+characters.get(0).getSpeed());
+			monster.setY(monster.getY()+characters.get(0).getSpeed()/2);
 		    mapObjects.forEach(obj -> obj.setY(obj.getY() + characters.get(0).getSpeed()/2));
 		    for (int i = 1; i< characters.size(); i++)
 			characters.get(i).setY(characters.get(i).getY()+characters.get(0).getSpeed()/2);
 		}
-
 	    }
 	    if (keysPressed[VK_S] && ableToMove("down")) {
-		if(!shielded){
+		if (!shielded){
 		    mapY-=characters.get(0).getSpeed();
 		    characters.get(0).setDownAnimated();
-		for (Character monster : ai)
-		    monster.setY(monster.getY()-characters.get(0).getSpeed());
-		mapObjects.forEach(obj -> obj.setY(obj.getY() - characters.get(0).getSpeed()));
-		for (int i = 1; i< characters.size(); i++)
-		    characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed());
+		    for (Character monster : ai)
+			monster.setY(monster.getY()-characters.get(0).getSpeed());
+		    mapObjects.forEach(obj -> obj.setY(obj.getY() - characters.get(0).getSpeed()));
+		    for (int i = 1; i< characters.size(); i++)
+			characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed());
 		}else{
-		    mapY-= characters.get(0).getSpeed()/2;
+		    mapY-=characters.get(0).getSpeed()/2;
 		    characters.get(0).setDownShieldAnimated();
-		for (Character monster : ai)
-		    monster.setY(monster.getY()-characters.get(0).getSpeed());
-		mapObjects.forEach(obj -> obj.setY(obj.getY() - characters.get(0).getSpeed()/2));
-		for (int i = 1; i< characters.size(); i++)
-		    characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed()/2);
+		    for (Character monster : ai)
+			monster.setY(monster.getY()-characters.get(0).getSpeed());
+		    mapObjects.forEach(obj -> obj.setY(obj.getY() - characters.get(0).getSpeed()/2));
+		    for (int i = 1; i< characters.size(); i++)
+			characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed()/2);
 		}
-
 	    }
+
 	    if (keysPressed[VK_A] && ableToMove("left")) {
-		if(!shielded){
+		if (!shielded){
 		    mapX+=characters.get(0).getSpeed();
 		    characters.get(0).setLeftAnimated();
 		    for (Character monster : ai)
@@ -517,18 +526,20 @@ public class GamePanel extends JPanel {
 		    for (int i = 1; i< characters.size(); i++)
 			characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed());
 		}else{
-		    mapX+= characters.get(0).getSpeed()/2;
+		    mapX+=characters.get(0).getSpeed()/2;
 		    characters.get(0).setLeftShieldAnimated();
-		for (Character monster : ai)
-		    monster.setX(monster.getX()+characters.get(0).getSpeed());
-		mapObjects.forEach(obj -> obj.setX(obj.getX() + characters.get(0).getSpeed()/2));
-		for (int i = 1; i< characters.size(); i++)
-		    characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed()/2);
+
+		    for (Character monster : ai)
+			monster.setX(monster.getX()+characters.get(0).getSpeed());
+		    mapObjects.forEach(obj -> obj.setX(obj.getX() + characters.get(0).getSpeed()/2));
+		    for (int i = 1; i< characters.size(); i++)
+			characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed()/2);
+		
 		}
 
 	    }
 	    if (keysPressed[VK_D] && ableToMove("right")) {
-		if(!shielded){
+		if (!shielded){
 		    mapX-=characters.get(0).getSpeed();
 		    characters.get(0).setRightAnimated();
 		    for (Character monster : ai)
@@ -537,7 +548,7 @@ public class GamePanel extends JPanel {
 		    for (int i = 1; i< characters.size(); i++)
 			characters.get(i).setX(characters.get(i).getX()-characters.get(0).getSpeed());
 		}else{
-		    mapX-= characters.get(0).getSpeed()/2;
+		    mapX-=characters.get(0).getSpeed()/2;
 		    characters.get(0).setRightShieldAnimated();
 		    for (Character monster : ai)
 			monster.setX(monster.getX()-characters.get(0).getSpeed());
@@ -545,99 +556,158 @@ public class GamePanel extends JPanel {
 		    for (int i = 1; i< characters.size(); i++)
 			characters.get(i).setX(characters.get(i).getX()-characters.get(0).getSpeed()/2);
 		}
+	    }
+	    
+	//special attack
+	if (keysPressed[VK_SPACE]/* && characters.get(0).getMana() >= 300*/){
+	    for (Character c : ai)
+		if (c.getDist(characters.get(0)) < 200)
+		    characters.get(0).sAttack(c);
+	    keysPressed[VK_SPACE] = false;
+	    //characters.get(0).setMana(characters.get(0).getMana()-300);
+	}
+	//reset player to idle mode after done moving
+	if(keysReleased[VK_SHIFT]){
+	    shielded = false;
+	}
+	if(keysReleased[VK_W]){
+	    if(!shielded){
+		characters.get(0).setUp();
+	    }else{
+		characters.get(0).setUpShield();
+	    }
+	    keysReleased[VK_W] = false;
+	}
+	if(keysReleased[VK_S]){
+	    if(!shielded){
+		characters.get(0).setDown();
+	    }else{
+		characters.get(0).setDownShield();
+	    }
+	    keysReleased[VK_S] = false;
+	}
+	if(keysReleased[VK_A]){
+	    if(!shielded){
+		characters.get(0).setLeft();
+	    }else{
+		characters.get(0).setLeftShield();
+	    }
+	    keysReleased[VK_A] = false;
+	}
+	if(keysReleased[VK_D]){
+	    if(!shielded){	
+		characters.get(0).setRight();
+	    }else{
+		characters.get(0).setRightShield();
+	    }
+	    keysReleased[VK_D] = false;
+	}
+	while (!(attacks.isEmpty())) {
+	    AttackEvent attack = attacks.pop();
+	    //System.out.println("\nStart: (" + attack.getStartX() + ", " + attack.getStartY() + "); End: (" + attack.getEndX() + ", " + attack.getEndY() + ")");
+	    for (Character character : ai) {
+		if (intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), (character.getX() + character.getWidth()/2 - mapX), (character.getY() + character.getHeight()/2 - mapY), character.getWidth(), character.getHeight())) {characters.get(0).attack(character);}
+	    }
+	}
 
-	    }
+	chanceOfSpawn(); //chance of spawn
 
-	    //reset player to idle mode after done moving
-	    if(keysReleased[VK_SHIFT]){
-		shielded = false;
-	    }
-	    if(keysReleased[VK_W]){
-		if(!shielded){
-		    characters.get(0).setUp();
+	//AI code
+	for (Character character : ai){
+	    if (character.getDist(characters.get(2)) <= character.getDist(characters.get(1)) && character.getDist(characters.get(2)) <= character.getDist(characters.get(0)))
+		character.setTarget(characters.get(2));
+	    else if (character.getDist(characters.get(1)) <= character.getDist(characters.get(2)) && character.getDist(characters.get(1)) <= character.getDist(characters.get(0)))
+		character.setTarget(characters.get(1));
+	    else
+		character.setTarget(characters.get(0));
+	    if (character.getDist(character.getTarget()) < character.getRange()){
+		if (Math.abs(character.getChangeX()) > Math.abs(character.getChangeY())){
+		    if (character.getChangeX() > character.getChangeY())
+			character.setRight();
+		    else if (character.getChangeX() < character.getChangeY())
+			character.setLeft();
 		}else{
-		    characters.get(0).setUpShield();
+		    if (character.getChangeY() > character.getChangeX())
+			character.setDown();
+		    else if (character.getChangeY() < character.getChangeX())
+			character.setUp();
 		}
-		keysReleased[VK_W] = false;
-	    }
-	    if(keysReleased[VK_S]){
-		if(!shielded){
-		    characters.get(0).setDown();
+		if ((character.getTimeStarted()-time)%character.getATKspeed() != 0){}
+		else character.attack(character.getTarget());
+	    }else{
+		character.setX(character.getX() + (int)(character.getSpeed()*character.getChangeX()/character.getDist(character.getTarget())));
+		character.setY(character.getY() + (int)(character.getSpeed()*character.getChangeY()/character.getDist(character.getTarget())));
+		if (Math.abs(character.getChangeX()) > Math.abs(character.getChangeY())){
+		    if (character.getChangeX() > character.getChangeY())
+			character.setRightAnimated();
+		    else if (character.getChangeX() < character.getChangeY())
+			character.setLeftAnimated();
 		}else{
-		    characters.get(0).setDownShield();
-		}
-		keysReleased[VK_S] = false;
-	    }
-	    if(keysReleased[VK_A]){
-		if(!shielded){
-		    characters.get(0).setLeft();
-		}else{
-		    characters.get(0).setLeftShield();
-		}
-		keysReleased[VK_A] = false;
-	    }
-	    if(keysReleased[VK_D]){
-		if(!shielded){	
-		    characters.get(0).setRight();
-		}else{
-		    characters.get(0).setRightShield();
-		}
-		keysReleased[VK_D] = false;
-	    }
-	    while (!(attacks.isEmpty())) {
-		AttackEvent attack = attacks.pop();
-		//System.out.println("\nStart: (" + attack.getStartX() + ", " + attack.getStartY() + "); End: (" + attack.getEndX() + ", " + attack.getEndY() + ")");
-		for (Character character : ai) {
-		    if (intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), (character.getX() + character.getWidth()/2 - mapX), (character.getY() + character.getHeight()/2 - mapY), character.getWidth(), character.getHeight())) {characters.get(0).attack(character);}
+		    if (character.getChangeY() > character.getChangeX())
+			character.setDownAnimated();
+		    else if (character.getChangeY() < character.getChangeX())
+			character.setUpAnimated();
 		}
 	    }
-
-	    chanceOfSpawn(); //chance of spawn
-
-	    //AI code
-	    for (Character character : ai){
-		if (character.getDist(characters.get(2)) <= character.getDist(characters.get(1)) && character.getDist(characters.get(2)) <= character.getDist(characters.get(0)))
-		    character.setTarget(characters.get(2));
-		else if (character.getDist(characters.get(1)) <= character.getDist(characters.get(2)) && character.getDist(characters.get(1)) <= character.getDist(characters.get(0)))
-		    character.setTarget(characters.get(1));
-		else
-		    character.setTarget(characters.get(0));
-		if (character.getDist(character.getTarget()) < character.getRange()){
-		    if (Math.abs(character.getChangeX()) > Math.abs(character.getChangeY())){
-			if (character.getChangeX() > character.getChangeY())
-			    character.setRight();
-			else if (character.getChangeX() < character.getChangeY())
-			    character.setLeft();
+	}
+	for (int j = 1; j < characters.size(); j++){
+	    if (ai.size() <= 0){
+		if(characters.get(j).getDist(characters.get(0)) > (50*j)){
+		    characters.get(j).setX(characters.get(j).getX() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(0))));
+		    characters.get(j).setY(characters.get(j).getY() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(0))));
+		    //when the characters are moving
+		    if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
+			if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
+			    characters.get(j).setRightAnimated();
+			else if (characters.get(j).getChangeX() < characters.get(j).getChangeY())
+			    characters.get(j).setLeftAnimated();
 		    }else{
-			if (character.getChangeY() > character.getChangeX())
-			    character.setDown();
-			else if (character.getChangeY() < character.getChangeX())
-			    character.setUp();
+			if (characters.get(j).getChangeY() > characters.get(j).getChangeX())
+			    characters.get(j).setDownAnimated();
+			else if (characters.get(j).getChangeY() < characters.get(j).getChangeX())
+			    characters.get(j).setUpAnimated();
 		    }
-		    if ((character.getTimeStarted()-time)%character.getATKspeed() != 0){}
-		    else character.attack(character.getTarget());
+		    //when the characters are idle
 		}else{
-		    character.setX(character.getX() + (int)(character.getSpeed()*character.getChangeX()/character.getDist(character.getTarget())));
-		    character.setY(character.getY() + (int)(character.getSpeed()*character.getChangeY()/character.getDist(character.getTarget())));
-		    if (Math.abs(character.getChangeX()) > Math.abs(character.getChangeY())){
-			if (character.getChangeX() > character.getChangeY())
-			    character.setRightAnimated();
-			else if (character.getChangeX() < character.getChangeY())
-			    character.setLeftAnimated();
+		    if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
+			if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
+			    characters.get(j).setRight();
+			else if (characters.get(j).getChangeX() < characters.get(j).getChangeY())
+			    characters.get(j).setLeft();
 		    }else{
-			if (character.getChangeY() > character.getChangeX())
-			    character.setDownAnimated();
-			else if (character.getChangeY() < character.getChangeX())
-			    character.setUpAnimated();
+			if (characters.get(j).getChangeY() > characters.get(j).getChangeX())
+			    characters.get(j).setDown();
+			else if (characters.get(j).getChangeY() < characters.get(j).getChangeX())
+			    characters.get(j).setUp();
 		    }
 		}
-	    }
-	    for (int j = 1; j < characters.size(); j++){
-		if (ai.size() <= 0){
-		    if(characters.get(j).getDist(characters.get(0)) > (50*j)){
-			characters.get(j).setX(characters.get(j).getX() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(0))));
-			characters.get(j).setY(characters.get(j).getY() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(0))));
-			//when the characters are moving
+	    }else{
+		if (characters.get(j).getTarget() == null)
+		    characters.get(j).setTarget(ai.get((int)(Math.random()*ai.size()))); //random monster on screen
+		else if (characters.get(j).getTarget().getHP() <= 0)
+		    characters.get(j).setTarget(null);
+		try{
+		    if (characters.get(j).getDist(characters.get(j).getTarget()) < characters.get(j).getRange()){
+			if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
+			    if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
+				characters.get(j).setRight();
+			    else if (characters.get(j).getChangeX() < characters.get(j).getChangeY())
+				characters.get(j).setLeft();
+			}else{
+			    if (characters.get(j).getChangeY() > characters.get(j).getChangeX())
+				characters.get(j).setDown();
+			    else if (characters.get(j).getChangeY() < characters.get(j).getChangeX())
+				characters.get(j).setUp();
+			}
+			if ((characters.get(j).getTimeStarted()-time)%characters.get(j).getATKspeed() != 0){}
+			else characters.get(j).attack(characters.get(j).getTarget());
+			if (characters.get(j).getTarget().getHP() <= 0)
+			    characters.get(j).setEXP(characters.get(j).getEXP()+characters.get(j).getTarget().getEXP());
+			if (characters.get(j).getEXP() >= characters.get(j).getLVLreq())
+			    characters.get(j).LVLup();
+		    }else{
+			characters.get(j).setX(characters.get(j).getX() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(j).getTarget())));
+			characters.get(j).setY(characters.get(j).getY() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(j).getTarget())));
 			if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
 			    if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
 				characters.get(j).setRightAnimated();
@@ -649,7 +719,22 @@ public class GamePanel extends JPanel {
 			    else if (characters.get(j).getChangeY() < characters.get(j).getChangeX())
 				characters.get(j).setUpAnimated();
 			}
-			//when the characters are idle
+		    }
+		}catch(/*IndexOutOfBounds*/Exception e){
+		    if (characters.get(j).getDist(characters.get(0)) > 50){
+			characters.get(j).setX(characters.get(j).getX() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(0))));
+			characters.get(j).setY(characters.get(j).getY() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(0))));
+			if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
+			    if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
+				characters.get(j).setRightAnimated();
+			    else if (characters.get(j).getChangeX() < characters.get(j).getChangeY())
+				characters.get(j).setLeftAnimated();
+			}else{
+			    if (characters.get(j).getChangeY() > characters.get(j).getChangeX())
+				characters.get(j).setDownAnimated();
+			    else if (characters.get(j).getChangeY() < characters.get(j).getChangeX())
+				characters.get(j).setUpAnimated();
+			}
 		    }else{
 			if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
 			    if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
@@ -663,146 +748,79 @@ public class GamePanel extends JPanel {
 				characters.get(j).setUp();
 			}
 		    }
-		}else{
-		    if (characters.get(j).getTarget() == null)
-			characters.get(j).setTarget(ai.get((int)(Math.random()*ai.size()))); //random monster on screen
-		    else if (characters.get(j).getTarget().getHP() <= 0)
-			characters.get(j).setTarget(null);
-		    try{
-			if (characters.get(j).getDist(characters.get(j).getTarget()) < characters.get(j).getRange()){
-			    if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
-				if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
-				    characters.get(j).setRight();
-				else if (characters.get(j).getChangeX() < characters.get(j).getChangeY())
-				    characters.get(j).setLeft();
-			    }else{
-				if (characters.get(j).getChangeY() > characters.get(j).getChangeX())
-				    characters.get(j).setDown();
-				else if (characters.get(j).getChangeY() < characters.get(j).getChangeX())
-				    characters.get(j).setUp();
-			    }
-			    if ((characters.get(j).getTimeStarted()-time)%characters.get(j).getATKspeed() != 0){}
-			    else characters.get(j).attack(characters.get(j).getTarget());
-			    if (characters.get(j).getTarget().getHP() <= 0)
-				characters.get(j).setEXP(characters.get(j).getEXP()+characters.get(j).getTarget().getEXP());
-			    if (characters.get(j).getEXP() >= characters.get(j).getLVLreq())
-				characters.get(j).LVLup();
-			}else{
-			    characters.get(j).setX(characters.get(j).getX() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(j).getTarget())));
-			    characters.get(j).setY(characters.get(j).getY() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(j).getTarget())));
-			    if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
-				if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
-				    characters.get(j).setRightAnimated();
-				else if (characters.get(j).getChangeX() < characters.get(j).getChangeY())
-				    characters.get(j).setLeftAnimated();
-			    }else{
-				if (characters.get(j).getChangeY() > characters.get(j).getChangeX())
-				    characters.get(j).setDownAnimated();
-				else if (characters.get(j).getChangeY() < characters.get(j).getChangeX())
-				    characters.get(j).setUpAnimated();
-			    }
-			}
-		    }catch(/*IndexOutOfBounds*/Exception e){
-			if (characters.get(j).getDist(characters.get(0)) > 50){
-			    characters.get(j).setX(characters.get(j).getX() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(0))));
-			    characters.get(j).setY(characters.get(j).getY() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(0))));
-			    if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
-				if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
-				    characters.get(j).setRightAnimated();
-				else if (characters.get(j).getChangeX() < characters.get(j).getChangeY())
-				    characters.get(j).setLeftAnimated();
-			    }else{
-				if (characters.get(j).getChangeY() > characters.get(j).getChangeX())
-				    characters.get(j).setDownAnimated();
-				else if (characters.get(j).getChangeY() < characters.get(j).getChangeX())
-				    characters.get(j).setUpAnimated();
-			    }
-			}else{
-			    if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
-				if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
-				    characters.get(j).setRight();
-				else if (characters.get(j).getChangeX() < characters.get(j).getChangeY())
-				    characters.get(j).setLeft();
-			    }else{
-				if (characters.get(j).getChangeY() > characters.get(j).getChangeX())
-				    characters.get(j).setDown();
-				else if (characters.get(j).getChangeY() < characters.get(j).getChangeX())
-				    characters.get(j).setUp();
-			    }
-			}
-		    }
-		}
-	    }
-	    
-	    //kill characters and players with <= 0 hp
-	    for (int i = 0; i < ai.size(); i++){
-		if (ai.get(i).getHP() <= 0){
-		    characters.get(0).setEXP(characters.get(0).getEXP()+ai.get(i).getEXP());
-		    if (characters.get(0).getEXP() >= characters.get(0).getLVLreq())
-			characters.get(0).LVLup();
-		    Character deadCharacter = ai.get(i);
-		    double dropChance = Math.random();
-		    ai.get(i).getDrops().forEach((itemName, chance) -> {
-			    if (dropChance <= chance) {
-				Item droppedItem = ItemFactory.get(itemName);
-				droppedItem.setX(deadCharacter.getX() - mapX);
-				droppedItem.setY(deadCharacter.getY() - mapY);
-				droppedItems.add(droppedItem);
-			    }
-			});
-		    ai.remove(i);
-		    i--;
-		}
-	    }
-	    for (int i = 0; i < characters.size(); i++){
-		if (characters.get(i).getHP() <= 0){}
-	    }
-
-	    long pastTime = System.currentTimeMillis() - prevTick;
-
-	    if (frames.size() == FPS_SAMPLE_SIZE) {
-		frames.remove();
-	    }
-	    frames.add(pastTime);
-
-	    // Calculate average FPS
-	    long sum = 0;
-	    for (long frame : frames) {
-		sum += frame;
-	    }
-	    long averageFrame = sum / FPS_SAMPLE_SIZE;
-	    averageFPS = (int)(1000 / averageFrame);
-	    prevTick = System.currentTimeMillis();
-	    // Only if the time passed since the previous tick is less than one
-	    // second divided by the number of maximum FPS allowed do we delay
-	    // ourselves to give Time time to catch up to our rendering.
-	    if (pastTime < 1000.0 / MAX_FPS) {
-		try {
-		    Thread.sleep((long)(1000.0 / MAX_FPS)-pastTime);
-		} catch (InterruptedException e) {
-		    Utilities.showErrorMessage(this, e);
 		}
 	    }
 	}
+	    
+	//kill characters and players with <= 0 hp
+	for (int i = 0; i < ai.size(); i++){
+	    if (ai.get(i).getHP() <= 0){
+		characters.get(0).setEXP(characters.get(0).getEXP()+ai.get(i).getEXP());
+		if (characters.get(0).getEXP() >= characters.get(0).getLVLreq())
+		    characters.get(0).LVLup();
+		Character deadCharacter = ai.get(i);
+		double dropChance = Math.random();
+		ai.get(i).getDrops().forEach((itemName, chance) -> {
+			if (dropChance <= chance) {
+			    Item droppedItem = ItemFactory.get(itemName);
+			    droppedItem.setX(deadCharacter.getX() - mapX);
+			    droppedItem.setY(deadCharacter.getY() - mapY);
+			    droppedItems.add(droppedItem);
+			}
+		    });
+		ai.remove(i);
+		i--;
+	    }
+	}
+	for (int i = 0; i < characters.size(); i++){
+	    if (characters.get(i).getHP() <= 0){}
+	}
 
-        private boolean ableToMove(String direction) {
-            Character player = characters.get(0);
-            ArrayList<MapObject> objects = mapObjects;
+	long pastTime = System.currentTimeMillis() - prevTick;
 
-            for (MapObject object : objects) {
-                double dx = object.getX() - player.getX();
-                double dy = object.getY() - TILE_SCALE / 2 - player.getY();
-                double dist = Math.sqrt(dx * dx + dy * dy);
-                double theta = Math.atan2(dy, dx);
-                double softness = 1.5;
-                if (dist < TILE_SCALE / 2) {
-                    player.setX((int)(player.getX() - Math.cos(theta) * softness));
-                    player.setY((int)(player.getY() - Math.sin(theta) * softness));
-                    return false;
-                }
-            }
+	if (frames.size() == FPS_SAMPLE_SIZE) {
+	    frames.remove();
+	}
+	frames.add(pastTime);
 
-            return true;
-        }
+	// Calculate average FPS
+	long sum = 0;
+	for (long frame : frames) {
+	    sum += frame;
+	}
+	long averageFrame = sum / FPS_SAMPLE_SIZE;
+	averageFPS = (int)(1000 / averageFrame);
+	prevTick = System.currentTimeMillis();
+	// Only if the time passed since the previous tick is less than one
+	// second divided by the number of maximum FPS allowed do we delay
+	// ourselves to give Time time to catch up to our rendering.
+	if (pastTime < 1000.0 / MAX_FPS) {
+	    try {
+		Thread.sleep((long)(1000.0 / MAX_FPS)-pastTime);
+	    } catch (InterruptedException e) {
+		Utilities.showErrorMessage(this, e);
+	    }
+	}
     }
+
+    private boolean ableToMove(String direction) {
+	Character player = characters.get(0);
+	ArrayList<MapObject> objects = mapObjects;
+
+	for (MapObject object : objects) {
+	    double dx = object.getX() - player.getX();
+	    double dy = object.getY() - TILE_SCALE / 2 - player.getY();
+	    double dist = Math.sqrt(dx * dx + dy * dy);
+	    double theta = Math.atan2(dy, dx);
+	    double softness = 1.5;
+	    if (dist < TILE_SCALE / 2) {
+		player.setX((int)(player.getX() - Math.cos(theta) * softness));
+		player.setY((int)(player.getY() - Math.sin(theta) * softness));
+		return false;
+	    }
+	}
+
+	return true;
+    }
+}
 }

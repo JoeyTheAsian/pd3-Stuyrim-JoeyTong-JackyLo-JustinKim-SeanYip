@@ -23,12 +23,12 @@ public class Bug extends Player{
 	}
 	maxHP = 750;
 	HP = maxHP;
-	maxATK = 50;
+	maxATK = 100;
 	ATK = maxATK;
 	maxDEF = 25;
 	DEF = maxDEF;
 	EXP = 50;
-	maxLuk = 0.03;
+	maxLuk = 0.1;
 	luk = maxLuk;
 	maxSpeed = 3;
 	speed = maxSpeed;

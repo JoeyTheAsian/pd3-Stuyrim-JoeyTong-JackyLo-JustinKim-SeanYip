@@ -49,4 +49,12 @@ public class Mage extends Player{
 	range = 800;
     }
 
+    public void sAttack(Character c){
+	attack(c);
+	if (c.getMana() < 0) c.setMana(0);
+	HP+=LVL*5;
+	if (HP > maxHP) HP = maxHP;
+	mana+=LVL*10;
+	if (mana > maxMana) mana = maxMana;
+    }
 }
