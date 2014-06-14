@@ -4,6 +4,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 public class Character implements Drawable{  
+<<<<<<< HEAD
     protected Image image, down, up, left, right, downAnimated, upAnimated, leftAnimated, rightAnimated
 	,downShield = null, upShield = null,leftShield = null ,rightShield = null,
 	downShieldAnimated = null ,upShieldAnimated = null,leftShieldAnimated = null,rightShieldAnimated = null;
@@ -52,8 +53,9 @@ public class Character implements Drawable{
 	maxMana = 500;
 	mana = 500;
 	gold = 0;
-	inventory.add(new Item("Cake","it's a lie",9001,9001,9001));
-	drops.put(null, 1.0); //Always drops nothing. A new instance of HashMap (with the optimization explained in the comment above) should be created to overwrite this one if the Character should drop something (to avoid cluttering inventory with nulls).
+	try {inventory.add(new Item(ImageIO.read(new File("items/Cake.png")), "Cake", "It's a lie.", 9001, 9001, 9001));}
+	catch (Exception e) {Utilities.showErrorMessage(null, e);}
+	drops.put("Cake", 1.0);
     }
     
     public final Image getImage() {return image;}
@@ -96,6 +98,7 @@ public class Character implements Drawable{
     public final int getATK(){return ATK;}
     public final int getMaxDEF(){return maxDEF;}
     public final int getDEF(){return DEF;}
+    public final HashMap<String, Double> getDrops() {return drops;}
     public final double getMaxLuk(){return maxLuk;}
     public final double getLuk(){return luk;}
     public final int getEXP(){return EXP;}
