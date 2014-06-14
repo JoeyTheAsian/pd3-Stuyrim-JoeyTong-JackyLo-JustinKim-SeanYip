@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.*;
@@ -31,8 +30,6 @@ public class GamePanel extends JPanel {
     private boolean[] keysPressed = new boolean[256];
     private boolean[] keysReleased = new boolean[256];
     private BufferedImage bg; //background
-    private HashMap<String, Item> items = new HashMap<>(); //If the maximum number of items is known, use the optimization described in Character.
-    private HashMap<String, ArrayList<Point>> droppedItems = new HashMap<>();
     //Maps dropped items (after death of monsters) to its location in game.
     private int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height-37;
     private int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
@@ -47,8 +44,6 @@ public class GamePanel extends JPanel {
     Screen screen = new Screen();
     private JTextArea playerData;
     private JButton inventoryButton, menuButton, partyButton;
-    
-    private ArrayList<Drawable> screenEntities = new ArrayList <Drawable>();
 
     public GamePanel() {
 	setLayout(null);
@@ -57,13 +52,6 @@ public class GamePanel extends JPanel {
 	catch (Exception e) {Utilities.showErrorMessage(this, e);}
 	setVisible(true);
 
-	//Initalize HashMap of items
-	try {
-		items.put("Cake", new Item(ImageIO.read(new File("items/Cake.png")), "Cake", "It's a lie.", 9001, 9001, 9001));
-	}
-	catch (Exception e) {Utilities.showErrorMessage(this, e);}
-
-    
 	//add buttons
 	inventoryButton = new JButton("Inventory");
 	inventoryButton.setOpaque(false);
@@ -170,6 +158,18 @@ public class GamePanel extends JPanel {
 	revalidate();
     }
 
+	public static class ItemFactory {
+		public static Item get(String name) {
+			try {
+				switch (name) {
+					case "Cake": return new Item(ImageIO.read(new File("items/Cake.png")), "Cake", "It's a lie.", 9001, 9001, 9001);
+				}
+			}
+			catch (Exception e) {Utilities.showErrorMessage(null, e);}
+			return null;
+		}
+	}
+	
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	g.drawImage(bg,0,windowHeight/5*4,width,height,null);
@@ -194,6 +194,7 @@ public class GamePanel extends JPanel {
 	private ArrayDeque<AttackEvent> attacks = new ArrayDeque<>(); //Used as a stack
 	private ArrayList<Player> characters = new ArrayList<>();
 	private ArrayList<Character> ai = new ArrayList<>();
+	private ArrayList<Item> droppedItems = new ArrayList<>();
 	private ArrayList<Drawable> screenEntities = new ArrayList<>();
 	private boolean running;
 	private int averageFPS;
@@ -311,18 +312,10 @@ public class GamePanel extends JPanel {
 	    //draw fps
 	    g.setColor(Color.GREEN);
 
-	    droppedItems.forEach((itemName, locations) -> {
-			Item item = items.get(itemName);
-			locations.forEach(location -> {g.drawImage(item.getImage(), (int) location.getX(), (int) location.getY(), null);});
-		});
-
-	    for(Character character : ai){
-		screenEntities.add(character);
-	    }
-	    for(Character character : characters){
-		screenEntities.add(character);
-	    }
-	   screenEntities.sort((Drawable e1, Drawable e2) -> (new Integer(e1.getY())).compareTo(e2.getY()));
+	    screenEntities.addAll(characters);
+		screenEntities.addAll(ai);
+		screenEntities.addAll(droppedItems);
+	    screenEntities.sort((Drawable e1, Drawable e2) -> (new Integer(e1.getY())).compareTo(e2.getY()));
 	    //draws everything
 	    for(Drawable entity : screenEntities){
 		if(entity instanceof Character){
@@ -460,12 +453,7 @@ public class GamePanel extends JPanel {
 		}
 		for (Character monster : ai)
 		    monster.setY(monster.getY()+characters.get(0).getSpeed());
-		droppedItems.forEach((itemName, locations) -> {
-			Item item = items.get(itemName);
-			locations.forEach(location -> {
-				location.y=((int)location.getY()+characters.get(0).getSpeed());
-			    });
-		});
+		droppedItems.forEach(item -> item.setY(item.getY() + characters.get(0).getSpeed()));
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setY(characters.get(i).getY()+characters.get(0).getSpeed());
 	    }
@@ -479,12 +467,7 @@ public class GamePanel extends JPanel {
 		}
 		for (Character monster : ai)
 		    monster.setY(monster.getY()-characters.get(0).getSpeed());
-		droppedItems.forEach((itemName, locations) -> {
-			Item item = items.get(itemName);
-			locations.forEach(location -> {
-				location.y=((int)location.getY()-characters.get(0).getSpeed());
-			    });
-		});
+		droppedItems.forEach(item -> {item.setY(item.getY() - characters.get(0).getSpeed());});
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed());
 	    }
@@ -498,12 +481,7 @@ public class GamePanel extends JPanel {
 		}
 		for (Character monster : ai)
 		    monster.setX(monster.getX()+characters.get(0).getSpeed());
-		droppedItems.forEach((itemName, locations) -> {
-			Item item = items.get(itemName);
-			locations.forEach(location -> {
-				location.x=((int)location.getX()+characters.get(0).getSpeed());
-			    });
-		});
+		droppedItems.forEach(item -> item.setX(item.getX() + characters.get(0).getSpeed()));
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed());
 	    }
@@ -517,12 +495,7 @@ public class GamePanel extends JPanel {
 		}
 		for (Character monster : ai)
 		    monster.setX(monster.getX()-characters.get(0).getSpeed());
-		droppedItems.forEach((itemName, locations) -> {
-			Item item = items.get(itemName);
-			locations.forEach(location -> {
-				location.x=((int)location.getX()-characters.get(0).getSpeed());
-			    });
-		});
+		droppedItems.forEach(item -> item.setX(item.getX() - characters.get(0).getSpeed()));
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setX(characters.get(i).getX()-characters.get(0).getSpeed());
 	    }
@@ -567,7 +540,6 @@ public class GamePanel extends JPanel {
 		AttackEvent attack = attacks.pop();
 		//System.out.println("\nStart: (" + attack.getStartX() + ", " + attack.getStartY() + "); End: (" + attack.getEndX() + ", " + attack.getEndY() + ")");
 		for (Character character : ai) {
-		    //System.out.println(character + " @ (" + (character.getX() + character.getWidth()/2 - mapX) + ", " + (character.getY() + character.getHeight()/2 - mapY) + "); Width: " + character.getWidth() + "; Height: " + character.getHeight() + " " + intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), (character.getX() + character.getWidth()/2 - mapX), (character.getY() + character.getHeight()/2 - mapY), character.getWidth(), character.getHeight()));
 		    if (intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), (character.getX() + character.getWidth()/2 - mapX), (character.getY() + character.getHeight()/2 - mapY), character.getWidth(), character.getHeight())) {characters.get(0).attack(character);}
 		}
 	    }
@@ -721,12 +693,13 @@ public class GamePanel extends JPanel {
 		    if (characters.get(0).getEXP() >= characters.get(0).getLVLreq())
 			characters.get(0).LVLup();
 			Character deadCharacter = ai.get(i);
-		    HashMap<String, Double> drops = ai.get(i).getDrops();
 			double dropChance = Math.random();
-		    drops.forEach((itemName, chance) -> {
+		    ai.get(i).getDrops().forEach((itemName, chance) -> {
 				if (dropChance <= chance) {
-					if (droppedItems.get(itemName) == null) {droppedItems.put(itemName, new ArrayList<>());}
-					droppedItems.get(itemName).add(new Point(deadCharacter.getX(), deadCharacter.getY()));
+					Item droppedItem = ItemFactory.get(itemName);
+					droppedItem.setX(deadCharacter.getX());
+					droppedItem.setY(deadCharacter.getY());
+					droppedItems.add(droppedItem);
 				}
 			});
 		    ai.remove(i);

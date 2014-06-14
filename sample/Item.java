@@ -1,14 +1,17 @@
 import java.awt.Image;
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import javax.imageio.ImageIO;
 
-public class Item implements Comparable<Item> {
+public class Item implements Comparable<Item>, Drawable {
 	protected String name;
 	protected String description;
 	protected Image image;
 	protected int level;
 	protected int value;
 	protected int rarity;
+	protected int x, y;
 	public Item(Image image, String name, String description, int level, int value, int rarity){
 		this.image = image;
 	    this.name = name;
@@ -33,7 +36,15 @@ public class Item implements Comparable<Item> {
 	return rarity;
 	}
 	public Image getImage() {return image;}
-
+	public int getX() {return x;}
+	public int getY() {return y;}
+	
+	public void setImage(String location) {
+		try {image = ImageIO.read(new File(location));}
+		catch (Exception e) {Utilities.showErrorMessage(null, e);}
+	}
+	public void setX(int x) {this.x = x;}
+	public void setY(int y) {this.y = y;}
 	/* Items are sorted based on a hierarchy of qualities:
 	 *	Item type > Rarity > Level > Name
 	 *
