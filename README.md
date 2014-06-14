@@ -11,19 +11,38 @@ Project Name: The Senior Scrolls I: Stuyrim
 
 Project Description: 2.5D RPG game
 
-
-  
   TEST CODE IS ALL IN SAMPLE IMPLEMENT YOUR CODE BITS INTO SAMPLE CODE
   
   Textures and images get dumped in images directory 
   
   Feature log: 
+  **6/14/14**
+  
+  
+  
+  **6/13/14**
+  
+  Implemented sorted rendering for proper 2.5D effect (Joey)
+  
+  Implemented item drops and item drop rendering (Sean)
+  
+  Fully functional directional hit detection (Sean)
+  
+  Implemented shield animations and slowing of character movement while shielded
+  
+  Upgraded Character AI (Jacky)
+  
+  Further optimization of rendering, does not render characters further than 1.25 times the screen height and width (Joey)
+  
+  Updated swordsman left animated.gif because previous had shield and sword in the wrong hands (Joey)
   
   **6/12/14**
   
   Implemented EXP (Jacky)
   
   Made party members attack random monsters and lock in (Jacky)
+    
+  Fixed some character animations and rendering issues (Joey)
   
   **6/11/14**
   
@@ -32,6 +51,13 @@ Project Description: 2.5D RPG game
   Drew bird, and slime animations (Jacky)
     
   Made characters turn (Jacky)
+  
+  Fixed HP bars (Joey)
+  
+  Fixed partyPanel information display (Joey)
+  
+  Updated Hit detection (Sean)
+  
   
   **6/10/14**
   
@@ -46,6 +72,10 @@ Project Description: 2.5D RPG game
   We will likely only have the first level in time for the due date. Let's just try to get that as functional as possible, continuing content creation after the due date is still a possibility. 
   
   **6/9/14**
+  
+    More animations (Jacky)
+      
+    Work on directional hit detection (Sean)
   
   **6/8/14**
   
