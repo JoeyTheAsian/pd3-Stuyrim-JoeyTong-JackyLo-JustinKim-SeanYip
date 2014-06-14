@@ -205,15 +205,15 @@ public class GamePanel extends JPanel {
 		    public void keyTyped(KeyEvent e) {}
 		});
 	    addMouseListener(new MouseListener() {
-		    public void mouseClicked(MouseEvent e) {
+		    public void mouseClicked(MouseEvent e) {}
+		    public void mouseEntered(MouseEvent e) {}
+		    public void mouseExited(MouseEvent e) {}
+		    public void mousePressed(MouseEvent e) {
 			for (Character character : ai){
 			    if (character.getDist(characters.get(0)) <= characters.get(0).getRange())
 				characters.get(0).attack(character);
 			}
 		    }
-		    public void mouseEntered(MouseEvent e) {}
-		    public void mouseExited(MouseEvent e) {}
-		    public void mousePressed(MouseEvent e) {}
 		    public void mouseReleased(MouseEvent e) {}
 		});
 	    addMouseMotionListener(new MouseMotionListener() {
@@ -225,7 +225,23 @@ public class GamePanel extends JPanel {
 		});
 	    setVisible(true);
 	}
-
+	
+	protected boolean intersectEllipseLineSegment(double x1, double y1, double x2, double y2, double h, double k, double a, double b) {//For the purposes of this game, a line segment that is in an ellipse but does not intersect it (completely contained in ellipse) counts as an intersection. x1, y1, x2, and y2 are points that define the **directed** ((x1, y1) to (x2, y2)) line segment to test. h and k are the x- and y-coordinates of the center of the ellipse, respectively. a and b are the same variables as they are in the equation of an ellipse
+		double m = (y2 - y1)/(x2 - x1), c = y1 - m*x1, d = c + m*h, e = c - k; //m is the slope of the **directed** line segment defined from (x1, y1) to (x2, y2). c is the y-intercept of that line segment, if it were extended to intersect the y-axis. d and e are additional variables to make the calculation shorter. Note that all this will not work if x1 = x2 (vertical line because of divison by zero) (will include a separate case for that).
+		double discriminant = a*a*m*m + b*b - d*d - k*k + 2*d*k, iX1, iY1, iX2, iY2; //Discriminant, like in the quadratic formula, is used to find the number of intersection points. iX1, iY1, iX2, iY2 represent the intersection points.
+		if (discriminant < 0) {return false;}
+		if (discriminant >= 0) {
+			iX1 = (h*b*b - m*a*a*e + a*b*Math.sqrt(discriminant))/(a*a*m*m + b*b);
+			iY1 = (b*b*d + k*a*a*m*m + a*b*m*Math.sqrt(discriminant))/(a*a*m*m + b*b);
+		}
+		if (discriminant > 0) { //Note that this case and the one above are not mutually 
+			iX2 = (h*b*b - m*a*a*e - a*b*Math.sqrt(discriminant))/(a*a*m*m + b*b);
+			iY2 = (b*b*d + k*a*a*m*m - a*b*m*Math.sqrt(discriminant))/(a*a*m*m + b*b);
+		}
+		
+		return false;
+	}
+	
 	//renders the screen
 	public void render(){
 	    BufferStrategy bs = getBufferStrategy();
@@ -240,10 +256,13 @@ public class GamePanel extends JPanel {
 	    drawMap(g);
 	    //draw fps
 	    g.setColor(Color.GREEN);
+
 	    
 	    //draws HP bars and then draws character
+
+
 	    for (Character character : ai) {
-<<<<<<< HEAD
+
 		if(character.getY()<=screenHeight/2){
 		    g.setColor(Color.RED);
 		    g.fillRect(character.getX(),character.getY()-10,80,7);
@@ -251,13 +270,6 @@ public class GamePanel extends JPanel {
 		    g.fillRect(character.getX(),character.getY()-10,(int)(80.0*((double)character.getHP()/(double)character.getMaxHP())),7);
 		    g.drawImage(character.getImage(), character.getX(), character.getY(), null);
 		}
-=======
-		g.setColor(Color.GREEN);
-		g.fillRect(character.getX(),character.getY(),character.getHP()/100,25);
-		g.setColor(Color.RED);
-		g.fillRect(character.getX()+character.getHP()/100,character.getY(),character.getMaxHP()-character.getHP()/100,25);
-		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
->>>>>>> f162b96dfff5c772dabc08ba83e18c5b0448af71
 	    }
 	    for (Character character : characters) {
 		g.setColor(Color.RED);
@@ -277,6 +289,8 @@ public class GamePanel extends JPanel {
 	    }
 	    g.drawString("TPS: " + averageFPS, 0, 20);
 	    g.drawString("FPS: " + averageFPS1,0, 31);
+	    g.drawString("Global Time: " + time, 0, 50);
+
 	    g.dispose();
 	    bs.show();
 
