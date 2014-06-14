@@ -4,7 +4,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 public class Character implements Drawable{  
-<<<<<<< HEAD
++<<<<<<< HEAD
     protected Image image, down, up, left, right, downAnimated, upAnimated, leftAnimated, rightAnimated
 	,downShield = null, upShield = null,leftShield = null ,rightShield = null,
 	downShieldAnimated = null ,upShieldAnimated = null,leftShieldAnimated = null,rightShieldAnimated = null;
