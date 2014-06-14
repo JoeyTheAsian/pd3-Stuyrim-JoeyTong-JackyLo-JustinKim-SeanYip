@@ -316,6 +316,7 @@ public class GamePanel extends JPanel {
 	    //draw fps
 	    g.setColor(Color.GREEN);
 
+		characters.forEach(c -> c.setY(c.getY() + c.getHeight() - mapY));
 	    screenEntities.addAll(characters);
 		screenEntities.addAll(ai);
 		screenEntities.addAll(droppedItems);
@@ -324,6 +325,9 @@ public class GamePanel extends JPanel {
 	    screenEntities.sort((Drawable e1, Drawable e2) -> (new Integer(e1.getY())).compareTo(e2.getY()));
 	    //draws everything
 	    for(Drawable entity : screenEntities){
+			if (entity.equals(characters.get(0))) {System.out.print("Player: ");}
+			System.out.print(entity + "@(" + entity.getX() + "," + entity.getY() + "); ");
+			if (characters.contains(entity)) {entity.setY(entity.getY() - entity.getImage().getHeight(null) + mapY);}
 		if(entity instanceof Character){
 		    try{
 			g.setColor(Color.RED);
@@ -343,6 +347,7 @@ public class GamePanel extends JPanel {
 		}
 	    }
 	    screenEntities.clear();
+		System.out.println();
 
 	    g.drawString("TPS: " + averageFPS, 0, 20);
 	    g.drawString("FPS: " + averageFPS1,0, 31);
