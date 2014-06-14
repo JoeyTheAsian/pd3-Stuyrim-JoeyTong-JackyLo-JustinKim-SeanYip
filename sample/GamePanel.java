@@ -243,6 +243,7 @@ public class GamePanel extends JPanel {
 	    
 	    //draws HP bars and then draws character
 	    for (Character character : ai) {
+<<<<<<< HEAD
 		if(character.getY()<=screenHeight/2){
 		    g.setColor(Color.RED);
 		    g.fillRect(character.getX(),character.getY()-10,80,7);
@@ -250,6 +251,13 @@ public class GamePanel extends JPanel {
 		    g.fillRect(character.getX(),character.getY()-10,(int)(80.0*((double)character.getHP()/(double)character.getMaxHP())),7);
 		    g.drawImage(character.getImage(), character.getX(), character.getY(), null);
 		}
+=======
+		g.setColor(Color.GREEN);
+		g.fillRect(character.getX(),character.getY(),character.getHP()/100,25);
+		g.setColor(Color.RED);
+		g.fillRect(character.getX()+character.getHP()/100,character.getY(),character.getMaxHP()-character.getHP()/100,25);
+		g.drawImage(character.getImage(), character.getX(), character.getY(), null);
+>>>>>>> f162b96dfff5c772dabc08ba83e18c5b0448af71
 	    }
 	    for (Character character : characters) {
 		g.setColor(Color.RED);

@@ -7,6 +7,10 @@ public class Slime extends Monster{
 
     public Slime(int x, int y){
 	super(x,y);
+	setLeft("slime left.png");
+	setRight("slime right.png");
+	setUp("slime up.png");
+	setDown("slime down.png");
     }
 
     public void setList(){}

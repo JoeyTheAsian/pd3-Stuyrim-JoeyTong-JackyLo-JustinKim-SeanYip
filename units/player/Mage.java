@@ -30,10 +30,10 @@ public class Mage extends Player{
 	range = 120;
 	maxCDS1 = CDS1;
 	maxCDS3 = CDS3;
-	setLeft("Mage_left.png");
-	setRight("Mage_right.png");
-	setUp("Mage_up.png");
-	setDown("Mage_down.png");
+	setLeft("mage left.png");
+	setRight("mage right.png");
+	setUp("mage up.png");
+	setDown("mage down.png");
     }
   
     public void setManaCost(int mncst){ manaCost = mncst; }
