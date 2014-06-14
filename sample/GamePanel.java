@@ -307,7 +307,6 @@ public class GamePanel extends JPanel {
 	//updates game screen data
 	public void tick() {
 	    if (keysPressed[VK_W]) {
-		//	slime.setY(slime.getY() - 1);
 		mapY+=2;
 		characters.get(0).setUpAnimated();
 		for (Character monster : ai)
@@ -323,7 +322,7 @@ public class GamePanel extends JPanel {
 	    }
 	    if (keysPressed[VK_A]) {
 		mapX +=2;
-		characters.get(0).setLeftAnimated();
+	       	characters.get(0).setLeftAnimated();
 		for (Character monster : ai)
 		    monster.setX(monster.getX()+2);
 		chanceOfSpawn();
