@@ -448,16 +448,20 @@ public class GamePanel extends JPanel {
 			   {(int)(Math.random()*screenWidth),screenHeight}};
 	    double chance = Math.random();
 	    int temp = (int)(Math.random()*4);
-	    if (chance > 0.003)
+	    if (chance > 0.004)
 		return;
 	    else{
 		Player plyr;
-		if (chance > 0.002){
+		if (chance > 0.003){
 		    plyr = new Bug("sprites/bug down.png",side[temp][0],side[temp][1]);
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
-		}else if (chance > 0.001){
+		}else if (chance > 0.002){
 		    plyr = new Bird("sprites/bird down.png",side[temp][0],side[temp][1]);
+		    ai.add(plyr);
+		    plyr.setTimeStarted(time);
+		}else if (chance > 0.001){
+		    plyr = new Goblin("sprites/goblin down.png",side[temp][0],side[temp][1]);
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
 		}else{
