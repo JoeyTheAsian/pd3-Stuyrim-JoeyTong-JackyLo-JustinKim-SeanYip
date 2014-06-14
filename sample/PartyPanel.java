@@ -1,4 +1,3 @@
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.Toolkit;
 import java.awt.Color;
@@ -8,8 +7,6 @@ import java.awt.Graphics;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
 import javax.imageio.ImageIO;
 import java.util.ArrayList;

@@ -5,7 +5,7 @@ import javax.imageio.ImageIO;
 
 public class Character implements Drawable{  
     protected Image image, down, up, left, right, downAnimated, upAnimated, leftAnimated, rightAnimated;
-    protected HashMap<String, Double> drops = new HashMap<>(); //The drop table (RuneScape PvM style). Maps the item name to the item's chance of dropping. Why is the key of type String? That avoids mutable keys and having instances of items in every Character. To get the actual item, have another HashMap<String, Item> that maps the name of the item to the actual item, probably in GamePanel. For maximum performance, use constructor HashMap(int initalCapacity, float loadFactor) to overwrite this instance of drops here, where initalCapacity equals to the number of entries in the collection and loadFactor equals 1, if the capacity of the HashMap is known, which it is because the HashMap will be initalized in the constructors of Character's subclasses: Bird, Swordsman, etc.
+    protected HashMap<String, Double> drops = new HashMap<>();
     private int x, y;
     private String imageLocation;
     protected int maxHP, HP;
@@ -50,8 +50,9 @@ public class Character implements Drawable{
 	maxMana = 500;
 	mana = 500;
 	gold = 0;
-	inventory.add(new Item("Cake","it's a lie",9001,9001,9001));
-	drops.put(null, 1.0); //Always drops nothing. A new instance of HashMap (with the optimization explained in the comment above) should be created to overwrite this one if the Character should drop something (to avoid cluttering inventory with nulls).
+	try {inventory.add(new Item(ImageIO.read(new File("items/Cake.png")), "Cake", "It's a lie.", 9001, 9001, 9001));}
+	catch (Exception e) {Utilities.showErrorMessage(null, e);}
+	drops.put("Cake", 1.0);
     }
     
     public final Image getImage() {return image;}
@@ -94,6 +95,7 @@ public class Character implements Drawable{
     public final int getATK(){return ATK;}
     public final int getMaxDEF(){return maxDEF;}
     public final int getDEF(){return DEF;}
+    public final HashMap<String, Double> getDrops() {return drops;}
     public final double getMaxLuk(){return maxLuk;}
     public final double getLuk(){return luk;}
     public final int getEXP(){return EXP;}

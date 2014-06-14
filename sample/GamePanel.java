@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.*;
@@ -17,8 +18,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -31,7 +32,7 @@ public class GamePanel extends JPanel {
     private boolean[] keysReleased = new boolean[256];
     private BufferedImage bg; //background
     private HashMap<String, Item> items = new HashMap<>(); //If the maximum number of items is known, use the optimization described in Character.
-    // private HashMap<Item, Point> droppedItems = new HashMap<>();
+    private HashMap<String, ArrayList<Point>> droppedItems = new HashMap<>();
     //Maps dropped items (after death of monsters) to its location in game.
     private int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height-37;
     private int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
@@ -53,7 +54,10 @@ public class GamePanel extends JPanel {
 	catch (Exception e) {Utilities.showErrorMessage(this, e);}
 	setVisible(true);
     //Initalize HashMap of items
-    items.put("Cake", new Item("Cake", "It's a lie.", 9001, 9001, 9001));
+    try {
+		items.put("Cake", new Item(ImageIO.read(new File("items/Cake.png")), "Cake", "It's a lie.", 9001, 9001, 9001));
+	}
+	catch (Exception e) {Utilities.showErrorMessage(this, e);}
     
 	//add buttons
 	inventoryButton = new JButton("Inventory");
@@ -331,7 +335,10 @@ public class GamePanel extends JPanel {
 		    g.drawImage(character.getImage(), character.getX(), character.getY(), null);
 		}
 	    }
-	    
+	    droppedItems.forEach((itemName, locations) -> {
+			Item item = items.get(itemName);
+			locations.forEach(location -> {g.drawImage(item.getImage(), (int) location.getX(), (int) location.getY(), null);});
+		});
 
 	    g.drawString("TPS: " + averageFPS, 0, 20);
 	    g.drawString("FPS: " + averageFPS1,0, 31);
@@ -645,9 +652,15 @@ public class GamePanel extends JPanel {
 		    characters.get(0).setEXP(characters.get(0).getEXP()+ai.get(i).getEXP());
 		    if (characters.get(0).getEXP() >= characters.get(0).getLVLreq())
 			characters.get(0).LVLup();
-		    double dropChance = Math.random();
-		    //HashMap<String, Double> drops = ai.get(i).getDrops();
-		    //drops.forEach((Item item, Double chance) -> {if (chance <= drops.get(item)) {droppedItems.put(items.get(item), new Point((int) character.getX(), (int) character.getY()));}});
+			Character deadCharacter = ai.get(i);
+		    HashMap<String, Double> drops = ai.get(i).getDrops();
+			double dropChance = Math.random();
+		    drops.forEach((itemName, chance) -> {
+				if (dropChance <= chance) {
+					if (droppedItems.get(itemName) == null) {droppedItems.put(itemName, new ArrayList<>());}
+					droppedItems.get(itemName).add(new Point(deadCharacter.getX(), deadCharacter.getY()));
+				}
+			});
 		    ai.remove(i);
 		    i--;
 		}

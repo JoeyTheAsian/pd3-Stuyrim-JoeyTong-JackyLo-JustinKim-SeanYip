@@ -1,7 +1,6 @@
-import java.wat.Image;
-import java.awt.image.BufferedImage;
-import javax.swing.ImageIcon;
 import java.io.File;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 public class Bug extends Player{
   public Bug(){super();}
