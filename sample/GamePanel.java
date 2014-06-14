@@ -195,6 +195,7 @@ public class GamePanel extends JPanel {
 	private ArrayList<Player> characters = new ArrayList<>();
 	private ArrayList<Character> ai = new ArrayList<>();
 	private ArrayList<Item> droppedItems = new ArrayList<>();
+    private ArrayList<MapObject> mapObjects = new ArrayList<>();
 	private ArrayList<Drawable> screenEntities = new ArrayList<>();
 	private boolean running;
 	private int averageFPS;
@@ -226,6 +227,8 @@ public class GamePanel extends JPanel {
 	    characters.add(player2);
 	    characters.add(player3);
 
+        Rock rock = new Rock(200, 600);
+        mapObjects.add(rock);
 
             currentMap = new Map();
 	    addKeyListener(new KeyListener() {
@@ -314,8 +317,10 @@ public class GamePanel extends JPanel {
 	    g.setColor(Color.GREEN);
 
 	    screenEntities.addAll(characters);
-	    screenEntities.addAll(ai);
-	    screenEntities.addAll(droppedItems);
+		screenEntities.addAll(ai);
+		screenEntities.addAll(droppedItems);
+		screenEntities.addAll(mapObjects);
+
 	    screenEntities.sort((Drawable e1, Drawable e2) -> (new Integer(e1.getY())).compareTo(e2.getY()));
 	    //draws everything
 	    for(Drawable entity : screenEntities){
@@ -382,6 +387,7 @@ public class GamePanel extends JPanel {
                     drawTile(i, j, tilemap[i][j], g);
                 }
             }
+            // drawAllMapObjects(g);
         }
 
         private void drawTile(int x, int y, Tile tile, Graphics g) {
@@ -391,6 +397,15 @@ public class GamePanel extends JPanel {
 		g.drawImage(texture, x * TILE_SCALE + mapX, y * TILE_SCALE + mapY,
 			    TILE_SCALE, TILE_SCALE, null);
 	    }
+        }
+
+        private void drawAllMapObjects(Graphics g) {
+            for (MapObject mo : mapObjects) {
+                Image texture = mo.getImage();
+                g.drawImage(texture, mo.getX() * TILE_SCALE + mapX,
+                                     mo.getY() * TILE_SCALE + mapY,
+                                     TILE_SCALE, TILE_SCALE, null);
+            }
         }
     
 	public void run() {
@@ -457,6 +472,7 @@ public class GamePanel extends JPanel {
 		for (Character monster : ai)
 		    monster.setY(monster.getY()+characters.get(0).getSpeed());
 		droppedItems.forEach(item -> item.setY(item.getY() + characters.get(0).getSpeed()));
+	            mapObjects.forEach(mapObject -> mapObject.setY(mapObject.getY() + characters.get(0).getSpeed()));
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setY(characters.get(i).getY()+characters.get(0).getSpeed());
 	    }
@@ -471,6 +487,7 @@ public class GamePanel extends JPanel {
 		for (Character monster : ai)
 		    monster.setY(monster.getY()-characters.get(0).getSpeed());
 		droppedItems.forEach(item -> {item.setY(item.getY() - characters.get(0).getSpeed());});
+	            mapObjects.forEach(mapObject -> mapObject.setY(mapObject.getY() - characters.get(0).getSpeed()));
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed());
 	    }
@@ -485,6 +502,7 @@ public class GamePanel extends JPanel {
 		for (Character monster : ai)
 		    monster.setX(monster.getX()+characters.get(0).getSpeed());
 		droppedItems.forEach(item -> item.setX(item.getX() + characters.get(0).getSpeed()));
+	            mapObjects.forEach(mapObject -> mapObject.setX(mapObject.getX() + characters.get(0).getSpeed()));
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed());
 	    }
@@ -499,6 +517,7 @@ public class GamePanel extends JPanel {
 		for (Character monster : ai)
 		    monster.setX(monster.getX()-characters.get(0).getSpeed());
 		droppedItems.forEach(item -> item.setX(item.getX() - characters.get(0).getSpeed()));
+	            mapObjects.forEach(mapObject -> mapObject.setX(mapObject.getX() - characters.get(0).getSpeed()));
 		for (int i = 1; i< characters.size(); i++)
 		    characters.get(i).setX(characters.get(i).getX()-characters.get(0).getSpeed());
 	    }
