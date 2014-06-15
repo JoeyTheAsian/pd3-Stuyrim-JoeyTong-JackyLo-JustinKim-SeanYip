@@ -215,7 +215,7 @@ public class GamePanel extends JPanel {
 	private boolean shielded;
 	//for testing putposes
 	private Swordsman player2 = new Swordsman("sprites/swordsman down.png", screenWidth/2, screenHeight/2);
-	private Swordsman player = new Swordsman("sprites/mage down.png", screenWidth/2, screenHeight/2);
+	private Swordsman player = new Swordsman("sprites/swordsman down.png", screenWidth/2, screenHeight/2);
 	private Swordsman player3 = new Swordsman("sprites/swordsman down.png", screenWidth/2, screenHeight/2);
 	private Thread thread;
 
