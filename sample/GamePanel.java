@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.*;
@@ -195,7 +196,7 @@ public class GamePanel extends JPanel {
 	private ArrayList<Player> characters = new ArrayList<>();
 	private ArrayList<Character> ai = new ArrayList<>();
 	private ArrayList<Item> droppedItems = new ArrayList<>();
-    private ArrayList<MapObject> mapObjects = new ArrayList<>();
+	private ArrayList<MapObject> mapObjects = new ArrayList<>();
 	private ArrayList<Drawable> screenEntities = new ArrayList<>();
 	private boolean running;
 	private int averageFPS;
@@ -227,8 +228,8 @@ public class GamePanel extends JPanel {
 	    characters.add(player2);
 	    characters.add(player3);
 
-        Rock rock = new Rock(200, 600);
-        mapObjects.add(rock);
+	    Rock rock = new Rock(200, 600);
+	    mapObjects.add(rock);
 
             currentMap = new Map();
 	    addKeyListener(new KeyListener() {
@@ -319,10 +320,10 @@ public class GamePanel extends JPanel {
 	    //draw fps
 	    g.setColor(Color.GREEN);
 
-		screenEntities.addAll(characters);
-		screenEntities.addAll(ai);
-		screenEntities.addAll(droppedItems);
-		screenEntities.addAll(mapObjects);
+	    screenEntities.addAll(characters);
+	    screenEntities.addAll(ai);
+	    screenEntities.addAll(droppedItems);
+	    screenEntities.addAll(mapObjects);
 
 	    screenEntities.sort((Drawable e1, Drawable e2) -> (new Integer(e1.getY())).compareTo(e2.getY()));
 	    //draws everything
@@ -341,8 +342,8 @@ public class GamePanel extends JPanel {
 		    }
 		}
 		if(entity.getX() < windowWidth+(windowWidth/4) && entity.getY()<windowHeight+(windowHeight/4)){
-		    	if (entity instanceof Item) {g.drawImage(entity.getImage(), entity.getX() + mapX, entity.getY() + mapY, null);}
-		    	else {g.drawImage(entity.getImage(),entity.getX(),entity.getY(),null);}
+		    if (entity instanceof Item) {g.drawImage(entity.getImage(), entity.getX() + mapX, entity.getY() + mapY, null);}
+		    else {g.drawImage(entity.getImage(),entity.getX(),entity.getY(),null);}
 		}
 	    }
 	    screenEntities.clear();
@@ -402,15 +403,6 @@ public class GamePanel extends JPanel {
 		g.drawImage(texture, x * TILE_SCALE + mapX, y * TILE_SCALE + mapY,
 			    TILE_SCALE, TILE_SCALE, null);
 	    }
-        }
-
-        private void drawAllMapObjects(Graphics g) {
-            for (MapObject mo : mapObjects) {
-                Image texture = mo.getImage();
-                g.drawImage(texture, mo.getX() * TILE_SCALE + mapX,
-                                     mo.getY() * TILE_SCALE + mapY,
-                                     TILE_SCALE, TILE_SCALE, null);
-            }
         }
     
 	public void run() {
@@ -476,7 +468,7 @@ public class GamePanel extends JPanel {
 	    if(keysPressed[VK_SHIFT] ){
 		shielded = true;
 	    }
-	    if (keysPressed[VK_W] && ableToMove("up")) {
+	    if (keysPressed[VK_W] && ableToMove("up", characters.get(0))) {
 		if (!shielded){
 		    mapY+=characters.get(0).getSpeed();
 		    characters.get(0).setUpAnimated();
@@ -495,7 +487,7 @@ public class GamePanel extends JPanel {
 			characters.get(i).setY(characters.get(i).getY()+characters.get(0).getSpeed()/2);
 		}
 	    }
-	    if (keysPressed[VK_S] && ableToMove("down")) {
+	    if (keysPressed[VK_S] && ableToMove("down", characters.get(0))) {
 		if (!shielded){
 		    mapY-=characters.get(0).getSpeed();
 		    characters.get(0).setDownAnimated();
@@ -514,7 +506,7 @@ public class GamePanel extends JPanel {
 			characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed()/2);
 		}
 	    }
-	    if (keysPressed[VK_A] && ableToMove("left")) {
+	    if (keysPressed[VK_A] && ableToMove("left", characters.get(0))) {
 		if (!shielded){
 		    mapX+=characters.get(0).getSpeed();
 		    characters.get(0).setLeftAnimated();
@@ -533,7 +525,7 @@ public class GamePanel extends JPanel {
 			characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed()/2);
 		}
 	    }
-	    if (keysPressed[VK_D] && ableToMove("right")) {
+	    if (keysPressed[VK_D] && ableToMove("right", characters.get(0))) {
 		if (!shielded){
 		    mapX-=characters.get(0).getSpeed();
 		    characters.get(0).setRightAnimated();
@@ -552,18 +544,7 @@ public class GamePanel extends JPanel {
 			characters.get(i).setX(characters.get(i).getX()+-characters.get(0).getSpeed()/2);
 		}
 	    }
-	    /*	    if(!ableToMove("up")){
-		mapY -=characters.get(0).getSpeed();  
-	    }
-	    if(!ableToMove("down")){
-		mapY +=characters.get(0).getSpeed();  
-	    }
-	    if(!ableToMove("left")){
-		mapX -=characters.get(0).getSpeed();  
-	    }
-	    if(!ableToMove("right")){
-		mapX +=characters.get(0).getSpeed();  
-		}*/
+
 	    //special attack
 	    if (keysPressed[VK_SPACE]/* && characters.get(0).getMana() >= 300*/){
 		for (Character c : ai)
@@ -808,25 +789,43 @@ public class GamePanel extends JPanel {
 		}
 	    }
 	}
+	//compares 2 rectangular objects to see if they are colliding
+	private boolean isIn(int x, int y, int x1, int y1, int a, int b,int a1, int b1){
+	    System.out.println(x + "," + y + "," + a + "," + b );
+	    Rectangle player = new Rectangle(x,y,x1,y1);
+	    Rectangle object = new Rectangle(a,b,a1,b1);
+	    if(!player.intersects(object)){
+		return true;
+	    }
+	    return false;
+	}
+	private boolean ableToMove(String direction, Character character) {
+	    ArrayList<MapObject> objects = new ArrayList<MapObject>();
+	    int x = character.getX(),
+		y = character.getY(),
+		x1 = character.getImage().getWidth(null),
+		y1 = character.getImage().getWidth(null);
+	    if(direction == "right"){x+=character.getSpeed();x1+= character.getSpeed();}
+	    else if(direction == "left"){x-=character.getSpeed();x1-=character.getSpeed();}
+	    else if(direction == "up"){y-=character.getSpeed();y1-=character.getSpeed();}
+	    else if(direction == "down"){y+=character.getSpeed();y1+=character.getSpeed();}
+	    for(MapObject mapObject : mapObjects){
+		if(mapObject.getX() < windowWidth*2 && mapObject.getX() >0-(windowWidth) 
+		   && mapObject.getY() < windowHeight*2 && mapObject.getY() > 0-windowHeight){
+		    objects.add(mapObject);
+		}
+		for(MapObject object : objects){
+		    int a1 = object.getImage().getWidth(null)/2,
+			b1 = object.getImage().getWidth(null)/2,
+			a = object.getX(),
+			b = object.getY();
 
-        private boolean ableToMove(String direction) {
-            Character player = characters.get(0);
-            ArrayList<MapObject> objects = mapObjects;
-
-            for (MapObject object : objects) {
-                double dx = object.getX() - player.getX();
-                double dy = object.getY() - TILE_SCALE / 2 - player.getY();
-                double dist = Math.sqrt(dx * dx + dy * dy);
-                double theta = Math.atan2(dy, dx);
-                double softness = 1.5;
-                if (dist < TILE_SCALE / 2) {
-	        player.setX((int)(player.getX() - Math.cos(theta) * softness));
-                    player.setY((int)(player.getY() - Math.sin(theta) * softness));
-                    return false;
-                }
-            }
-
-            return true;
-        }
-    }
+		    if(isIn(x,y,x1,y1,a,b,a1,b1))
+			return true;
+		}
+	    }
+	    return false;
+	}
+	
+    }	     
 }
