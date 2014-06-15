@@ -803,8 +803,8 @@ public class GamePanel extends JPanel {
 	    ArrayList<MapObject> objects = new ArrayList<MapObject>();
 	    int x = character.getX(),
 		y = character.getY(),
-		x1 = character.getImage().getWidth(null),
-		y1 = character.getImage().getWidth(null);
+		x1 = character.getImage().getWidth(null)/2,
+		y1 = character.getImage().getWidth(null)/2;
 	    if(direction == "right"){x+=character.getSpeed();x1+= character.getSpeed();}
 	    else if(direction == "left"){x-=character.getSpeed();x1-=character.getSpeed();}
 	    else if(direction == "up"){y-=character.getSpeed();y1-=character.getSpeed();}
