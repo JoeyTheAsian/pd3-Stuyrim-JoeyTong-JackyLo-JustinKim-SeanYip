@@ -215,7 +215,7 @@ public class GamePanel extends JPanel {
 	private boolean shielded;
 	//for testing putposes
 	private Swordsman player2 = new Swordsman("sprites/swordsman down.png", screenWidth/2, screenHeight/2);
-	private Mage player = new Mage("sprites/mage down.png", screenWidth/2, screenHeight/2);
+	private Swordsman player = new Swordsman("sprites/mage down.png", screenWidth/2, screenHeight/2);
 	private Swordsman player3 = new Swordsman("sprites/swordsman down.png", screenWidth/2, screenHeight/2);
 	private Thread thread;
 
@@ -245,8 +245,11 @@ public class GamePanel extends JPanel {
 		    public void mouseExited(MouseEvent e) {}
 		    public void mousePressed(MouseEvent e) {
 			Character player = characters.get(0);
-			e.translatePoint(-mapX, -mapY);
-			attacks.push(new AttackEvent(player.getX() + player.getWidth()/2 - mapX, player.getY() + player.getWidth() / 2 - mapY, e.getX(), e.getY(), characters.get(0).getRange()));
+			if (time-player.getTimeStarted() >= player.getATKspeed()){
+			    player.setTimeStarted(time);
+			    e.translatePoint(-mapX, -mapY);
+			    attacks.push(new AttackEvent(player.getX() + player.getWidth()/2 - mapX, player.getY() + player.getWidth() / 2 - mapY, e.getX(), e.getY(), characters.get(0).getRange()));
+			}
 		    }
 		    public void mouseReleased(MouseEvent e) {}
 		});
