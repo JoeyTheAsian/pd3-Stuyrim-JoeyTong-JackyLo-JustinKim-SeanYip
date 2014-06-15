@@ -23,7 +23,6 @@ public class Character implements Drawable{
     protected int EXP;
     protected int LVL = 1;
     protected int LVLreq = 50;
-    protected int gold;
     protected Inventory inventory = new Inventory();
     protected double changeX;
     protected double changeY;
