@@ -50,7 +50,6 @@ public class Character implements Drawable{
 	ATKspeed = maxATKspeed;
 	maxMana = 500;
 	mana = 500;
-	gold = 0;
 	try {inventory.add(new Item(ImageIO.read(new File("items/Cake.png")), "Cake", "It's a lie.", 9001, 9001, 9001));}
 	catch (Exception e) {Utilities.showErrorMessage(null, e);}
 	drops.put("Cake", 1.0);
@@ -87,7 +86,6 @@ public class Character implements Drawable{
     public final void setATKspeed(int ATKspeed){this.ATKspeed = ATKspeed;}
     public final void setMaxMana(int maxMana){this.maxMana = maxMana;}
     public final void setMana(int mana){this.mana = mana;}
-    public final void setGold(int gold){this.gold = gold;}
     public final void setTarget(Character tgt){target = tgt;}
 
     public final int getMaxHP(){return maxHP;}
@@ -109,7 +107,6 @@ public class Character implements Drawable{
     public final int getATKspeed(){return ATKspeed;}
     public final int getMaxMana(){return maxMana;}
     public final int getMana(){return mana;}
-    public final int getGold(){return gold;}
     public final Character getTarget(){return target;}
 
     public final Inventory getInventory(){return inventory;}

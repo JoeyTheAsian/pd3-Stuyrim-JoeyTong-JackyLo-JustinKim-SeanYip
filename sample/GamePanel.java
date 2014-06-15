@@ -319,8 +319,7 @@ public class GamePanel extends JPanel {
 	    //draw fps
 	    g.setColor(Color.GREEN);
 
-		characters.forEach(c -> c.setY(c.getY() + c.getHeight() - mapY));
-	    screenEntities.addAll(characters);
+		screenEntities.addAll(characters);
 		screenEntities.addAll(ai);
 		screenEntities.addAll(droppedItems);
 		screenEntities.addAll(mapObjects);
@@ -328,9 +327,6 @@ public class GamePanel extends JPanel {
 	    screenEntities.sort((Drawable e1, Drawable e2) -> (new Integer(e1.getY())).compareTo(e2.getY()));
 	    //draws everything
 	    for(Drawable entity : screenEntities){
-			if (entity.equals(characters.get(0))) {System.out.print("Player: ");}
-			System.out.print(entity + "@(" + entity.getX() + "," + entity.getY() + "); ");
-			if (characters.contains(entity)) {entity.setY(entity.getY() - entity.getImage().getHeight(null) + mapY);}
 		if(entity instanceof Character){
 		    try{
 			g.setColor(Color.RED);
@@ -345,13 +341,13 @@ public class GamePanel extends JPanel {
 		    }
 		}
 		if(entity.getX() < windowWidth+(windowWidth/4) && entity.getY()<windowHeight+(windowHeight/4)){
-			if (entity instanceof Item) {g.drawImage(entity.getImage(), entity.getX() + mapX, entity.getY() + mapY, null);}
-			else {g.drawImage(entity.getImage(),entity.getX(),entity.getY(),null);}
+		    	if (entity instanceof Item) {g.drawImage(entity.getImage(), entity.getX() + mapX, entity.getY() + mapY, null);}
+		    	else {g.drawImage(entity.getImage(),entity.getX(),entity.getY(),null);}
 		}
 	    }
 	    screenEntities.clear();
-		System.out.println();
-
+	    characters.get(0).setY(screenHeight/2);
+	    characters.get(0).setX(screenWidth/2);
 	    g.drawString("TPS: " + averageFPS, 0, 20);
 	    g.drawString("FPS: " + averageFPS1,0, 31);
 	    g.drawString("Global Time: " + time, 0, 50);
@@ -556,6 +552,18 @@ public class GamePanel extends JPanel {
 			characters.get(i).setX(characters.get(i).getX()+-characters.get(0).getSpeed()/2);
 		}
 	    }
+	    /*	    if(!ableToMove("up")){
+		mapY -=characters.get(0).getSpeed();  
+	    }
+	    if(!ableToMove("down")){
+		mapY +=characters.get(0).getSpeed();  
+	    }
+	    if(!ableToMove("left")){
+		mapX -=characters.get(0).getSpeed();  
+	    }
+	    if(!ableToMove("right")){
+		mapX +=characters.get(0).getSpeed();  
+		}*/
 	    //special attack
 	    if (keysPressed[VK_SPACE]/* && characters.get(0).getMana() >= 300*/){
 		for (Character c : ai)
@@ -584,7 +592,7 @@ public class GamePanel extends JPanel {
 		}
 		keysReleased[VK_S] = false;
 	    }
-	    if(keysReleased[VK_A]){
+	    if(keysReleased[VK_A] ){
 		if(!shielded){
 		    characters.get(0).setLeft();
 		}else{
@@ -812,7 +820,7 @@ public class GamePanel extends JPanel {
                 double theta = Math.atan2(dy, dx);
                 double softness = 1.5;
                 if (dist < TILE_SCALE / 2) {
-                    player.setX((int)(player.getX() - Math.cos(theta) * softness));
+	        player.setX((int)(player.getX() - Math.cos(theta) * softness));
                     player.setY((int)(player.getY() - Math.sin(theta) * softness));
                     return false;
                 }
