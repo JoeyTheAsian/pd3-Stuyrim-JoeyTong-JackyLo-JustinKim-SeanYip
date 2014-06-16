@@ -16,6 +16,10 @@ Project Description: 2.5D RPG game
   Textures and images get dumped in images directory 
   
   Feature log: 
+  **6/15/14**
+  
+  Edited spawning so that when the player reaches a certain point one type of monster would spawn (Jacky)
+  
   **6/14/14**
   
   
