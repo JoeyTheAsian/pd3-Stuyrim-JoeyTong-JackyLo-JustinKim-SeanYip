@@ -230,8 +230,10 @@ public class GamePanel extends JPanel {
 	    characters.add(player2);
 	    characters.add(player3);
 
-	    Rock rock = new Rock(200, 600);
-	    mapObjects.add(rock);
+	    for (int i = 0; i < 1200; i += 30){
+		Rock rock = new Rock(0,i);
+		mapObjects.add(rock);
+	    }
 
             currentMap = new Map();
 	    addKeyListener(new KeyListener() {
@@ -473,7 +475,7 @@ public class GamePanel extends JPanel {
 	    if(keysPressed[VK_SHIFT] ){
 		shielded = true;
 	    }
-	    if (keysPressed[VK_W] && ableToMove("up", characters.get(0))) {
+	    if (keysPressed[VK_W] && ableToMove("up", characters.get(0),characters.get(0).getSpeed())) {
 		if (!shielded){
 		    mapY+=characters.get(0).getSpeed();
 		    for (int i = 0; i < spawnCoords.length; i++)
@@ -496,7 +498,7 @@ public class GamePanel extends JPanel {
 			characters.get(i).setY(characters.get(i).getY()+characters.get(0).getSpeed()/2);
 		}
 	    }
-	    if (keysPressed[VK_S] && ableToMove("down", characters.get(0))) {
+	    if (keysPressed[VK_S] && ableToMove("down", characters.get(0),characters.get(0).getSpeed())) {
 		if (!shielded){
 		    mapY-=characters.get(0).getSpeed();
 		    for (int i = 0; i < spawnCoords.length; i++)
@@ -519,7 +521,7 @@ public class GamePanel extends JPanel {
 			characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed()/2);
 		}
 	    }
-	    if (keysPressed[VK_A] && ableToMove("left", characters.get(0))) {
+	    if (keysPressed[VK_A] && ableToMove("left", characters.get(0),characters.get(0).getSpeed())) {
 		if (!shielded){
 		    mapX+=characters.get(0).getSpeed();
 		    for (int i = 0; i < spawnCoords.length; i++)
@@ -542,7 +544,7 @@ public class GamePanel extends JPanel {
 			characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed()/2);
 		}
 	    }
-	    if (keysPressed[VK_D] && ableToMove("right", characters.get(0))) {
+	    if (keysPressed[VK_D] && ableToMove("right", characters.get(0),characters.get(0).getSpeed())) {
 		if (!shielded){
 		    mapX-=characters.get(0).getSpeed();
 		    for (int i = 0; i < spawnCoords.length; i++)
@@ -643,8 +645,12 @@ public class GamePanel extends JPanel {
 		    if ((character.getTimeStarted()-time)%character.getATKspeed() != 0){}
 		    else character.attack(character.getTarget());
 		}else{
-		    character.setX(character.getX() + (int)(character.getSpeed()*character.getChangeX()/character.getDist(character.getTarget())));
-		    character.setY(character.getY() + (int)(character.getSpeed()*character.getChangeY()/character.getDist(character.getTarget())));
+		    int speedX = (int)(character.getSpeed()*character.getChangeX()/character.getDist(character.getTarget()));
+		    int speedY = (int)(character.getSpeed()*character.getChangeY()/character.getDist(character.getTarget()));
+		    if (speedX < 0 && ableToMove("left",character,(int)(Math.abs(speedX))) || speedX > 0 && ableToMove("right",character,(int)(Math.abs(speedX))))
+			character.setX(character.getX() + speedX);
+		    if (speedY < 0 && ableToMove("up",character,(int)(Math.abs(speedY))) || speedY > 0 && ableToMove("down",character,(int)(Math.abs(speedY))))
+			character.setX(character.getX() + speedY);
 		    if (Math.abs(character.getChangeX()) > Math.abs(character.getChangeY())){
 			if (character.getChangeX() > character.getChangeY())
 			    character.setRightAnimated();
@@ -820,32 +826,34 @@ public class GamePanel extends JPanel {
 	    }
 	    return false;
 	}
-	private boolean ableToMove(String direction, Character character) {
+	private boolean ableToMove(String direction, Character character, int speed) {
 	    ArrayList<MapObject> objects = new ArrayList<MapObject>();
 	    int x = character.getX(),
 		y = character.getY(),
 		x1 = character.getImage().getWidth(null)/2,
 		y1 = character.getImage().getWidth(null)/2;
-	    if(direction == "right"){x+=character.getSpeed();x1+= character.getSpeed();}
-	    else if(direction == "left"){x-=character.getSpeed();x1-=character.getSpeed();}
-	    else if(direction == "up"){y-=character.getSpeed();y1-=character.getSpeed();}
-	    else if(direction == "down"){y+=character.getSpeed();y1+=character.getSpeed();}
+	    if(direction == "right"){x+=speed;x1+=speed;}
+	    else if(direction == "left"){x-=speed;x1-=speed;}
+	    else if(direction == "up"){y-=speed;y1-=speed;}
+	    else if(direction == "down"){y+=speed;y1+=speed;}
+	    
 	    for(MapObject mapObject : mapObjects){
 		if(mapObject.getX() < windowWidth*2 && mapObject.getX() >0-(windowWidth) 
 		   && mapObject.getY() < windowHeight*2 && mapObject.getY() > 0-windowHeight){
 		    objects.add(mapObject);
 		}
-		for(MapObject object : objects){
-		    int a1 = object.getImage().getWidth(null)/2,
-			b1 = object.getImage().getWidth(null)/2,
-			a = object.getX(),
-			b = object.getY();
-
-		    if(isIn(x,y,x1,y1,a,b,a1,b1))
-			return true;
-		}
 	    }
-	    return false;
+	    
+	    for(MapObject object : objects){
+		int a1 = object.getImage().getWidth(null)/2,
+		    b1 = object.getImage().getWidth(null)/2,
+		    a = object.getX(),
+		    b = object.getY();
+		
+		if(!isIn(x,y,x1,y1,a,b,a1,b1))
+		    return false;
+	    }
+	    return true;
 	}
 	
     }	     

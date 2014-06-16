@@ -1,5 +1,6 @@
 public enum Tile {
-    GRASS   (0, "sprites/grass.png");
+    GRASS (0, "sprites/grass.png"),
+    DIRT (1, "sprites/grass.png");
 
     public int id;
     public String texture;

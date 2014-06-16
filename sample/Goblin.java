@@ -15,12 +15,12 @@ public class Goblin extends Player{
  	//to prevent unnecessary resetting of images (gifs would stutter)
 	down = ImageIO.read(new File("sprites/goblin down.png"));
 	up = ImageIO.read(new File("sprites/goblin up.png"));
-	left = ImageIO.read(new File("sprites/goblin down.png"));
-	right = ImageIO.read(new File("sprites/goblin down.png"));
+	left = ImageIO.read(new File("sprites/goblin left.png"));
+	right = ImageIO.read(new File("sprites/goblin right.png"));
 	downAnimated = (new ImageIcon("sprites/goblin down animated.gif").getImage());
 	upAnimated = (new ImageIcon("sprites/goblin up animated.gif").getImage());
-	leftAnimated =(new ImageIcon("sprites/goblin down animated.gif").getImage());
-	rightAnimated =(new ImageIcon("sprites/goblin down animated.gif").getImage());
+	leftAnimated =(new ImageIcon("sprites/goblin left animated.gif").getImage());
+	rightAnimated =(new ImageIcon("sprites/goblin right animated.gif").getImage());
 	}catch(Exception e){
 	    Utilities.showErrorMessage(null,e);
 	}
