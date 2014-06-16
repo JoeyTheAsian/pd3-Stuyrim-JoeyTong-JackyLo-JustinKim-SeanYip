@@ -220,6 +220,8 @@ public class GamePanel extends JPanel {
 	private Swordsman player3 = new Swordsman("sprites/swordsman down.png", screenWidth/2, screenHeight/2);
 	private Thread thread;
 
+	private int[][] spawnCoords = {{0,0},{1000,0},{0,1000},{1000,1000}};
+
 	public Screen() {
 	    setSize(screenWidth, screenHeight);
 	    try{flickerStop =ImageIO.read(new File("GUI Images/flickerStop.png"));
@@ -437,26 +439,29 @@ public class GamePanel extends JPanel {
 			   {screenWidth,(int)(Math.random()*screenHeight)},
 			   {(int)(Math.random()*screenWidth),0},
 			   {(int)(Math.random()*screenWidth),screenHeight}};
-	    double chance = Math.random();
 	    int temp = (int)(Math.random()*4);
-	    if (chance > 0.004)
-		return;
-	    else{
-		Player plyr;
-		if (chance > 0.003){
+	    Player plyr;
+	    if (Math.abs(characters.get(0).getX()-spawnCoords[0][0]) < 400 && Math.abs(characters.get(0).getY()-spawnCoords[0][1]) < 400){
+		if (Math.random() < 0.01){
 		    plyr = new Bug("sprites/bug down.png",side[temp][0],side[temp][1]);
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
-		}else if (chance > 0.002){
+		}
+	    }else if (Math.abs(characters.get(0).getX()-spawnCoords[1][0]) < 400 && Math.abs(characters.get(0).getY()-spawnCoords[1][1]) < 400){
+		if (Math.random() < 0.01){
 		    plyr = new Bird("sprites/bird down.png",side[temp][0],side[temp][1]);
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
-		}else if (chance > 0.001){
-		    plyr = new Goblin("sprites/goblin down.png",side[temp][0],side[temp][1]);
+		}
+	    }else if (Math.abs(characters.get(0).getX()-spawnCoords[2][0]) < 400 && Math.abs(characters.get(0).getY()-spawnCoords[2][1]) < 400){
+		if (Math.random() < 0.01){
+		    plyr = new Slime("sprites/slime down.png",side[temp][0],side[temp][1]);
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
-		}else{
-		    plyr = new Slime("sprites/slime down.png",side[temp][0],side[temp][1]);
+		}
+	    }else if (Math.abs(characters.get(0).getX()-spawnCoords[3][0]) < 400 && Math.abs(characters.get(0).getY()-spawnCoords[3][1]) < 400){
+		if (Math.random() < 0.01){
+		    plyr = new Goblin("sprites/goblin down.png",side[temp][0],side[temp][1]);
 		    ai.add(plyr);
 		    plyr.setTimeStarted(time);
 		}
@@ -471,6 +476,8 @@ public class GamePanel extends JPanel {
 	    if (keysPressed[VK_W] && ableToMove("up", characters.get(0))) {
 		if (!shielded){
 		    mapY+=characters.get(0).getSpeed();
+		    for (int i = 0; i < spawnCoords.length; i++)
+			spawnCoords[i][1]+=characters.get(0).getSpeed();
 		    characters.get(0).setUpAnimated();
 		    for (Character monster : ai)
 			monster.setY(monster.getY()+characters.get(0).getSpeed());
@@ -479,6 +486,8 @@ public class GamePanel extends JPanel {
 			characters.get(i).setY(characters.get(i).getY()+characters.get(0).getSpeed());
 		}else{
 		    mapY+=characters.get(0).getSpeed()/2;
+		    for (int i = 0; i < spawnCoords.length; i++)
+			spawnCoords[i][1]+=characters.get(0).getSpeed()/2;
 		    characters.get(0).setUpShieldAnimated();
 		    for (Character monster : ai)
 			monster.setY(monster.getY()+characters.get(0).getSpeed()/2);
@@ -490,6 +499,8 @@ public class GamePanel extends JPanel {
 	    if (keysPressed[VK_S] && ableToMove("down", characters.get(0))) {
 		if (!shielded){
 		    mapY-=characters.get(0).getSpeed();
+		    for (int i = 0; i < spawnCoords.length; i++)
+			spawnCoords[i][1]-=characters.get(0).getSpeed();
 		    characters.get(0).setDownAnimated();
 		    for (Character monster : ai)
 			monster.setY(monster.getY()-characters.get(0).getSpeed());
@@ -498,6 +509,8 @@ public class GamePanel extends JPanel {
 			characters.get(i).setY(characters.get(i).getY()-characters.get(0).getSpeed());
 		}else{
 		    mapY-=characters.get(0).getSpeed()/2;
+		    for (int i = 0; i < spawnCoords.length; i++)
+			spawnCoords[i][1]-=characters.get(0).getSpeed()/2;
 		    characters.get(0).setDownShieldAnimated();
 		    for (Character monster : ai)
 			monster.setY(monster.getY()-characters.get(0).getSpeed()/2);
@@ -509,6 +522,8 @@ public class GamePanel extends JPanel {
 	    if (keysPressed[VK_A] && ableToMove("left", characters.get(0))) {
 		if (!shielded){
 		    mapX+=characters.get(0).getSpeed();
+		    for (int i = 0; i < spawnCoords.length; i++)
+			spawnCoords[i][0]+=characters.get(0).getSpeed();
 		    characters.get(0).setLeftAnimated();
 		    for (Character monster : ai)
 			monster.setX(monster.getX()+characters.get(0).getSpeed());
@@ -517,6 +532,8 @@ public class GamePanel extends JPanel {
 			characters.get(i).setX(characters.get(i).getX()+characters.get(0).getSpeed());
 		}else{
 		    mapX+=characters.get(0).getSpeed()/2;
+		    for (int i = 0; i < spawnCoords.length; i++)
+			spawnCoords[i][0]+=characters.get(0).getSpeed()/2;
 		    characters.get(0).setLeftShieldAnimated();
 		    for (Character monster : ai)
 			monster.setX(monster.getX()+characters.get(0).getSpeed()/2);
@@ -528,6 +545,8 @@ public class GamePanel extends JPanel {
 	    if (keysPressed[VK_D] && ableToMove("right", characters.get(0))) {
 		if (!shielded){
 		    mapX-=characters.get(0).getSpeed();
+		    for (int i = 0; i < spawnCoords.length; i++)
+			spawnCoords[i][0]-=characters.get(0).getSpeed();
 		    characters.get(0).setRightAnimated();
 		    for (Character monster : ai)
 			monster.setX(monster.getX()-characters.get(0).getSpeed());
@@ -536,6 +555,8 @@ public class GamePanel extends JPanel {
 			characters.get(i).setX(characters.get(i).getX()-characters.get(0).getSpeed());
 		}else{
 		    mapX-=characters.get(0).getSpeed()/2;
+		    for (int i = 0; i < spawnCoords.length; i++)
+			spawnCoords[i][0]-=characters.get(0).getSpeed()/2;
 		    characters.get(0).setRightShieldAnimated();
 		    for (Character monster : ai)
 			monster.setX(monster.getX()-characters.get(0).getSpeed()/2);
