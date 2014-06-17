@@ -75,7 +75,7 @@ Some frame stutter on entity animations on slower machines.
 Lack of lore related NPCs, we intended to do this but not much point in coding in NPCs you can talk to and/or buy and sell from if there isn't even a proper map. 
 
 
-=======================================================FEATURE LOG===========================================================
+=================================FEATURE LOG=============
   Feature log: 
   **6/15/14**
   
