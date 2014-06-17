@@ -819,7 +819,7 @@ public class GamePanel extends JPanel {
 	}
 	//compares 2 rectangular objects to see if they are colliding
 	private boolean isIn(int x, int y, int x1, int y1, int a, int b,int a1, int b1){
-	    System.out.println(x + "," + y + "," + a + "," + b );
+	    //	    System.out.println(x + "," + y + "," + a + "," + b );
 	    Rectangle player = new Rectangle(x,y,x1,y1);
 	    Rectangle object = new Rectangle(a,b,a1,b1);
 	    if(!player.intersects(object)){
@@ -837,20 +837,17 @@ public class GamePanel extends JPanel {
 	    else if(direction == "left"){x-=speed;x1-=speed;}
 	    else if(direction == "up"){y-=speed;y1-=speed;}
 	    else if(direction == "down"){y+=speed;y1+=speed;}
-	    
 	    for(MapObject mapObject : mapObjects){
 		if(mapObject.getX() < windowWidth*2 && mapObject.getX() >0-(windowWidth) 
 		   && mapObject.getY() < windowHeight*2 && mapObject.getY() > 0-windowHeight){
 		    objects.add(mapObject);
 		}
 	    }
-	    
 	    for(MapObject object : objects){
 		int a1 = object.getImage().getWidth(null)/2,
 		    b1 = object.getImage().getWidth(null)/2,
 		    a = object.getX(),
 		    b = object.getY();
-		
 		if(!isIn(x,y,x1,y1,a,b,a1,b1))
 		    return false;
 	    }
