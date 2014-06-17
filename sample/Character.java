@@ -14,7 +14,7 @@ public class Character implements Drawable{
     protected int maxATK, ATK;
     protected int maxDEF, DEF;
     protected double maxLuk, luk;
-    protected int range = 100; //for testing purposes
+    protected int range = 75; //for testing purposes
     protected int maxSpeed, speed; //10 is super fast
     protected int maxATKspeed, ATKspeed; //hit per x CENTIseconds
     protected int maxMana, mana;

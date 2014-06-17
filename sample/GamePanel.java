@@ -236,7 +236,7 @@ public class GamePanel extends JPanel {
 	    for (int i = 0; i < 10; i++){
 		int a = (int)(Math.random()*25)*60;
 		int b = (int)(Math.random()*20)*60;
-		if (a > 500 || a < -500 || b > 500 || b < -500)
+		if (a > 450 || a < -450 || b > 450 || b < -450)
 		    i--;
 		else{
 		    Bush bush = new Bush(a,b);
@@ -246,7 +246,7 @@ public class GamePanel extends JPanel {
 	    for (int i = 0; i < 10; i++){
 		int a = (int)(Math.random()*25)*60;
 		int b = (int)(Math.random()*20)*60;
-		if (a > 500 || a < -500 || b > 1700 || b < 700)
+		if (a > 450 || a < -450 || b > 1650 || b < 750)
 		    i--;
 		else{
 		    Rock rock = new Rock(a,b);
@@ -256,7 +256,7 @@ public class GamePanel extends JPanel {
 	    for (int i = 0; i < 10; i++){
 		int a = (int)(Math.random()*25)*60;
 		int b = (int)(Math.random()*20)*60;
-		if (a > 1700 || a < 700 || b > 1700 || b < 700)
+		if (a > 1650 || a < 750 || b > 1650 || b < 750)
 		    i--;
 		else{
 		    Campfire campfire = new Campfire(a,b);
@@ -266,7 +266,7 @@ public class GamePanel extends JPanel {
 	    for (int i = 0; i < 10; i++){
 		int a = (int)(Math.random()*25)*60;
 		int b = (int)(Math.random()*20)*60;
-		if (a > 1700 || a < 700 || b > 500 || b < -500)
+		if (a > 1650 || a < 750 || b > 450 || b < -450)
 		    i--;
 		else{
 		    Tree tree = new Tree(a,b);
@@ -694,6 +694,10 @@ public class GamePanel extends JPanel {
 
 	    //AI code
 	    for (Character character : ai){
+		if (character.getTarget() == null)
+		    character.setTarget(characters.get((int)(Math.random()*characters.size()))); //random character on screen
+		else if (character.getTarget().getHP() <= 0)
+		    character.setTarget(null);
 		if (character.getDist(characters.get(2)) <= character.getDist(characters.get(1)) && character.getDist(characters.get(2)) <= character.getDist(characters.get(0)))
 		    character.setTarget(characters.get(2));
 		else if (character.getDist(characters.get(1)) <= character.getDist(characters.get(2)) && character.getDist(characters.get(1)) <= character.getDist(characters.get(0)))
@@ -737,8 +741,12 @@ public class GamePanel extends JPanel {
 	    for (int j = 1; j < characters.size(); j++){
 		if (ai.size() <= 0){
 		    if(characters.get(j).getDist(characters.get(0)) > (50*j)){
-			characters.get(j).setX(characters.get(j).getX() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(0))));
-			characters.get(j).setY(characters.get(j).getY() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(0))));
+			int speedX = (int)(characters.get(j).getSpeed()*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(0)));
+			int speedY = (int)(characters.get(j).getSpeed()*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(0)));
+			if (speedX < 0 && ableToMove("left",characters.get(j), Math.abs(speedX)) || speedX > 0 && ableToMove("right",characters.get(j), Math.abs(speedX)))
+			    characters.get(j).setX(characters.get(j).getX() + speedX);
+			if (speedY < 0 && ableToMove("up",characters.get(j), Math.abs(speedY)) || speedY > 0 && ableToMove("down",characters.get(j), Math.abs(speedY)))
+			    characters.get(j).setY(characters.get(j).getY() + speedY);
 			//when the characters are moving
 			if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
 			    if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
@@ -790,8 +798,12 @@ public class GamePanel extends JPanel {
 			    if (characters.get(j).getEXP() >= characters.get(j).getLVLreq())
 				characters.get(j).LVLup();
 			}else{
-			    characters.get(j).setX(characters.get(j).getX() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(j).getTarget())));
-			    characters.get(j).setY(characters.get(j).getY() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(j).getTarget())));
+			    int speedX = (int)(characters.get(j).getSpeed()*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(j).getTarget()));
+			    int speedY = (int)(characters.get(j).getSpeed()*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(j).getTarget()));
+			    if (speedX < 0 && ableToMove("left",characters.get(j), Math.abs(speedX)) || speedX > 0 && ableToMove("right",characters.get(j), Math.abs(speedX)))
+				characters.get(j).setX(characters.get(j).getX() + speedX);
+			    if (speedY < 0 && ableToMove("up",characters.get(j), Math.abs(speedY)) || speedY > 0 && ableToMove("down",characters.get(j), Math.abs(speedY)))
+				characters.get(j).setY(characters.get(j).getY() + speedY);
 			    if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
 				if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
 				    characters.get(j).setRightAnimated();
@@ -806,8 +818,12 @@ public class GamePanel extends JPanel {
 			}
 		    }catch(/*IndexOutOfBounds*/Exception e){
 			if (characters.get(j).getDist(characters.get(0)) > 50){
-			    characters.get(j).setX(characters.get(j).getX() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(0))));
-			    characters.get(j).setY(characters.get(j).getY() + (int)(characters.get(j).getSpeed()*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(0))));
+			    int speedX = (int)(characters.get(j).getSpeed()*characters.get(j).getChangeX()/characters.get(j).getDist(characters.get(0)));
+			    int speedY = (int)(characters.get(j).getSpeed()*characters.get(j).getChangeY()/characters.get(j).getDist(characters.get(0)));
+			    if (speedX < 0 && ableToMove("left",characters.get(j), Math.abs(speedX)) || speedX > 0 && ableToMove("right",characters.get(j), Math.abs(speedX)))
+				characters.get(j).setX(characters.get(j).getX() + speedX);
+			    if (speedY < 0 && ableToMove("up",characters.get(j), Math.abs(speedY)) || speedY > 0 && ableToMove("down",characters.get(j), Math.abs(speedY)))
+				characters.get(j).setY(characters.get(j).getY() + speedY);
 			    if (Math.abs(characters.get(j).getChangeX()) > Math.abs(characters.get(j).getChangeY())){
 				if (characters.get(j).getChangeX() > characters.get(j).getChangeY())
 				    characters.get(j).setRightAnimated();
@@ -893,11 +909,8 @@ public class GamePanel extends JPanel {
 	}
 	//compares 2 rectangular objects to see if they are colliding
 	private boolean isIn(int x, int y, int x1, int y1, int a, int b,int a1, int b1){
-<<<<<<< HEAD
 	    //	    System.out.println(x + "," + y + "," + a + "," + b );
-=======
 	    //System.out.println(x + "," + y + "," + a + "," + b );
->>>>>>> 14bde6866bdfc33b68128a8e6eb8810fd4588b45
 	    Rectangle player = new Rectangle(x,y,x1,y1);
 	    Rectangle object = new Rectangle(a,b,a1,b1);
 	    if(!player.intersects(object)){
@@ -911,18 +924,15 @@ public class GamePanel extends JPanel {
 		y = character.getY(),
 		x1 = character.getImage().getWidth(null)/2,
 		y1 = character.getImage().getWidth(null)/2;
-<<<<<<< HEAD
 	    if(direction == "right"){x+=speed;x1+=speed;}
 	    else if(direction == "left"){x-=speed;x1-=speed;}
 	    else if(direction == "up"){y-=speed;y1-=speed;}
 	    else if(direction == "down"){y+=speed;y1+=speed;}
-=======
 	    if(direction.equals("right")){x+=speed;x1+=speed;}
 	    else if(direction.equals("left")){x-=speed;x1-=speed;}
 	    else if(direction.equals("up")){y-=speed;y1-=speed;}
 	    else if(direction.equals("down")){y+=speed;y1+=speed;}
-		
->>>>>>> 14bde6866bdfc33b68128a8e6eb8810fd4588b45
+	        
 	    for(MapObject mapObject : mapObjects){
 		if(mapObject.getX() < windowWidth*2 && mapObject.getX() >0-(windowWidth) 
 		   && mapObject.getY() < windowHeight*2 && mapObject.getY() > 0-windowHeight){
