@@ -218,7 +218,7 @@ public class GamePanel extends JPanel {
 
 	private boolean shielded;
 	//for testing putposes
-	private Swordsman player2 = new Swordsman("sprites/swordsman down.png", screenWidth/2, screenHeight/2);
+	private Mage player2 = new Mage("sprites/mage down.png", screenWidth/2, screenHeight/2);
 	private Swordsman player = new Swordsman("sprites/swordsman down.png", screenWidth/2, screenHeight/2);
 	private Swordsman player3 = new Swordsman("sprites/swordsman down.png", screenWidth/2, screenHeight/2);
 	private Thread thread;
@@ -698,12 +698,6 @@ public class GamePanel extends JPanel {
 		    character.setTarget(characters.get((int)(Math.random()*characters.size()))); //random character on screen
 		else if (character.getTarget().getHP() <= 0)
 		    character.setTarget(null);
-		if (character.getDist(characters.get(2)) <= character.getDist(characters.get(1)) && character.getDist(characters.get(2)) <= character.getDist(characters.get(0)))
-		    character.setTarget(characters.get(2));
-		else if (character.getDist(characters.get(1)) <= character.getDist(characters.get(2)) && character.getDist(characters.get(1)) <= character.getDist(characters.get(0)))
-		    character.setTarget(characters.get(1));
-		else
-		    character.setTarget(characters.get(0));
 		if (character.getDist(character.getTarget()) < character.getRange()){
 		    if (Math.abs(character.getChangeX()) > Math.abs(character.getChangeY())){
 			if (character.getChangeX() > character.getChangeY())
@@ -872,14 +866,7 @@ public class GamePanel extends JPanel {
 		    i--;
 		}
 	    }
-	    for (int i = 0; i < characters.size(); i++){
-		if (characters.get(0).getHP() <= 0)
-		    System.exit(0);
-		if (characters.get(i).getHP() <= 0){
-		    characters.remove(i);
-		    i--;
-		}
-	    }
+	    for (int i = 0; i < characters.size(); i++){}
 
 	    long pastTime = System.currentTimeMillis() - prevTick;
 
