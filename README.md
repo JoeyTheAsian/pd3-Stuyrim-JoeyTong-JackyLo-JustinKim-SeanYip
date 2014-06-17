@@ -74,17 +74,42 @@ Some frame stutter on entity animations on slower machines.
 
 Lack of lore related NPCs, we intended to do this but not much point in coding in NPCs you can talk to and/or buy and sell from if there isn't even a proper map. 
 
+Item Rendering is a little wacky. 2.5D effect not working with items. 
+
 
 =================================FEATURE LOG=============
  
   Feature log: 
+  **6/16/14**
+  
+  Fixed Optimization bug, System.out.println over 300 times per second was lagging game (Joey)
+    
+  Fixed up Map to look better (Jacky)
+  
+  Added Item pickup (Sean) 
+  
+  Added customized mapObjects (Jacky)
+  
+  
   **6/15/14**
+
+  Fixed Collision detection bug, rewrote collision code (Joey)
   
   Edited spawning so that when the player reaches a certain point one type of monster would spawn (Jacky)
   
   **6/14/14**
   
+  Wrote Collision Detection (Justin)
   
+  Implemented Item Drop (Sean)
+  
+  More animations (Jacky) 
+  
+  More selective AI, does not target corresponding index on monster arraylist anymore (Jacky)
+  
+  Fixed up some of the GUI (Joey)
+  
+  Wrote and implemented the Mage class (Joey) 
   
   **6/13/14**
   
