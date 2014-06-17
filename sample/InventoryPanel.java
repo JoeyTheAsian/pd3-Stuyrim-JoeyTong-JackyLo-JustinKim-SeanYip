@@ -42,8 +42,13 @@ public class InventoryPanel extends JPanel {
 			for (Object[] a : getInventoryArray()) {System.out.print(Arrays.toString(a));}
 			System.out.println();
 			DefaultTableModel inventoryTableModel = new DefaultTableModel(getInventoryArray(), COLUMN_NAMES);
+			inventoryTable.setModel(inventoryTableModel);
 			inventoryTableModel.fireTableDataChanged();
+			inventoryTable.revalidate();
+			inventoryTable.repaint();
+			inventoryTableScrollPane.repaint();
 			repaint();
+			//Still no table refresh.
 		}
 		public void focusLost(FocusEvent e) {
 		    requestFocusInWindow();
@@ -62,10 +67,10 @@ public class InventoryPanel extends JPanel {
 	protected Object[][] getInventoryArray() {
 		Object[][] inventoryTableData = new Object[inventory.size()][5];
 		for (int i = 0; i < inventory.size(); i++) {
-			inventoryTableData[i][0] = new Boolean(false); //When using constructor JTable(Object[][], Object[]), booleans are automatically converted to checkboxes.
+			inventoryTableData[i][0] = new Boolean(false);
 			inventoryTableData[i][1] = inventory.get(i).getName();
 			inventoryTableData[i][2] = inventory.get(i).getLevel();
-			//inventoryTableData[i][3] = inventory.get(i).getType();
+			inventoryTableData[i][3] = null;
 			inventoryTableData[i][4] = inventory.get(i).getRarity();
 		}
 		return inventoryTableData;

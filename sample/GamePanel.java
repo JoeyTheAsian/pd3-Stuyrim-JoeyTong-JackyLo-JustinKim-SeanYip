@@ -697,7 +697,7 @@ public class GamePanel extends JPanel {
 		if (character.getTarget() == null)
 		    character.setTarget(characters.get((int)(Math.random()*characters.size()))); //random character on screen
 		else if (character.getTarget().getHP() <= 0)
-		    character.setTarget(null);
+		    continue;
 		if (character.getDist(character.getTarget()) < character.getRange()){
 		    if (Math.abs(character.getChangeX()) > Math.abs(character.getChangeY())){
 			if (character.getChangeX() > character.getChangeY())
@@ -913,10 +913,10 @@ public class GamePanel extends JPanel {
 		y = character.getY(),
 		x1 = character.getImage().getWidth(null)/2,
 		y1 = character.getImage().getWidth(null)/2;
-	    if(direction == "right"){x+=speed;x1+=speed;}
-	    else if(direction == "left"){x-=speed;x1-=speed;}
-	    else if(direction == "up"){y-=speed;y1-=speed;}
-	    else if(direction == "down"){y+=speed;y1+=speed;}
+	    if(direction.equals("right")){x+=speed;x1+=speed;}
+	    else if(direction.equals("left")){x-=speed;x1-=speed;}
+	    else if(direction.equals("up")){y-=speed;y1-=speed;}
+	    else if(direction.equals("down")){y+=speed;y1+=speed;}
 	    if(direction.equals("right")){x+=speed;x1+=speed;}
 	    else if(direction.equals("left")){x-=speed;x1-=speed;}
 	    else if(direction.equals("up")){y-=speed;y1-=speed;}
