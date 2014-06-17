@@ -74,6 +74,8 @@ Some frame stutter on entity animations on slower machines.
 
 Lack of lore related NPCs, we intended to do this but not much point in coding in NPCs you can talk to and/or buy and sell from if there isn't even a proper map. 
 
+Item Rendering is a little wacky. 2.5D effect not working with items. 
+
 
 =================================FEATURE LOG=============
  
