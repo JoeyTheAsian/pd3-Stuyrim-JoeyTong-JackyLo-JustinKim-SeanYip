@@ -627,12 +627,12 @@ public class GamePanel extends JPanel {
 	    }
 
 	    //special attack
-	    if (keysPressed[VK_SPACE]/* && characters.get(0).getMana() >= 300*/){
+	    if (keysPressed[VK_SPACE] && characters.get(0).getMana() >= 50){
 		for (Character c : ai)
 		    if (c.getDist(characters.get(0)) < 200)
 			characters.get(0).sAttack(c);
 		keysPressed[VK_SPACE] = false;
-		//characters.get(0).setMana(characters.get(0).getMana()-300);
+		characters.get(0).setMana(characters.get(0).getMana()-50);
 	    }
 	    //reset player to idle mode after done moving
 	    if(keysReleased[VK_SHIFT]){
