@@ -11,13 +11,13 @@ public class Inventory implements Collection<Item> {
 	public Inventory() {}
 	
 	public boolean add(Item i) {
-		if (inventory.size() >= MAX_SIZE) {return false;}
+		if ((i == null) || (inventory.size() >= MAX_SIZE)) {return false;}
 		inventory.add(i);
 		return true;
 	}
 	
 	public boolean add(int index, Item i) {
-		if (inventory.size() >= MAX_SIZE) {return false;}
+		if ((i == null) || (inventory.size() >= MAX_SIZE)) {return false;}
 		inventory.add(index, i);
 		return true;
 	}
@@ -79,6 +79,8 @@ public class Inventory implements Collection<Item> {
 	public Object[] toArray() {return inventory.toArray();}
 	
 	public <T> T[] toArray(T[] a) {return inventory.toArray(a);}
+	
+	public String toString() {return inventory.toString();}
 	
 	public void trimToSize() {inventory.trimToSize();}
 }
