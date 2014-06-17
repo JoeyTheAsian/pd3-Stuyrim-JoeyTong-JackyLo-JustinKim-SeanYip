@@ -1,8 +1,5 @@
 pd3-Stuyrim-JoeyTong-JackyLo
 
-
-**Note: Java 8 required.**
-
 Final Project
 
 Group Members: Joey Tong, Justin Kim, Jacky Lo (Pd 3),  Sean Yip (Pd 2)
@@ -11,10 +8,64 @@ Project Name: The Senior Scrolls I: Stuyrim
 
 Project Description: 2.5D RPG game
 
-  TEST CODE IS ALL IN SAMPLE IMPLEMENT YOUR CODE BITS INTO SAMPLE CODE
-  
-  Textures and images get dumped in images directory 
-  
+**Note: Java 8 required to run.**
+
+Game Concept: A typical 2.5D RPG hacknslash game. Level as you progress through the game, gain items, xp, party members, etc.
+
+**Controls:**
+Move up: 	W
+Move Down: 	S
+Move Left: 	A
+Move Right: 	D
+Pick up Item: 	E
+Shield: 	SHIFT
+Special Attack: SPACE
+Attack: 	LMOUSE *requires mouse aim*
+Party Panel: 	Click on "Party" Button
+Inventory: 	Click on "Inventory" Button
+
+**Features:**
+
+Two playable classes, Swordsman and Mage
+
+HP bars, all stat related data shown in party panel and immediately relevent stat data shown in lower left textArea
+
+Map scrolling
+
+Party and monster AI, Semi-intelligent but no time to implement automatic pathing
+
+Collision detection, monsters are unable to move when collided with objects
+
+Frame rate and update rate counters, (uses linkedlist data structure) 
+
+Inventory and inventory sort (uses MergeSort that sorts based on hierarchy of features, though sort feature is currently not used in the UI)
+
+Sorted Entity rendering, all entities on screen are added to a screenEntity ArrayList where they are sorted and then rendered from highest Y coordinate to lowest Y coordinate, this gives proper 2.5D layered effect.
+
+Meticulous level of optimization, we were very careful to keep this game not only relatively well optimized, but also dynamic. The game is coded in such a way that you could make an entirely different game with simply redrawn textures and maps. 
+
+Screen autosize, upon starting the game, the screen and ALL of the components throughout the entire game are sized to fit the user's screen.\
+
+Item system, items are dropped upon killing a monster. 
+
+Occlusion culling (renders only objects on the screen)
+
+Just play and you'll see all the other things we implemented. 
+
+Known issues and missed bits: 
+
+Some missing graphics, had to hand draw all animations and sprite states, not enough time, we decided it was more important to get the code working
+
+Lack of content, again, we decided getting the structural part of the game working was more important than 20 levels that you'll never have time to play, Mr.Z
+
+Empty space in the middle of the lower UI bar was reserved for a hotbar we never got to because we didn't have time to create many different types of abilities. 
+
+Some frame stutter on entity animations on slower machines.
+
+Lack of lore related NPCs, we intended to do this but not much point in coding in NPCs you can talk to and/or buy and sell from if there isn't even a proper map. 
+
+
+=======================================================FEATURE LOG===========================================================
   Feature log: 
   **6/15/14**
   
