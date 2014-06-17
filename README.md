@@ -44,7 +44,7 @@ Map scrolling
 
 Party and monster AI, Semi-intelligent but no time to implement automatic pathing
 
-Collision detection, monsters are unable to move when collided with objects
+Collision detection, monsters and players are unable to move when collided with objects
 
 Frame rate and update rate counters, (uses linkedlist data structure) 
 
@@ -76,8 +76,9 @@ Lack of lore related NPCs, we intended to do this but not much point in coding i
 
 Item Rendering is a little wacky. 2.5D effect not working with items. 
 
+The party members are invincible for testing purposes
 
-=================================FEATURE LOG=============
+=================================FEATURE LOG===============================
  
   Feature log: 
   **6/16/14**
