@@ -236,7 +236,7 @@ public class GamePanel extends JPanel {
 	    for (int i = 0; i < 10; i++){
 		int a = (int)(Math.random()*25)*60;
 		int b = (int)(Math.random()*20)*60;
-		if (a > 450 || a < -450 || b > 450 || b < -450)
+		if (a > 400 || a < -400 || b > 400 || b < -400)
 		    i--;
 		else{
 		    Bush bush = new Bush(a,b);
@@ -246,7 +246,7 @@ public class GamePanel extends JPanel {
 	    for (int i = 0; i < 10; i++){
 		int a = (int)(Math.random()*25)*60;
 		int b = (int)(Math.random()*20)*60;
-		if (a > 450 || a < -450 || b > 1650 || b < 750)
+		if (a > 400 || a < -400 || b > 1600 || b < 800)
 		    i--;
 		else{
 		    Rock rock = new Rock(a,b);
@@ -256,7 +256,7 @@ public class GamePanel extends JPanel {
 	    for (int i = 0; i < 10; i++){
 		int a = (int)(Math.random()*25)*60;
 		int b = (int)(Math.random()*20)*60;
-		if (a > 1650 || a < 750 || b > 1650 || b < 750)
+		if (a > 1600 || a < 800 || b > 1600 || b < 800)
 		    i--;
 		else{
 		    Campfire campfire = new Campfire(a,b);
@@ -266,7 +266,7 @@ public class GamePanel extends JPanel {
 	    for (int i = 0; i < 10; i++){
 		int a = (int)(Math.random()*25)*60;
 		int b = (int)(Math.random()*20)*60;
-		if (a > 1650 || a < 750 || b > 450 || b < -450)
+		if (a > 1600 || a < 800 || b > 400 || b < -400)
 		    i--;
 		else{
 		    Tree tree = new Tree(a,b);
@@ -866,7 +866,9 @@ public class GamePanel extends JPanel {
 		    i--;
 		}
 	    }
-	    for (int i = 0; i < characters.size(); i++){}
+	    for (int i = 0; i < characters.size(); i++){
+	    	if (characters.get(i).getHP()<=0{}
+	    }
 
 	    long pastTime = System.currentTimeMillis() - prevTick;
 
