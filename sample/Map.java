@@ -13,7 +13,7 @@ public class Map {
 
     public Map() {
         tilemap = new Tile[NUM_COLS][NUM_ROWS];
-        textures = new HashMap<Integer, Image>();
+        textures = new HashMap<>();
         setAll(Tile.GRASS);
 	for (int i = 0; i < 50; i++){
 	    int x = (int)(Math.random()*23)+1;
