@@ -1,5 +1,3 @@
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -24,14 +22,16 @@ public class Bird extends Player{
 	}catch(Exception e){
 	    Utilities.showErrorMessage(null,e);
 	}
-	maxHP = 500;
+	maxHP = 1000;
 	HP = maxHP;
-	maxATK = 35;
+	maxMana = 500;
+	mana = maxMana;
+	maxATK = 150;
 	ATK = maxATK;
-	maxDEF = 5;
+	maxDEF = 50;
 	DEF = maxDEF;
-	EXP = 25;
-	maxLuk = 0.05;
+	EXP = 50;
+	maxLuk = 0.1;
 	luk = maxLuk;
 	maxSpeed = 3;
 	speed = maxSpeed;

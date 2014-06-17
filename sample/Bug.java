@@ -21,14 +21,14 @@ public class Bug extends Player{
 	}catch(Exception e){
 	    Utilities.showErrorMessage(null,e);
 	}
-	maxHP = 750;
+	maxHP = 1500;
 	HP = maxHP;
-	maxATK = 100;
+	maxATK = 250;
 	ATK = maxATK;
-	maxDEF = 25;
+	maxDEF = 75;
 	DEF = maxDEF;
-	EXP = 50;
-	maxLuk = 0.1;
+	EXP = 100;
+	maxLuk = 0.15;
 	luk = maxLuk;
 	maxSpeed = 3;
 	speed = maxSpeed;

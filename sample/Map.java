@@ -15,6 +15,11 @@ public class Map {
         tilemap = new Tile[NUM_COLS][NUM_ROWS];
         textures = new HashMap<Integer, Image>();
         setAll(Tile.GRASS);
+	for (int i = 0; i < 50; i++){
+	    int x = (int)(Math.random()*23)+1;
+	    int y = (int)(Math.random()*18)+1;
+	    setTile(x,y,Tile.DIRT);
+	}
     }
 
     public String toString() {

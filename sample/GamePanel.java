@@ -220,7 +220,7 @@ public class GamePanel extends JPanel {
 	private Swordsman player3 = new Swordsman("sprites/swordsman down.png", screenWidth/2, screenHeight/2);
 	private Thread thread;
 
-	private int[][] spawnCoords = {{0,0},{1000,0},{0,1000},{1000,1000}};
+	private int[][] spawnCoords = {{0,0},{1200,0},{0,1200},{1200,1200}};
 
 	public Screen() {
 	    setSize(screenWidth, screenHeight);
@@ -230,9 +230,45 @@ public class GamePanel extends JPanel {
 	    characters.add(player2);
 	    characters.add(player3);
 
-	    for (int i = 0; i < 25; i++){
-		Rock rock = new Rock((int)(Math.random()*25*60),(int)(Math.random()*20*60));
-		mapObjects.add(rock);
+	    for (int i = 0; i < 10; i++){
+		int a = (int)(Math.random()*25)*60;
+		int b = (int)(Math.random()*20)*60;
+		if (a > 500 || a < -500 || b > 500 || b < -500)
+		    i--;
+		else{
+		    Bush bush = new Bush(a,b);
+		    mapObjects.add(bush);
+		}
+	    }
+	    for (int i = 0; i < 10; i++){
+		int a = (int)(Math.random()*25)*60;
+		int b = (int)(Math.random()*20)*60;
+		if (a > 500 || a < -500 || b > 1700 || b < 700)
+		    i--;
+		else{
+		    Rock rock = new Rock(a,b);
+		    mapObjects.add(rock);
+		}
+	    }
+	    for (int i = 0; i < 10; i++){
+		int a = (int)(Math.random()*25)*60;
+		int b = (int)(Math.random()*20)*60;
+		if (a > 1700 || a < 700 || b > 1700 || b < 700)
+		    i--;
+		else{
+		    Campfire campfire = new Campfire(a,b);
+		    mapObjects.add(campfire);
+		}
+	    }
+	    for (int i = 0; i < 10; i++){
+		int a = (int)(Math.random()*25)*60;
+		int b = (int)(Math.random()*20)*60;
+		if (a > 1700 || a < 700 || b > 500 || b < -500)
+		    i--;
+		else{
+		    Tree tree = new Tree(a,b);
+		    mapObjects.add(tree);
+		}
 	    }
 
             currentMap = new Map();
@@ -790,7 +826,12 @@ public class GamePanel extends JPanel {
 		}
 	    }
 	    for (int i = 0; i < characters.size(); i++){
-		if (characters.get(i).getHP() <= 0){}
+		if (characters.get(0).getHP() <= 0)
+		    System.exit(0);
+		if (characters.get(i).getHP() <= 0){
+		    characters.remove(i);
+		    i--;
+		}
 	    }
 
 	    long pastTime = System.currentTimeMillis() - prevTick;

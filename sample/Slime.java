@@ -1,5 +1,3 @@
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -28,11 +26,11 @@ public class Slime extends Player{
 	HP = maxHP;
 	maxMana = 500;
 	mana = maxMana;
-	maxATK = 50;
+	maxATK = 100;
 	ATK = maxATK;
-	maxDEF = 5;
+	maxDEF = 25;
 	DEF = maxDEF;
-	EXP = 10;
+	EXP = 25;
 	maxLuk = 0.01;
 	luk = maxLuk;
 	maxSpeed = 2;

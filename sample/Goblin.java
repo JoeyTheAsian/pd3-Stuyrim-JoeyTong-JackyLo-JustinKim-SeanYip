@@ -1,5 +1,3 @@
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -24,16 +22,16 @@ public class Goblin extends Player{
 	}catch(Exception e){
 	    Utilities.showErrorMessage(null,e);
 	}
-	maxHP = 1000;
+	maxHP = 2000;
 	HP = maxHP;
 	maxMana = 500;
 	mana = maxMana;
-	maxATK = 200;
+	maxATK = 500;
 	ATK = maxATK;
-	maxDEF = 100;
+	maxDEF = 250;
 	DEF = maxDEF;
-	EXP = 100;
-	maxLuk = 0.15;
+	EXP = 150;
+	maxLuk = 0.2;
 	luk = maxLuk;
 	maxSpeed = 2;
 	speed = maxSpeed;
