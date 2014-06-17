@@ -6,22 +6,32 @@ Group Members: Joey Tong, Justin Kim, Jacky Lo (Pd 3),  Sean Yip (Pd 2)
 
 Project Name: The Senior Scrolls I: Stuyrim
 
-Project Description: 2.5D RPG game
+Project Description: A typical 2.5D RPG hacknslash game. Level as you progress through the game, gain items, xp, party members, etc.
 
 **Note: Java 8 required to run.**
 
-Game Concept: A typical 2.5D RPG hacknslash game. Level as you progress through the game, gain items, xp, party members, etc.
+**To Start the game, simply double click or run the "Stuyrim.jar" file**
 
 **Controls:**
+
 Move up: 	W
+
 Move Down: 	S
+
 Move Left: 	A
+
 Move Right: 	D
+
 Pick up Item: 	E
+
 Shield: 	SHIFT
+
 Special Attack: SPACE
+
 Attack: 	LMOUSE *requires mouse aim*
+
 Party Panel: 	Click on "Party" Button
+
 Inventory: 	Click on "Inventory" Button
 
 **Features:**
