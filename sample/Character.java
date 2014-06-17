@@ -175,11 +175,17 @@ public class Character implements Drawable{
 
     public void LVLupStat(){
 	maxHP+=25;
+	HP = maxHP;
 	maxMana+=50;
+	mana = maxMana;
 	maxATK+=5;
+	ATK = maxATK;
 	maxDEF+=2;
+	DEF = maxDEF;
 	maxLuk+=0.01;
+	luk = maxLuk;
 	maxATKspeed-=0.01;
+	ATKspeed = maxATKspeed;
     }
 	
     public void LVLup(){

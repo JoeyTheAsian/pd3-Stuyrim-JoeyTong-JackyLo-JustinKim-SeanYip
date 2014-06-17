@@ -475,6 +475,7 @@ public class GamePanel extends JPanel {
 	public void tick() {
 	    if(keysPressed[VK_SHIFT] ){
 		shielded = true;
+		characters.get(0).setDEF(characters.get(0).getDEF() + 100);
 	    }
 	    if (keysPressed[VK_W] && ableToMove("up", characters.get(0),characters.get(0).getSpeed())) {
 		if (!shielded){
@@ -580,6 +581,7 @@ public class GamePanel extends JPanel {
 	    //reset player to idle mode after done moving
 	    if(keysReleased[VK_SHIFT]){
 		shielded = false;
+		characters.get(0).setDEF(characters.get(0).getMaxDEF());
 	    }
 	    if(keysReleased[VK_W]){
 		if(!shielded){
