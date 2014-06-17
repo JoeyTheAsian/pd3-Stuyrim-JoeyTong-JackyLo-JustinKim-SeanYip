@@ -230,12 +230,13 @@ public class GamePanel extends JPanel {
 	    characters.add(player2);
 	    characters.add(player3);
 
-	    for (int i = 0; i < 1200; i += 30){
-		Rock rock = new Rock(0,i);
+	    for (int i = 0; i < 25; i++){
+		Rock rock = new Rock((int)(Math.random()*25*60),(int)(Math.random()*20*60));
 		mapObjects.add(rock);
 	    }
 
             currentMap = new Map();
+
 	    addKeyListener(new KeyListener() {
 		    public void keyPressed(KeyEvent e) {keysPressed[e.getKeyCode()] = true;}
 		    public void keyReleased(KeyEvent e) {
@@ -650,7 +651,7 @@ public class GamePanel extends JPanel {
 		    if (speedX < 0 && ableToMove("left",character,(int)(Math.abs(speedX))) || speedX > 0 && ableToMove("right",character,(int)(Math.abs(speedX))))
 			character.setX(character.getX() + speedX);
 		    if (speedY < 0 && ableToMove("up",character,(int)(Math.abs(speedY))) || speedY > 0 && ableToMove("down",character,(int)(Math.abs(speedY))))
-			character.setX(character.getX() + speedY);
+			character.setY(character.getY() + speedY);
 		    if (Math.abs(character.getChangeX()) > Math.abs(character.getChangeY())){
 			if (character.getChangeX() > character.getChangeY())
 			    character.setRightAnimated();
