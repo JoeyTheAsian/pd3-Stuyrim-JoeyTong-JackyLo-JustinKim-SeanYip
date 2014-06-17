@@ -13,7 +13,7 @@ public class Map {
 
     public Map() {
         tilemap = new Tile[NUM_COLS][NUM_ROWS];
-        textures = new HashMap<>();
+        textures = new HashMap<Integer, Image>();
         setAll(Tile.GRASS);
     }
 

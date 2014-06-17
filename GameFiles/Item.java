@@ -45,8 +45,6 @@ public class Item implements Comparable<Item>, Drawable {
 	}
 	public void setX(int x) {this.x = x;}
 	public void setY(int y) {this.y = y;}
-	
-	public String toString() {return name;}
 	/* Items are sorted based on a hierarchy of qualities:
 	 *	Item type > Rarity > Level > Name
 	 *

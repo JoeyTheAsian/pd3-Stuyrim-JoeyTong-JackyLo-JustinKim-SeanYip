@@ -18,6 +18,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -84,7 +85,6 @@ public class GamePanel extends JPanel {
 		    invent.requestFocusInWindow();
 		    //invent.updateInventory(inventory);
 		    inventoryButton.setIcon(new ImageIcon(i2));
-			invent.setInventory(inventory);
 		}
 	    });
 	partyButton = new JButton("Party");
@@ -171,8 +171,6 @@ public class GamePanel extends JPanel {
 	}
     }
 	
-	public Inventory getInventory() {return inventory;}
-	
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	g.drawImage(bg,0,windowHeight/5*4,width,height,null);
@@ -195,7 +193,6 @@ public class GamePanel extends JPanel {
 	private static final int TILE_SCALE = 60;
 	//arraylists containing all entities on screen, painted by while loop in screen
 	private ArrayDeque<AttackEvent> attacks = new ArrayDeque<>(); //Used as a stack
-	private ArrayDeque<KeyEvent> itemPickupRequests = new ArrayDeque<>();
 	private ArrayList<Player> characters = new ArrayList<>();
 	private ArrayList<Character> ai = new ArrayList<>();
 	private ArrayList<Item> droppedItems = new ArrayList<>();
@@ -239,13 +236,14 @@ public class GamePanel extends JPanel {
 	    }
 
             currentMap = new Map();
+
 	    addKeyListener(new KeyListener() {
 		    public void keyPressed(KeyEvent e) {keysPressed[e.getKeyCode()] = true;}
 		    public void keyReleased(KeyEvent e) {
 			keysPressed[e.getKeyCode()] = false;
 			keysReleased[e.getKeyCode()] = true;
 		    }
-		    public void keyTyped(KeyEvent e) {if (e.getKeyChar() == 'e') {itemPickupRequests.push(e);}}
+		    public void keyTyped(KeyEvent e) {}
 		});
 	    addMouseListener(new MouseListener() {
 		    public void mouseClicked(MouseEvent e) {}
@@ -356,8 +354,6 @@ public class GamePanel extends JPanel {
 	    screenEntities.clear();
 	    characters.get(0).setY(screenHeight/2);
 	    characters.get(0).setX(screenWidth/2);
-		
-		if (getClosestItemDistance() <= 50) {g.drawString("Press E to pick up " + getClosestItem().getName(), 5, getHeight() - 10);}
 	    g.drawString("TPS: " + averageFPS, 0, 20);
 	    g.drawString("FPS: " + averageFPS1,0, 31);
 	    g.drawString("Global Time: " + time, 0, 50);
@@ -414,22 +410,6 @@ public class GamePanel extends JPanel {
 	    }
         }
     
-	public Item getClosestItem() {
-		if (droppedItems.isEmpty()) {return null;}
-		double[] distancesToDroppedItems = new double[droppedItems.size()];
-		for (int i = 0; i < droppedItems.size(); i++) {distancesToDroppedItems[i] = Math.hypot(droppedItems.get(i).getX() - (player.getX() + player.getWidth()/2 - mapX), droppedItems.get(i).getY() - (player.getY() + player.getHeight()/2 - mapY));}
-		int indexOfSmallestDistanceToDroppedItem = 0;
-		for (int i = 1; i < distancesToDroppedItems.length - 1; i++) {if (distancesToDroppedItems[i + 1] < distancesToDroppedItems[i]) {indexOfSmallestDistanceToDroppedItem = i + 1;}}
-		double smallestDistanceToDroppedItem = distancesToDroppedItems[indexOfSmallestDistanceToDroppedItem];
-		return droppedItems.get(indexOfSmallestDistanceToDroppedItem);
-	}
-	
-	public double getClosestItemDistance() {
-		Item closestItem = getClosestItem();
-		if (closestItem == null) {return Double.MAX_VALUE;}
-		return Math.hypot(closestItem.getX() - (player.getX() + player.getWidth()/2 - mapX), closestItem.getY() - (player.getY() + player.getHeight()/2 - mapY));
-	}
-	
 	public void run() {
 	    while (running) {
 		time++;
@@ -495,7 +475,6 @@ public class GamePanel extends JPanel {
 	public void tick() {
 	    if(keysPressed[VK_SHIFT] ){
 		shielded = true;
-		characters.get(0).setDEF(characters.get(0).getDEF() + 100);
 	    }
 	    if (keysPressed[VK_W] && ableToMove("up", characters.get(0),characters.get(0).getSpeed())) {
 		if (!shielded){
@@ -601,7 +580,6 @@ public class GamePanel extends JPanel {
 	    //reset player to idle mode after done moving
 	    if(keysReleased[VK_SHIFT]){
 		shielded = false;
-		characters.get(0).setDEF(characters.get(0).getMaxDEF());
 	    }
 	    if(keysReleased[VK_W]){
 		if(!shielded){
@@ -642,18 +620,7 @@ public class GamePanel extends JPanel {
 		    if (intersectEllipseLineSegment(attack.getStartX(), attack.getStartY(), attack.getEndX(), attack.getEndY(), (character.getX() + character.getWidth()/2 - mapX), (character.getY() + character.getHeight()/2 - mapY), character.getWidth(), character.getHeight())) {characters.get(0).attack(character);}
 		}
 	    }
-		while (!(itemPickupRequests.isEmpty())) {
-			if (droppedItems.isEmpty()) {
-				itemPickupRequests.clear();
-				break;
-			}
-			itemPickupRequests.pop(); //Really nothing to do with the KeyEvent. Keep it here just in case.
-			Item closestItem = getClosestItem();
-			if (getClosestItemDistance() <= 50) {
-				getInventory().add(closestItem); 
-				droppedItems.remove(closestItem);
-			}
-		}
+
 	    chanceOfSpawn(); //chance of spawn
 
 	    //AI code
@@ -681,9 +648,9 @@ public class GamePanel extends JPanel {
 		}else{
 		    int speedX = (int)(character.getSpeed()*character.getChangeX()/character.getDist(character.getTarget()));
 		    int speedY = (int)(character.getSpeed()*character.getChangeY()/character.getDist(character.getTarget()));
-		    if (speedX < 0 && ableToMove("left",character, Math.abs(speedX)) || speedX > 0 && ableToMove("right",character, Math.abs(speedX)))
+		    if (speedX < 0 && ableToMove("left",character,(int)(Math.abs(speedX))) || speedX > 0 && ableToMove("right",character,(int)(Math.abs(speedX))))
 			character.setX(character.getX() + speedX);
-		    if (speedY < 0 && ableToMove("up",character, Math.abs(speedY)) || speedY > 0 && ableToMove("down",character, Math.abs(speedY)))
+		    if (speedY < 0 && ableToMove("up",character,(int)(Math.abs(speedY))) || speedY > 0 && ableToMove("down",character,(int)(Math.abs(speedY))))
 			character.setY(character.getY() + speedY);
 		    if (Math.abs(character.getChangeX()) > Math.abs(character.getChangeY())){
 			if (character.getChangeX() > character.getChangeY())
@@ -852,11 +819,7 @@ public class GamePanel extends JPanel {
 	}
 	//compares 2 rectangular objects to see if they are colliding
 	private boolean isIn(int x, int y, int x1, int y1, int a, int b,int a1, int b1){
-<<<<<<< HEAD
 	    //	    System.out.println(x + "," + y + "," + a + "," + b );
-=======
-	    //System.out.println(x + "," + y + "," + a + "," + b );
->>>>>>> 14bde6866bdfc33b68128a8e6eb8810fd4588b45
 	    Rectangle player = new Rectangle(x,y,x1,y1);
 	    Rectangle object = new Rectangle(a,b,a1,b1);
 	    if(!player.intersects(object)){
@@ -870,18 +833,10 @@ public class GamePanel extends JPanel {
 		y = character.getY(),
 		x1 = character.getImage().getWidth(null)/2,
 		y1 = character.getImage().getWidth(null)/2;
-<<<<<<< HEAD
 	    if(direction == "right"){x+=speed;x1+=speed;}
 	    else if(direction == "left"){x-=speed;x1-=speed;}
 	    else if(direction == "up"){y-=speed;y1-=speed;}
 	    else if(direction == "down"){y+=speed;y1+=speed;}
-=======
-	    if(direction.equals("right")){x+=speed;x1+=speed;}
-	    else if(direction.equals("left")){x-=speed;x1-=speed;}
-	    else if(direction.equals("up")){y-=speed;y1-=speed;}
-	    else if(direction.equals("down")){y+=speed;y1+=speed;}
-		
->>>>>>> 14bde6866bdfc33b68128a8e6eb8810fd4588b45
 	    for(MapObject mapObject : mapObjects){
 		if(mapObject.getX() < windowWidth*2 && mapObject.getX() >0-(windowWidth) 
 		   && mapObject.getY() < windowHeight*2 && mapObject.getY() > 0-windowHeight){
