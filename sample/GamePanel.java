@@ -867,7 +867,7 @@ public class GamePanel extends JPanel {
 		}
 	    }
 	    for (int i = 0; i < characters.size(); i++){
-	    	if (characters.get(i).getHP()<=0{}
+	    	if (characters.get(i).getHP()<=0){}
 	    }
 
 	    long pastTime = System.currentTimeMillis() - prevTick;
